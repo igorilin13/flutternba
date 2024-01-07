@@ -20,6 +20,15 @@ sealed class Result<T> {
         return Result.failure(failure.error);
     }
   }
+
+  R fold<R>({required R Function(T) onSuccess, required R Function(Object) onFailure}) {
+    switch (this) {
+      case Success<T> success:
+        return onSuccess(success.value);
+      case Failure<T> failure:
+        return onFailure(failure.error);
+    }
+  }
 }
 
 final class Success<T> extends Result<T> {
