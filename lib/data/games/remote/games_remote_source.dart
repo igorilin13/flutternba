@@ -1,4 +1,5 @@
 import 'package:flutternba/common/util/async_util.dart';
+import 'package:flutternba/common/util/collections.dart';
 import 'package:flutternba/data/common/network/api_response.dart';
 import 'package:flutternba/data/common/network/network_service.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
@@ -30,6 +31,7 @@ class GamesRemoteDataSource {
           return Result.failure(failure.error);
       }
     }
+    result.sortBy((item) => item.date);
 
     return Result.success(result);
   }

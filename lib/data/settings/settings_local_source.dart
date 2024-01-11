@@ -15,9 +15,13 @@ class SettingsLocalDataSource {
     await _preferences.setBool(_onboardingKey, value);
   }
 
+  int? getFavoriteTeamId() => _preferences.getInt(_favoriteTeamIdKey);
+
   Future<void> setFavoriteTeam(int id) async {
     await _preferences.setInt(_favoriteTeamIdKey, id);
   }
+
+  bool? shouldHideScores() => _preferences.getBool(_hideScoresKey);
 
   Future<void> setHideScores(bool value) async {
     await _preferences.setBool(_hideScoresKey, value);

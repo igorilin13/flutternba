@@ -1,3 +1,4 @@
+import 'package:flutternba/common/util/collections.dart';
 import 'package:flutternba/data/teams/remote/teams_remote_source.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 
@@ -11,6 +12,6 @@ class TeamsRepository {
 
   Future<Result<List<Team>>> getTeams() =>
       _remoteDataSource.getTeams().mapResult(
-            (teams) => teams.map(Team.fromResponse).toList(growable: false),
+            (teams) => teams.mapList(Team.fromResponse),
           );
 }
