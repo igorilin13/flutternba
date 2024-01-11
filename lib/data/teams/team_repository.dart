@@ -10,6 +10,7 @@ class TeamsRepository {
   const TeamsRepository(this._remoteDataSource);
 
   Future<Result<List<Team>>> getTeams() =>
-      _remoteDataSource.getTeams().mapResult((teams) =>
-          teams.map((team) => Team.fromResponse(team)).toList(growable: false));
+      _remoteDataSource.getTeams().mapResult(
+            (teams) => teams.map(Team.fromResponse).toList(growable: false),
+          );
 }

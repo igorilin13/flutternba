@@ -1,3 +1,4 @@
+import 'package:flutternba/common/util/async_util.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/common/network/network_service.dart';
 import 'package:flutternba/data/teams/remote/team_response.dart';
@@ -11,11 +12,10 @@ class TeamsRemoteDataSource {
   const TeamsRemoteDataSource(this._networkService);
 
   Future<Result<List<TeamResponse>>> getTeams() async {
-    return runCatching(() async {
-      final fromService = await _networkService.getTeams();
-      return fromService.data
-          .where((element) => _activeTeamIds.contains(element.id))
-          .toList(growable: false);
-    });
+    return _networkService.getTeams().mapResult(
+          (response) => response.data
+              .where((element) => _activeTeamIds.contains(element.id))
+              .toList(growable: false),
+        );
   }
 }

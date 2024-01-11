@@ -1,3 +1,5 @@
+import 'package:flutternba/data/games/games_repository.dart';
+import 'package:flutternba/data/games/remote/games_remote_source.dart';
 import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:get_it/get_it.dart';
@@ -21,6 +23,9 @@ Future<void> initLocator() async {
 
   locator.registerFactory(() => TeamsRemoteDataSource(locator()));
   locator.registerFactory(() => TeamsRepository(locator()));
+
+  locator.registerFactory(() => GamesRemoteDataSource(locator()));
+  locator.registerFactory(() => GamesRepository(locator()));
 
   await locator.allReady();
 }
