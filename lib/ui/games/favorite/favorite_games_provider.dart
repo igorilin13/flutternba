@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutternba/common/util/collections.dart';
 import 'package:flutternba/data/games/game_model.dart';
 import 'package:flutternba/domain/games/favorite_team_games.dart';
@@ -6,7 +7,7 @@ import 'package:flutternba/domain/games/get_favorite_games.dart';
 import '../../../domain/games/game_item.dart';
 import 'favorite_games_state.dart';
 
-class FavoriteTeamGamesProvider {
+class FavoriteTeamGamesProvider with ChangeNotifier {
   static const int _maxDisplayedUpcomingGames = 5;
 
   final GetFavoriteTeamGamesUseCase _getFavoriteTeamGamesUseCase;
@@ -35,6 +36,7 @@ class FavoriteTeamGamesProvider {
           onFailure: (_) => ErrorState(),
         );
     }
+    notifyListeners();
   }
 
   DisplayDataState createDisplayDataState(List<GameItem> games) {

@@ -11,10 +11,12 @@ class ErrorDisplay extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Container(
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16)),
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.error_outline,
@@ -22,7 +24,7 @@ class ErrorDisplay extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSurface,
             ),
             const SizedBox(width: 16),
-            Expanded(
+            Flexible(
               child: Text(
                 message,
                 style: Theme.of(context).textTheme.titleMedium,
