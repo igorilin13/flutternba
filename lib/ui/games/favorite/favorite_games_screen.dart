@@ -32,8 +32,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       create: (context) => FavoriteTeamGamesProvider(locator()),
       child: Consumer<FavoriteTeamGamesProvider>(
         builder: (context, provider, child) {
-          final state = provider.state;
-          return _buildBody(context, state);
+          return _buildBody(context, provider.state);
         },
       ),
     );

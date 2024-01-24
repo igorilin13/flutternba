@@ -3,7 +3,8 @@ import 'package:flutternba/data/games/remote/games_remote_source.dart';
 import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/domain/date/date_formatter.dart';
-import 'package:flutternba/domain/games/get_favorite_games.dart';
+import 'package:flutternba/domain/games/favorite/get_favorite_games.dart';
+import 'package:flutternba/domain/games/league/get_league_games.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/common/network/network_service.dart';
@@ -17,7 +18,8 @@ final locator = GetIt.instance;
 Future<void> initLocator() async {
   locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(
-      () => NetworkService(AppConfig.baseApiUrl, locator()));
+    () => NetworkService(AppConfig.baseApiUrl, locator()),
+  );
 
   locator.registerSingletonAsync(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => SettingsLocalDataSource(locator()));
@@ -31,7 +33,11 @@ Future<void> initLocator() async {
 
   locator.registerFactory(() => FormatGameDateUseCase());
   locator.registerFactory(
-      () => GetFavoriteTeamGamesUseCase(locator(), locator(), locator()));
+    () => GetFavoriteTeamGamesUseCase(locator(), locator(), locator()),
+  );
+  locator.registerFactory(
+    () => GetLeagueGamesUseCase(locator(), locator(), locator()),
+  );
 
   await locator.allReady();
 }
