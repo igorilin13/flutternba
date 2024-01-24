@@ -14,4 +14,7 @@ class UiStrings {
   static const String sectionPreviousGames = "Previous";
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
   static const String versus = "vs";
+  static const String navigationFavorite = "Favorite";
+  static const String navigationLeague = "League";
+  static const String navigationSettings = "Settings";
 }

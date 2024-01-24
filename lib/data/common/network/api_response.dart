@@ -18,18 +18,14 @@ class ApiResponse<T> {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class MetaDataResponse {
-  final int totalPages;
   final int currentPage;
   final int? nextPage;
   final int perPage;
-  final int totalCount;
 
   MetaDataResponse({
-    required this.totalPages,
     required this.currentPage,
     this.nextPage,
     required this.perPage,
-    required this.totalCount,
   });
 
   factory MetaDataResponse.fromJson(Map<String, dynamic> json) =>

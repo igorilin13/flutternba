@@ -10,7 +10,7 @@ import '../../util/widgets/error_display.dart';
 import '../../util/widgets/game_card.dart';
 import 'favorite_games_state.dart';
 
-class FavoriteTeamGamesScreen extends StatelessWidget {
+class FavoriteTeamGamesScreen extends StatefulWidget {
   final VoidCallback onSelectFavoriteClick;
 
   const FavoriteTeamGamesScreen({
@@ -19,19 +19,22 @@ class FavoriteTeamGamesScreen extends StatelessWidget {
   });
 
   @override
+  State<FavoriteTeamGamesScreen> createState() =>
+      _FavoriteTeamGamesScreenState();
+}
+
+class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
-    return SystemUiOverlay(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: ChangeNotifierProvider(
-        create: (context) => FavoriteTeamGamesProvider(locator()),
-        child: Consumer<FavoriteTeamGamesProvider>(
-          builder: (context, provider, child) {
-            final state = provider.state;
-            return Scaffold(
-              body: SafeArea(child: _buildBody(context, state)),
-            );
-          },
-        ),
+    super.build(context);
+    return ChangeNotifierProvider(
+      create: (context) => FavoriteTeamGamesProvider(locator()),
+      child: Consumer<FavoriteTeamGamesProvider>(
+        builder: (context, provider, child) {
+          final state = provider.state;
+          return _buildBody(context, state);
+        },
       ),
     );
   }
@@ -49,7 +52,10 @@ class FavoriteTeamGamesScreen extends StatelessWidget {
           child: ErrorDisplay(message: UiStrings.noGamesMessage),
         );
       case NoFavoriteTeamState():
-        return _buildNoFavoriteTeamMessage(context, onSelectFavoriteClick);
+        return _buildNoFavoriteTeamMessage(
+          context,
+          widget.onSelectFavoriteClick,
+        );
       case DisplayDataState():
         return _buildGameList(context, state);
     }
@@ -114,6 +120,9 @@ class FavoriteTeamGamesScreen extends StatelessWidget {
   List<Widget> _buildSectionItems(String title, List<GameItem> games) {
     return [_HeaderItem(title), for (var game in games) GameCard(item: game)];
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _HeaderItem extends StatelessWidget {

@@ -19,6 +19,6 @@ class GamesRepository {
   Future<Result<List<Game>>> getLeagueGames(DateTime date) {
     return _remoteSource.getLeagueGames(date).mapResult(
           (games) => games.mapList(Game.fromResponse),
-    );
+        );
   }
 }
