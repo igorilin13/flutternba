@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_screen.dart';
 import 'package:flutternba/ui/games/league/league_games_screen.dart';
+import 'package:flutternba/ui/settings/settings_screen.dart';
 import 'package:flutternba/ui/util/widgets/system_overlay.dart';
 
 import '../util/strings.dart';
@@ -21,7 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
       onSelectFavoriteClick: () {},
     ),
     const LeagueGamesScreen(),
-    const Placeholder(),
+    SettingsScreen(
+      onSelectFavoriteClick: () {},
+    ),
   ];
 
   @override

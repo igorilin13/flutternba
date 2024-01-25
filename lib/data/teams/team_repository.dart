@@ -10,8 +10,15 @@ class TeamsRepository {
 
   const TeamsRepository(this._remoteDataSource);
 
-  Future<Result<List<Team>>> getTeams() =>
-      _remoteDataSource.getTeams().mapResult(
-            (teams) => teams.mapList(Team.fromResponse),
-          );
+  Future<Result<List<Team>>> getTeams() {
+    return _remoteDataSource.getTeams().mapResult(
+          (teams) => teams.mapList(Team.fromResponse),
+        );
+  }
+
+  Future<Result<Team>> getTeam(int teamId) {
+    return getTeams().mapResult(
+      (teams) => teams.firstWhere((element) => element.id == teamId),
+    );
+  }
 }

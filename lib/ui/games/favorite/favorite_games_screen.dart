@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_provider.dart';
-import 'package:flutternba/ui/util/widgets/system_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';

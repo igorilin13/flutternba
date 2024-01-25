@@ -50,7 +50,7 @@ class NetworkService {
     String path,
     T Function(Object? json) fromJson,
   ) {
-    return runCatching(() async {
+    return runCatchingAsync(() async {
       final response = await _client.get(_buildUrl(path));
 
       if (response.statusCode == 200) {

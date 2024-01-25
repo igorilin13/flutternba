@@ -18,4 +18,9 @@ class UiStrings {
   static const String navigationLeague = "League";
   static const String navigationSettings = "Settings";
   static const String titleToday = "Today";
+  static const String titleSettings = "Settings";
+  static const String settingHideScores = "Hide scores";
+  static const String settingFavoriteTeam = "Favorite team";
+  static const String favoriteTeamError = "Error";
+  static const String noFavoriteTeamValue = "-";
 }
