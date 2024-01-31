@@ -8,13 +8,10 @@ class GetFavoriteTeamGamesUseCase extends BaseGetGamesUseCase {
 
   GetFavoriteTeamGamesUseCase(
     this._gamesRepository,
-    super.settingsRepository,
     super._formatGameDateUseCase,
   );
 
-  // todo: stream data on changes
-  Future<FavoriteTeamGamesResult> call() async {
-    final teamId = settingsRepository.getFavoriteTeamId();
+  Future<FavoriteTeamGamesResult> call(int? teamId) async {
     if (teamId != null) {
       return HasFavoriteTeam(
         await createResult(games: _gamesRepository.getTeamGames(teamId)),

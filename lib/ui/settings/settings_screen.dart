@@ -25,38 +25,35 @@ class _SettingsScreenState extends State<SettingsScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ChangeNotifierProvider(
-      create: (context) => SettingsProvider(locator(), locator()),
-      child: Consumer<SettingsProvider>(
-        builder: (context, provider, child) {
-          final state = provider.state;
+    return Consumer<SettingsProvider>(
+      builder: (context, provider, child) {
+        final state = provider.state;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  UiStrings.titleSettings,
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                UiStrings.titleSettings,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
-              if (state.shouldHideScores != null)
-                buildHideScoresSetting(
-                  context,
-                  state.shouldHideScores!,
-                  provider.setHideScores,
-                ),
-              const SizedBox(height: 12),
-              buildFavoriteTeamSetting(
+            ),
+            if (state.shouldHideScores != null)
+              buildHideScoresSetting(
                 context,
-                state.favoriteTeamState,
-                widget.onSelectFavoriteClick,
-              )
-            ],
-          );
-        },
-      ),
+                state.shouldHideScores!,
+                provider.setHideScores,
+              ),
+            const SizedBox(height: 12),
+            buildFavoriteTeamSetting(
+              context,
+              state.favoriteTeamState,
+              widget.onSelectFavoriteClick,
+            )
+          ],
+        );
+      },
     );
   }
 

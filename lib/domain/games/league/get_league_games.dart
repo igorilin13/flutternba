@@ -9,11 +9,9 @@ class GetLeagueGamesUseCase extends BaseGetGamesUseCase {
 
   GetLeagueGamesUseCase(
     this._gamesRepository,
-    super.settingsRepository,
     super._formatGameDateUseCase,
   );
 
-  // todo: stream data on changes
   Future<Result<List<GameItem>>> call() async {
     return createResult(games: _gamesRepository.getLeagueGames(DateTime.now()));
   }

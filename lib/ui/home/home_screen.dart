@@ -3,7 +3,10 @@ import 'package:flutternba/ui/games/favorite/favorite_games_screen.dart';
 import 'package:flutternba/ui/games/league/league_games_screen.dart';
 import 'package:flutternba/ui/settings/settings_screen.dart';
 import 'package:flutternba/ui/util/widgets/system_overlay.dart';
+import 'package:provider/provider.dart';
 
+import '../../common/di/locator.dart';
+import '../settings/settings_provider.dart';
 import '../util/strings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SystemUiOverlay(
+    return ChangeNotifierProvider(
+      create: (context) => SettingsProvider(locator(), locator()),
+      child: SystemUiOverlay(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Scaffold(
           bottomNavigationBar: NavigationBar(
@@ -67,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: _screens,
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

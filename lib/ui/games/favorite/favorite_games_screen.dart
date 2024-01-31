@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_provider.dart';
+import 'package:flutternba/ui/settings/settings_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';
@@ -31,13 +32,20 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       create: (context) => FavoriteTeamGamesProvider(locator()),
       child: Consumer<FavoriteTeamGamesProvider>(
         builder: (context, provider, child) {
-          return _buildBody(context, provider.state);
+          final hideScores = context.select<SettingsProvider, bool>(
+            (value) => value.state.shouldHideScores ?? false,
+          );
+          return _buildBody(context, provider.state, hideScores);
         },
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, FavoriteTeamGamesState state) {
+  Widget _buildBody(
+    BuildContext context,
+    FavoriteTeamGamesState state,
+    bool hideScores,
+  ) {
     switch (state) {
       case LoadingState():
         return const Center(child: CircularProgressIndicator());
@@ -55,7 +63,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
           widget.onSelectFavoriteClick,
         );
       case DisplayDataState():
-        return _buildGameList(context, state);
+        return _buildGameList(context, state, hideScores);
     }
   }
 
@@ -81,27 +89,35 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     );
   }
 
-  Widget _buildGameList(BuildContext context, DisplayDataState state) {
+  Widget _buildGameList(
+    BuildContext context,
+    DisplayDataState state,
+    bool hideScores,
+  ) {
     final items = <Widget>[
       if (state.nextGame != null)
         ..._buildSectionItems(
           UiStrings.sectionNextGame,
           [state.nextGame!],
+          hideScores,
         ),
       if (state.previousGame != null)
         ..._buildSectionItems(
           UiStrings.sectionPreviousGame,
           [state.previousGame!],
+          hideScores,
         ),
       if (state.upcomingGames.isNotEmpty)
         ..._buildSectionItems(
           UiStrings.sectionUpcomingGames,
           state.upcomingGames,
+          hideScores,
         ),
       if (state.previousGames.isNotEmpty)
         ..._buildSectionItems(
           UiStrings.sectionPreviousGames,
           state.previousGames,
+          hideScores,
         ),
     ];
 
@@ -115,8 +131,19 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     );
   }
 
-  List<Widget> _buildSectionItems(String title, List<GameItem> games) {
-    return [_HeaderItem(title), for (var game in games) GameCard(item: game)];
+  List<Widget> _buildSectionItems(
+    String title,
+    List<GameItem> games,
+    bool hideScores,
+  ) {
+    return [
+      _HeaderItem(title),
+      for (var game in games)
+        GameCard(
+          item: game,
+          hideScores: hideScores,
+        )
+    ];
   }
 
   @override

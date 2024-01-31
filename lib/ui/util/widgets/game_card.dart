@@ -9,8 +9,9 @@ import '../strings.dart';
 
 class GameCard extends StatelessWidget {
   final GameItem item;
+  final bool hideScores;
 
-  const GameCard({super.key, required this.item});
+  const GameCard({super.key, required this.item, required this.hideScores});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +99,7 @@ class GameCard extends StatelessWidget {
 
   Widget _buildGameScore(BuildContext context) {
     final hasScores =
-        item.showScores && item.game.gameStatus != GameStatus.scheduled;
+        !hideScores && item.game.gameStatus != GameStatus.scheduled;
     if (hasScores) {
       final textStyle = Theme.of(context).textTheme.titleLarge;
       return Row(

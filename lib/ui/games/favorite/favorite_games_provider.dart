@@ -21,7 +21,7 @@ class FavoriteTeamGamesProvider with ChangeNotifier {
   }
 
   void loadGames() async {
-    switch (await _getFavoriteTeamGamesUseCase()) {
+    switch (await _getFavoriteTeamGamesUseCase(1)) {
       case NoFavoriteTeam():
         _state = NoFavoriteTeamState();
       case HasFavoriteTeam result:

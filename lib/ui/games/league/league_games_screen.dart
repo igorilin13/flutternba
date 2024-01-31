@@ -4,7 +4,7 @@ import 'package:flutternba/ui/util/widgets/system_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';
-import '../../../domain/games/game_item.dart';
+import '../../settings/settings_provider.dart';
 import '../../util/strings.dart';
 import '../../util/widgets/error_display.dart';
 import '../../util/widgets/game_card.dart';
@@ -20,7 +20,6 @@ class LeagueGamesScreen extends StatefulWidget {
 
 class _LeagueGamesScreenState extends State<LeagueGamesScreen>
     with AutomaticKeepAliveClientMixin {
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -28,13 +27,20 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
       create: (context) => LeagueGamesProvider(locator()),
       child: Consumer<LeagueGamesProvider>(
         builder: (context, provider, child) {
-          return _buildBody(context, provider.state);
+          final hideScores = context.select<SettingsProvider, bool>(
+            (value) => value.state.shouldHideScores ?? false,
+          );
+          return _buildBody(context, provider.state, hideScores);
         },
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, LeagueGamesState state) {
+  Widget _buildBody(
+    BuildContext context,
+    LeagueGamesState state,
+    bool hideScores,
+  ) {
     switch (state) {
       case LoadingState():
         return const Center(child: CircularProgressIndicator());
@@ -47,11 +53,15 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
           child: ErrorDisplay(message: UiStrings.noGamesMessage),
         );
       case DisplayDataState():
-        return _buildGameList(context, state);
+        return _buildGameList(context, state, hideScores);
     }
   }
 
-  Widget _buildGameList(BuildContext context, DisplayDataState state) {
+  Widget _buildGameList(
+    BuildContext context,
+    DisplayDataState state,
+    bool hideScores,
+  ) {
     final items = state.games;
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -59,14 +69,14 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: index > 0
-            ? GameCard(item: items[index - 1])
+            ? GameCard(item: items[index - 1], hideScores: hideScores)
             : Padding(
-              padding: const EdgeInsets.only(left: 12),
-              child: Text(
+                padding: const EdgeInsets.only(left: 12),
+                child: Text(
                   UiStrings.titleToday,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-            ),
+              ),
       ),
     );
   }
