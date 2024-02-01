@@ -20,16 +20,8 @@ class SettingsProvider with ChangeNotifier {
 
   void loadSettings() async {
     final favoriteTeamId = _settingsRepository.getFavoriteTeamId();
-    final FavoriteTeamSettingState favoriteTeamState;
-    if (favoriteTeamId != null) {
-      favoriteTeamState = (await _teamsRepository.getTeam(favoriteTeamId)).fold(
-        onSuccess: (team) => HasFavoriteTeamState(team),
-        onFailure: (_) => FavoriteTeamErrorState(),
-      );
-    } else {
-      favoriteTeamState = NoFavoriteTeamState();
-    }
-
+    final FavoriteTeamSettingState favoriteTeamState =
+        await buildFavoriteTeamState(favoriteTeamId);
     final hideScores = _settingsRepository.shouldHideScores();
 
     _state = SettingsState(
@@ -46,5 +38,25 @@ class SettingsProvider with ChangeNotifier {
       favoriteTeamState: _state.favoriteTeamState,
     );
     notifyListeners();
+  }
+
+  void updateFavoriteTeam(int? teamId) async {
+    final favoriteTeamState = await buildFavoriteTeamState(teamId);
+    _state = SettingsState(
+      shouldHideScores: _state.shouldHideScores,
+      favoriteTeamState: favoriteTeamState,
+    );
+    notifyListeners();
+  }
+
+  Future<FavoriteTeamSettingState> buildFavoriteTeamState(int? teamId) async {
+    if (teamId != null) {
+      return (await _teamsRepository.getTeam(teamId)).fold(
+        onSuccess: (team) => HasFavoriteTeamState(team),
+        onFailure: (_) => FavoriteTeamErrorState(),
+      );
+    } else {
+      return NoFavoriteTeamState();
+    }
   }
 }
