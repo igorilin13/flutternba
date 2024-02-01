@@ -11,17 +11,30 @@ class FavoriteTeamGamesProvider with ChangeNotifier {
   static const int _maxDisplayedUpcomingGames = 5;
 
   final GetFavoriteTeamGamesUseCase _getFavoriteTeamGamesUseCase;
+  int? _favoriteTeamId;
 
   FavoriteTeamGamesState _state = LoadingState();
 
   FavoriteTeamGamesState get state => _state;
 
-  FavoriteTeamGamesProvider(this._getFavoriteTeamGamesUseCase) {
-    loadGames();
-  }
+  FavoriteTeamGamesProvider(this._getFavoriteTeamGamesUseCase);
 
-  void loadGames() async {
-    switch (await _getFavoriteTeamGamesUseCase(1)) {
+  void loadGames(int? teamId) async {
+    if (_favoriteTeamId == teamId) {
+      if (teamId == null && _state is! NoFavoriteTeam) {
+        _state = NoFavoriteTeamState();
+        notifyListeners();
+      }
+      return;
+    }
+
+    _favoriteTeamId = teamId;
+    if (_state is! LoadingState) {
+      _state = LoadingState();
+      notifyListeners();
+    }
+
+    switch (await _getFavoriteTeamGamesUseCase(_favoriteTeamId)) {
       case NoFavoriteTeam():
         _state = NoFavoriteTeamState();
       case HasFavoriteTeam result:

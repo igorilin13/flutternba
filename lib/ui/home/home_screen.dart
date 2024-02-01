@@ -22,9 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentPageIndex = 0;
 
   final _screens = <Widget>[
-    FavoriteTeamGamesScreen(
-      onSelectFavoriteClick: () {},
-    ),
+    const FavoriteTeamGamesScreen(),
     const LeagueGamesScreen(),
     const SettingsScreen(),
   ];

@@ -5,18 +5,16 @@ import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';
 import '../../../domain/games/game_item.dart';
+import '../../favorite/change/change_favorite_screen.dart';
+import '../../settings/settings_state.dart' as settings_state;
 import '../../util/strings.dart';
 import '../../util/widgets/error_display.dart';
 import '../../util/widgets/game_card.dart';
 import 'favorite_games_state.dart';
 
 class FavoriteTeamGamesScreen extends StatefulWidget {
-  final VoidCallback onSelectFavoriteClick;
 
-  const FavoriteTeamGamesScreen({
-    super.key,
-    required this.onSelectFavoriteClick,
-  });
+  const FavoriteTeamGamesScreen({super.key});
 
   @override
   State<FavoriteTeamGamesScreen> createState() =>
@@ -28,12 +26,26 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ChangeNotifierProvider(
+
+    return ChangeNotifierProxyProvider<SettingsProvider, FavoriteTeamGamesProvider>(
       create: (context) => FavoriteTeamGamesProvider(locator()),
+      update: (_, settings, teamsProvider) {
+        if (teamsProvider == null) {
+          return FavoriteTeamGamesProvider(locator());
+        } else {
+          final favoriteTeamState = settings.state.favoriteTeamState;
+          if (favoriteTeamState is settings_state.HasFavoriteTeamState) {
+            teamsProvider.loadGames(favoriteTeamState.team.id);
+          } else {
+            teamsProvider.loadGames(null);
+          }
+          return teamsProvider;
+        }
+      },
       child: Consumer<FavoriteTeamGamesProvider>(
         builder: (context, provider, child) {
           final hideScores = context.select<SettingsProvider, bool>(
-            (value) => value.state.shouldHideScores ?? false,
+                (value) => value.state.shouldHideScores ?? false,
           );
           return _buildBody(context, provider.state, hideScores);
         },
@@ -60,11 +72,28 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       case NoFavoriteTeamState():
         return _buildNoFavoriteTeamMessage(
           context,
-          widget.onSelectFavoriteClick,
+          () => _openFavoriteSelectionScreen(context),
         );
       case DisplayDataState():
         return _buildGameList(context, state, hideScores);
     }
+  }
+
+  void _openFavoriteSelectionScreen(BuildContext context) {
+    final settingsProvider = context.read<SettingsProvider>();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeFavoriteTeamScreen(
+          onSelectionComplete: (teamId) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              Navigator.pop(context);
+            });
+            settingsProvider.updateFavoriteTeam(teamId);
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildNoFavoriteTeamMessage(
