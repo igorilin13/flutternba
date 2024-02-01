@@ -24,4 +24,7 @@ class UiStrings {
   static const String settingFavoriteTeam = "Favorite team";
   static const String favoriteTeamError = "Error";
   static const String noFavoriteTeamValue = "-";
+  static const String yesterday = "Yesterday";
+  static String todayFormat(String time) => "Today, $time";
+  static String tomorrowFormat(String time) => "Tomorrow, $time";
 }

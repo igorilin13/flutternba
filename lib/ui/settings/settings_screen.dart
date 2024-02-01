@@ -5,8 +5,8 @@ import 'package:flutternba/ui/util/extensions.dart';
 import 'package:flutternba/ui/util/strings.dart';
 import 'package:provider/provider.dart';
 
-import '../favorite/change/change_favorite_screen.dart';
 import '../util/asset_paths.dart';
+import '../util/navigation.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -44,9 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             buildFavoriteTeamSetting(
               context,
               state.favoriteTeamState,
-              () {
-                openFavoriteSelectionScreen(context, provider);
-              },
+              () => Navigation.openFavoriteTeamSelection(context),
             )
           ],
         );
@@ -146,25 +144,6 @@ class _SettingsScreenState extends State<SettingsScreen>
           ],
         );
     }
-  }
-
-  void openFavoriteSelectionScreen(
-    BuildContext context,
-    SettingsProvider provider,
-  ) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChangeFavoriteTeamScreen(
-          onSelectionComplete: (teamId) {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              Navigator.pop(context);
-            });
-            provider.updateFavoriteTeam(teamId);
-          },
-        ),
-      ),
-    );
   }
 
   @override

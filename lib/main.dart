@@ -3,6 +3,7 @@ import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/ui/favorite/onboarding/onboarding_screen.dart';
 import 'package:flutternba/ui/home/home_screen.dart';
 import 'package:flutternba/ui/util/colors.dart';
+import 'package:flutternba/ui/util/navigation.dart';
 
 import 'common/di/locator.dart';
 
@@ -51,10 +52,7 @@ class _RootScreen extends StatelessWidget {
       return SelectTeamOnboardingScreen(
         onOnboardingComplete: () {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
+            Navigation.openHome(context);
           });
         },
       );
