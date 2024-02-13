@@ -5,9 +5,13 @@ class Team {
   final String name;
   final String fullName;
 
-  const Team(this.id, this.name, this.fullName);
+  const Team({required this.id, required this.name, required this.fullName});
 
   factory Team.fromResponse(TeamResponse response) {
-    return Team(response.id, response.name, response.fullName);
+    return Team(
+      id: response.id,
+      name: response.name,
+      fullName: response.fullName,
+    );
   }
 }

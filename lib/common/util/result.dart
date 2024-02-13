@@ -12,7 +12,7 @@ sealed class Result<T> {
     return Failure(error);
   }
 
-  Result<R> map<R>(R Function(T) transform) {
+  Result<R> map<R>(R Function(T value) transform) {
     switch (this) {
       case Success<T> success:
         return runCatching(() => transform(success.value));
@@ -21,13 +21,27 @@ sealed class Result<T> {
     }
   }
 
-  R fold<R>({required R Function(T) onSuccess, required R Function(Object) onFailure}) {
+  R fold<R>({
+    required R Function(T value) onSuccess,
+    required R Function(Object error) onFailure,
+  }) {
     switch (this) {
       case Success<T> success:
         return onSuccess(success.value);
       case Failure<T> failure:
         return onFailure(failure.error);
     }
+  }
+
+  Result<T> onSuccess(void Function(T value) action) {
+    switch (this) {
+      case Success<T> success:
+        action(success.value);
+      case Failure<T>():
+        break;
+    }
+
+    return this;
   }
 }
 
