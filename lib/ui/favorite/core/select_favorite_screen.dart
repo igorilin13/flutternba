@@ -111,14 +111,23 @@ class SelectFavoriteTeamScreen extends StatelessWidget {
           child: ErrorDisplay(message: UiStrings.teamListLoadError),
         );
       case DisplayState():
+        const itemWidth = 160.0;
+        const itemHeight = 225.0;
+        const itemSpacing = 8.0;
+        const containerMargin = 8.0;
+
+        final availableWidth =
+            MediaQuery.of(context).size.width - 2 * containerMargin;
+        int columnCount = (availableWidth / (itemWidth + itemSpacing)).floor();
+
         return GridView.builder(
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            childAspectRatio: 0.82,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: columnCount,
+            crossAxisSpacing: itemSpacing,
+            mainAxisSpacing: itemSpacing,
+            mainAxisExtent: itemHeight,
           ),
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(containerMargin),
           itemCount: state.teams.length,
           itemBuilder: (BuildContext context, int index) {
             var team = state.teams[index];
