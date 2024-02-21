@@ -43,6 +43,17 @@ sealed class Result<T> {
 
     return this;
   }
+
+  Result<T> onFailure(void Function(Object error) action) {
+    switch (this) {
+      case Success<T>():
+        break;
+      case Failure<T> failure:
+        action(failure.error);
+    }
+
+    return this;
+  }
 }
 
 final class Success<T> extends Result<T> {

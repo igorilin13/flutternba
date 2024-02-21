@@ -7,11 +7,12 @@ import 'package:http/http.dart' as http;
 
 import '../../teams/remote/team_response.dart';
 
-class NetworkService {
+class ApiService {
   final String _baseUrl;
+  final String _apiKey;
   final http.Client _client;
 
-  const NetworkService(this._baseUrl, this._client);
+  const ApiService(this._baseUrl, this._apiKey, this._client);
 
   Uri _buildUrl(String path) => Uri.parse("$_baseUrl$path");
 
@@ -26,11 +27,12 @@ class NetworkService {
   Future<Result<ApiResponse<List<GameResponse>>>> getTeamGames(
     List<int> teamIds,
     List<int> seasons,
-    int page,
+    int? cursor,
   ) async {
     return performGet(
       "games?per_page=100&team_ids[]=${teamIds.join(",")}"
-      "&seasons[]=${seasons.join(",")}&page=$page",
+      "&seasons[]=${seasons.join(",")}"
+      "${cursor != null ? "&cursor=$cursor" : ""}",
       (json) =>
           (json as List).map((item) => GameResponse.fromJson(item)).toList(),
     );
@@ -51,7 +53,10 @@ class NetworkService {
     T Function(Object? json) fromJson,
   ) {
     return runCatchingAsync(() async {
-      final response = await _client.get(_buildUrl(path));
+      final response = await _client.get(
+        _buildUrl(path),
+        headers: {"Authorization": _apiKey},
+      );
 
       if (response.statusCode == 200) {
         return ApiResponse.fromJson(jsonDecode(response.body), fromJson);

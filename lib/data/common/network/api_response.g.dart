@@ -12,7 +12,9 @@ ApiResponse<T> _$ApiResponseFromJson<T>(
 ) =>
     ApiResponse<T>(
       data: fromJsonT(json['data']),
-      meta: MetaDataResponse.fromJson(json['meta'] as Map<String, dynamic>),
+      meta: json['meta'] == null
+          ? null
+          : MetaDataResponse.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ApiResponseToJson<T>(
@@ -26,14 +28,10 @@ Map<String, dynamic> _$ApiResponseToJson<T>(
 
 MetaDataResponse _$MetaDataResponseFromJson(Map<String, dynamic> json) =>
     MetaDataResponse(
-      currentPage: json['current_page'] as int,
-      nextPage: json['next_page'] as int?,
-      perPage: json['per_page'] as int,
+      json['next_cursor'] as int?,
     );
 
 Map<String, dynamic> _$MetaDataResponseToJson(MetaDataResponse instance) =>
     <String, dynamic>{
-      'current_page': instance.currentPage,
-      'next_page': instance.nextPage,
-      'per_page': instance.perPage,
+      'next_cursor': instance.nextCursor,
     };

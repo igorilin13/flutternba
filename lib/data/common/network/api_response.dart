@@ -5,9 +5,9 @@ part 'api_response.g.dart';
 @JsonSerializable(genericArgumentFactories: true)
 class ApiResponse<T> {
   final T data;
-  final MetaDataResponse meta;
+  final MetaDataResponse? meta;
 
-  ApiResponse({required this.data, required this.meta});
+  ApiResponse({required this.data, this.meta});
 
   factory ApiResponse.fromJson(
     Map<String, dynamic> json,
@@ -18,15 +18,9 @@ class ApiResponse<T> {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class MetaDataResponse {
-  final int currentPage;
-  final int? nextPage;
-  final int perPage;
+  final int? nextCursor;
 
-  MetaDataResponse({
-    required this.currentPage,
-    this.nextPage,
-    required this.perPage,
-  });
+  MetaDataResponse(this.nextCursor);
 
   factory MetaDataResponse.fromJson(Map<String, dynamic> json) =>
       _$MetaDataResponseFromJson(json);

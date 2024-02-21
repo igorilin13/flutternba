@@ -1,6 +1,6 @@
 import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/common/db/app_db.dart';
-import 'package:flutternba/data/common/network/network_service.dart';
+import 'package:flutternba/data/common/network/api_service.dart';
 import 'package:flutternba/data/games/games_repository.dart';
 import 'package:flutternba/data/games/remote/games_remote_source.dart';
 import 'package:flutternba/data/settings/settings_local_source.dart';
@@ -20,7 +20,7 @@ final locator = GetIt.instance;
 Future<void> initLocator() async {
   locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(
-    () => NetworkService(AppConfig.baseApiUrl, locator()),
+    () => ApiService(AppConfig.apiUrl, AppConfig.apiKey, locator()),
   );
 
   locator.registerSingletonAsync(() => SharedPreferences.getInstance());

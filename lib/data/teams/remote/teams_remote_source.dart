@@ -1,13 +1,13 @@
 import 'package:flutternba/common/util/async_util.dart';
 import 'package:flutternba/common/util/result.dart';
-import 'package:flutternba/data/common/network/network_service.dart';
+import 'package:flutternba/data/common/network/api_service.dart';
 import 'package:flutternba/data/teams/remote/team_response.dart';
 
 class TeamsRemoteDataSource {
   static final Set<int> _activeTeamIds =
       List.generate(30, (index) => index + 1).toSet();
 
-  final NetworkService _networkService;
+  final ApiService _networkService;
 
   const TeamsRemoteDataSource(this._networkService);
 
