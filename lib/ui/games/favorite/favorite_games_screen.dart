@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_provider.dart';
 import 'package:flutternba/ui/settings/settings_provider.dart';
-import 'package:flutternba/ui/util/navigation.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';
 import '../../../domain/games/game_item.dart';
+import '../../favorite/change/change_favorite_screen.dart';
 import '../../settings/settings_state.dart' as settings_state;
 import '../../util/strings.dart';
 import '../../util/widgets/error_display.dart';
@@ -72,7 +72,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       case NoFavoriteTeamState():
         return _buildNoFavoriteTeamMessage(
           context,
-          () => Navigation.openFavoriteTeamSelection(context),
+          () => ChangeFavoriteTeamScreen.navigate(context),
         );
       case DisplayDataState():
         return _buildGameList(context, state, hideScores);

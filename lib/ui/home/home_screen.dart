@@ -11,6 +11,20 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+
+  static void navigate(BuildContext context) {
+    Navigator.restorablePush(context, _buildRoute);
+  }
+
+  @pragma('vm:entry-point')
+  static Route<void> _buildRoute(
+    BuildContext context,
+    Object? arguments,
+  ) {
+    return MaterialPageRoute<void>(
+      builder: (BuildContext context) => const HomeScreen(),
+    );
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> with RestorationMixin {

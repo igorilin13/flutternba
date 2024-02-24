@@ -37,4 +37,24 @@ class ChangeFavoriteTeamScreen extends StatelessWidget {
       ),
     );
   }
+
+  static void navigate(BuildContext context) {
+    Navigator.restorablePush(context, _buildRoute);
+  }
+
+  @pragma('vm:entry-point')
+  static Route<void> _buildRoute(
+    BuildContext context,
+    Object? arguments,
+  ) {
+    return MaterialPageRoute<void>(
+      builder: (BuildContext context) => ChangeFavoriteTeamScreen(
+        onSelectionComplete: (teamId) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            Navigator.pop(context);
+          });
+        },
+      ),
+    );
+  }
 }

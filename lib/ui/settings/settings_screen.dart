@@ -5,8 +5,8 @@ import 'package:flutternba/ui/util/extensions.dart';
 import 'package:flutternba/ui/util/strings.dart';
 import 'package:provider/provider.dart';
 
+import '../favorite/change/change_favorite_screen.dart';
 import '../util/asset_paths.dart';
-import '../util/navigation.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -44,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             buildFavoriteTeamSetting(
               context,
               state.favoriteTeamState,
-              () => Navigation.openFavoriteTeamSelection(context),
+              () => ChangeFavoriteTeamScreen.navigate(context),
             )
           ],
         );
