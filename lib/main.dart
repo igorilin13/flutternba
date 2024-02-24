@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/ui/favorite/onboarding/onboarding_screen.dart';
 import 'package:flutternba/ui/home/home_screen.dart';
+import 'package:flutternba/ui/settings/settings_provider.dart';
 import 'package:flutternba/ui/util/colors.dart';
 import 'package:flutternba/ui/util/navigation.dart';
+import 'package:provider/provider.dart';
 
 import 'common/di/locator.dart';
 
@@ -23,18 +25,22 @@ class _MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "NBA Schedules",
-      darkTheme: ThemeData(
-        colorScheme: AppColors.darkColorScheme,
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => SettingsProvider(locator(), locator()),
+      child: MaterialApp(
+        title: "NBA Schedules",
+        restorationScopeId: "root",
+        darkTheme: ThemeData(
+          colorScheme: AppColors.darkColorScheme,
+          useMaterial3: true,
+        ),
+        theme: ThemeData(
+          colorScheme: AppColors.lightColorScheme,
+          useMaterial3: true,
+        ),
+        themeMode: ThemeMode.system,
+        home: _RootScreen(_onboardingComplete),
       ),
-      theme: ThemeData(
-        colorScheme: AppColors.lightColorScheme,
-        useMaterial3: true,
-      ),
-      themeMode: ThemeMode.system,
-      home: _RootScreen(_onboardingComplete),
     );
   }
 }

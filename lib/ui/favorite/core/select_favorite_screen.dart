@@ -121,6 +121,7 @@ class SelectFavoriteTeamScreen extends StatelessWidget {
         int columnCount = (availableWidth / (itemWidth + itemSpacing)).floor();
 
         return GridView.builder(
+          restorationId: "selectFavoriteTeamGrid",
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: columnCount,
             crossAxisSpacing: itemSpacing,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';
+import '../../settings/settings_provider.dart';
 import '../../util/strings.dart';
 import '../core/select_favorite_screen.dart';
 import 'change_favorite_provider.dart';
@@ -26,7 +27,11 @@ class ChangeFavoriteTeamScreen extends StatelessWidget {
             onTeamTap: provider.selectTeam,
             onConfirmTap: provider.confirmSelection,
             onSkipTap: null,
-            onSelectionComplete: onSelectionComplete,
+            onSelectionComplete: (teamId) {
+              final settingsProvider = context.read<SettingsProvider>();
+              settingsProvider.updateFavoriteTeam(teamId);
+              onSelectionComplete(teamId);
+            },
           );
         },
       ),

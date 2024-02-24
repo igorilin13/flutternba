@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/games/favorite/favorite_games_provider.dart';
-import 'package:flutternba/ui/util/widgets/system_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/di/locator.dart';
@@ -64,6 +62,7 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
   ) {
     final items = state.games;
     return ListView.builder(
+      restorationId: "leagueGames",
       padding: const EdgeInsets.all(16),
       itemCount: items.length + 1,
       itemBuilder: (context, index) => Padding(

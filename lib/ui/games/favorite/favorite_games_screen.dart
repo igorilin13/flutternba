@@ -13,7 +13,6 @@ import '../../util/widgets/game_card.dart';
 import 'favorite_games_state.dart';
 
 class FavoriteTeamGamesScreen extends StatefulWidget {
-
   const FavoriteTeamGamesScreen({super.key});
 
   @override
@@ -27,7 +26,8 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return ChangeNotifierProxyProvider<SettingsProvider, FavoriteTeamGamesProvider>(
+    return ChangeNotifierProxyProvider<SettingsProvider,
+        FavoriteTeamGamesProvider>(
       create: (context) => FavoriteTeamGamesProvider(locator()),
       update: (_, settings, teamsProvider) {
         if (teamsProvider == null) {
@@ -45,7 +45,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       child: Consumer<FavoriteTeamGamesProvider>(
         builder: (context, provider, child) {
           final hideScores = context.select<SettingsProvider, bool>(
-                (value) => value.state.shouldHideScores ?? false,
+            (value) => value.state.shouldHideScores ?? false,
           );
           return _buildBody(context, provider.state, hideScores);
         },
@@ -134,6 +134,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     ];
 
     return ListView.builder(
+      restorationId: "favoriteTeamGames",
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       itemBuilder: (context, index) => Padding(
