@@ -1,29 +1,26 @@
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'dart:io';
 
-class AppDatabase {
-  static const String _dbName = "app.db";
-  static const int _dbVersion = 1;
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
-  static const String teamsTableName = "teams";
+import '../../teams/local/teams_table.dart';
 
-  static Database? _db;
+part 'app_db.g.dart';
 
-  Future<Database> get() async {
-    if (_db != null) {
-      return _db!;
-    }
+@DriftDatabase(tables: [TeamsTable])
+class AppDatabase extends _$AppDatabase {
+  AppDatabase() : super(_openConnection());
 
-    _db = await openDatabase(
-      join(await getDatabasesPath(), _dbName),
-      onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE $teamsTableName(id INTEGER PRIMARY KEY,"
-          " name TEXT, fullName TEXT)",
-        );
-      },
-      version: _dbVersion,
-    );
-    return _db!;
-  }
+  @override
+  int get schemaVersion => 1;
+}
+
+LazyDatabase _openConnection() {
+  return LazyDatabase(() async {
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(path.join(dbFolder.path, 'app.db'));
+    return NativeDatabase.createInBackground(file);
+  });
 }

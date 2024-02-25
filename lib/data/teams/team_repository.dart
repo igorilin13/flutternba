@@ -1,5 +1,6 @@
 import 'package:flutternba/common/util/collections.dart';
 import 'package:flutternba/data/teams/local/teams_local_source.dart';
+import 'package:flutternba/data/teams/local/teams_table.dart';
 import 'package:flutternba/data/teams/remote/teams_remote_source.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 

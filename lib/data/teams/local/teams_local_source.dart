@@ -1,40 +1,35 @@
+import 'package:drift/drift.dart';
 import 'package:flutternba/data/common/db/app_db.dart';
-import 'package:flutternba/data/teams/local/team_db_entity.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../team_model.dart';
 
 class TeamsLocalDataSource {
-  final AppDatabase _appDatabase;
+  final AppDatabase _database;
 
-  TeamsLocalDataSource(this._appDatabase);
+  TeamsLocalDataSource(this._database);
 
-  Future<List<TeamDbEntity>> getTeams() async {
-    final db = await _appDatabase.get();
-    final List<Map<String, dynamic>> maps = await db.query(
-      AppDatabase.teamsTableName,
-    );
-    return List.generate(maps.length, (i) {
-      return TeamDbEntity.fromMap(maps[i]);
+  Future<List<TeamsTableData>> getTeams() async {
+    return _database.select(_database.teamsTable).get();
+  }
+
+  void replace(List<Team> teams) async {
+    await _database.transaction(() async {
+      await _database.delete(_database.teamsTable).go();
+
+      for (var team in teams) {
+        await _insert(team);
+      }
     });
   }
 
-  Future<void> replace(List<Team> teams) async {
-    final db = await _appDatabase.get();
-    db.transaction((txn) async {
-      final batch = txn.batch();
-
-      batch.execute("DELETE FROM ${AppDatabase.teamsTableName}");
-
-      for (var team in teams) {
-        batch.insert(
-          "teams",
-          TeamDbEntity.fromTeamModel(team).toMap(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
+  Future<int> _insert(Team team) {
+    return _database.into(_database.teamsTable).insert(
+          TeamsTableCompanion.insert(
+            id: team.id,
+            name: team.name,
+            fullName: team.fullName,
+          ),
+          mode: InsertMode.insertOrReplace,
         );
-      }
-
-      batch.commit();
-    });
   }
 }
