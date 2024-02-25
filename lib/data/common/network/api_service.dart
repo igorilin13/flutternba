@@ -1,20 +1,14 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/common/network/api_response.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
-import 'package:http/http.dart' as http;
 
 import '../../teams/remote/team_response.dart';
 
 class ApiService {
-  final String _baseUrl;
-  final String _apiKey;
-  final http.Client _client;
+  final Dio _dio;
 
-  const ApiService(this._baseUrl, this._apiKey, this._client);
-
-  Uri _buildUrl(String path) => Uri.parse("$_baseUrl$path");
+  const ApiService(this._dio);
 
   Future<Result<ApiResponse<List<TeamResponse>>>> getTeams() async {
     return performGet(
@@ -53,13 +47,10 @@ class ApiService {
     T Function(Object? json) fromJson,
   ) {
     return runCatchingAsync(() async {
-      final response = await _client.get(
-        _buildUrl(path),
-        headers: {"Authorization": _apiKey},
-      );
+      final response = await _dio.get(path);
 
       if (response.statusCode == 200) {
-        return ApiResponse.fromJson(jsonDecode(response.body), fromJson);
+        return ApiResponse.fromJson(response.data, fromJson);
       } else {
         throw Exception('Failed to load data (code = ${response.statusCode})');
       }

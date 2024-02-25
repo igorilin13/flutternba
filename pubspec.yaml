@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  http: ^1.1.0
   json_annotation: ^4.8.1
   get_it: ^7.6.4
   provider: ^6.1.1
@@ -22,6 +21,7 @@ dependencies:
   path: ^1.8.3
   flutter_native_splash: ^2.0.2
   envied: ^0.5.3
+  dio: ^5.4.1
 
 dev_dependencies:
   flutter_test:
