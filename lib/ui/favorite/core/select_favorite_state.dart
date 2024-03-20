@@ -1,33 +1,21 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../data/teams/team_model.dart';
 
-sealed class SelectFavoriteTeamState {
-  bool get hasSelection;
-}
+part 'select_favorite_state.freezed.dart';
 
-class LoadingState extends SelectFavoriteTeamState {
-  @override
-  bool get hasSelection => false;
-}
+@freezed
+sealed class SelectFavoriteTeamState with _$SelectFavoriteTeamState {
+  const factory SelectFavoriteTeamState.loading({
+    @Default(false) bool selectionComplete,
+  }) = LoadingState;
 
-class ErrorState extends SelectFavoriteTeamState {
-  @override
-  bool get hasSelection => false;
-}
+  const factory SelectFavoriteTeamState.error({
+    @Default(false) bool selectionComplete,
+  }) = ErrorState;
 
-class DisplayState extends SelectFavoriteTeamState {
-  final List<Team> teams;
-  final int? selectedId;
-
-  DisplayState({required this.teams, required this.selectedId});
-
-  @override
-  bool get hasSelection => selectedId != null;
-}
-
-sealed class SelectFavoriteTeamEvent {}
-
-class FavoriteTeamSelectionComplete extends SelectFavoriteTeamEvent {
-  final int? teamId;
-
-  FavoriteTeamSelectionComplete(this.teamId);
+  const factory SelectFavoriteTeamState.display({
+    required List<Team> teams,
+    required bool selectionComplete,
+  }) = DisplayState;
 }

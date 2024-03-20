@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/favorite/core/base_select_favorite_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/ui/favorite/core/base_select_favorite_cubit.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
 import 'package:flutternba/ui/util/asset_paths.dart';
 import 'package:flutternba/ui/util/extensions.dart';
@@ -8,54 +9,57 @@ import '../../../data/teams/team_model.dart';
 import '../../util/strings.dart';
 import '../../util/widgets/error_display.dart';
 
-class SelectFavoriteTeamScreen extends StatelessWidget {
-  final BaseSelectFavoriteTeamProvider provider;
+class SelectFavoriteTeamView<T extends BaseSelectFavoriteTeamCubit>
+    extends StatefulWidget {
   final String confirmButtonText;
-  final void Function(Team) onTeamTap;
-  final VoidCallback onConfirmTap;
-  final void Function(int?) onSelectionComplete;
+  final VoidCallback onSelectionComplete;
   final VoidCallback? onSkipTap;
 
-  const SelectFavoriteTeamScreen({
+  const SelectFavoriteTeamView({
     super.key,
-    required this.provider,
     required this.confirmButtonText,
-    required this.onTeamTap,
-    required this.onConfirmTap,
     required this.onSelectionComplete,
     this.onSkipTap,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<SelectFavoriteTeamEvent>(
-      stream: provider.uiEvents,
-      builder: (context, snapshot) {
-        handleEvent(context, snapshot.data);
-        final state = provider.state;
+  State<SelectFavoriteTeamView<T>> createState() =>
+      _SelectFavoriteTeamViewState<T>();
+}
 
+class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
+    extends State<SelectFavoriteTeamView<T>> with RestorationMixin {
+  final RestorableIntN _selectedTeamId = RestorableIntN(null);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<T, SelectFavoriteTeamState>(
+      listener: (context, state) {
+        if (state.selectionComplete) {
+          widget.onSelectionComplete();
+        }
+      },
+      builder: (context, state) {
         return Scaffold(
-          appBar: _buildAppBar(context, onSkipTap),
+          appBar: _buildAppBar(context, widget.onSkipTap),
           body: _buildBody(
             context,
             state,
-            onTeamTap: onTeamTap,
+            onTeamTap: (team) {
+              setState(() {
+                _selectedTeamId.value = team.id;
+              });
+            },
           ),
-          bottomNavigationBar: state.hasSelection
-              ? _buildContinueButton(context, confirmButtonText, onConfirmTap)
-              : null,
+          bottomNavigationBar: _buildContinueButton(
+            context,
+            state,
+            widget.confirmButtonText,
+            () => context.read<T>().confirmSelection(_selectedTeamId.value),
+          ),
         );
       },
     );
-  }
-
-  void handleEvent(BuildContext context, SelectFavoriteTeamEvent? event) {
-    switch (event) {
-      case FavoriteTeamSelectionComplete():
-        onSelectionComplete(event.teamId);
-      case null:
-        break;
-    }
   }
 
   AppBar _buildAppBar(BuildContext context, VoidCallback? onSkipClick) {
@@ -80,11 +84,15 @@ class SelectFavoriteTeamScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContinueButton(
+  Widget? _buildContinueButton(
     BuildContext context,
+    SelectFavoriteTeamState state,
     String text,
     VoidCallback onTap,
   ) {
+    if (_selectedTeamId.value == null || state is! DisplayState) {
+      return null;
+    }
     return Container(
       padding: const EdgeInsets.all(16),
       child: ElevatedButton(
@@ -135,7 +143,7 @@ class SelectFavoriteTeamScreen extends StatelessWidget {
             return _buildTeamCard(
               context,
               team: team,
-              selectedTeamId: state.selectedId,
+              selectedTeamId: _selectedTeamId.value,
               onTap: () => onTeamTap(team),
             );
           },
@@ -189,5 +197,13 @@ class SelectFavoriteTeamScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  String? get restorationId => "teamSelection";
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_selectedTeamId, "selectedTeamId");
   }
 }

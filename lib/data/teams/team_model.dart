@@ -1,11 +1,15 @@
 import 'package:flutternba/data/teams/remote/team_response.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Team {
-  final int id;
-  final String name;
-  final String fullName;
+part 'team_model.freezed.dart';
 
-  const Team({required this.id, required this.name, required this.fullName});
+@freezed
+class Team with _$Team {
+  const factory Team({
+    required int id,
+    required String name,
+    required String fullName,
+  }) = _Team;
 
   factory Team.fromResponse(TeamResponse response) {
     return Team(

@@ -54,6 +54,13 @@ sealed class Result<T> {
 
     return this;
   }
+
+  T? getOrNull() {
+    return fold(
+      onSuccess: (value) => value,
+      onFailure: (_) => null,
+    );
+  }
 }
 
 final class Success<T> extends Result<T> {

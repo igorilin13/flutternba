@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
-import 'package:flutternba/ui/favorite/onboarding/onboarding_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/ui/favorite/onboarding/onboarding_cubit.dart';
 
 import '../../../common/di/locator.dart';
 import '../../util/strings.dart';
-import '../core/select_favorite_screen.dart';
+import '../core/select_favorite_view.dart';
 
 class SelectTeamOnboardingScreen extends StatelessWidget {
   final VoidCallback onOnboardingComplete;
@@ -17,29 +16,18 @@ class SelectTeamOnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SelectTeamOnboardingProvider(locator(), locator()),
-      child: Consumer<SelectTeamOnboardingProvider>(
-        builder: (context, provider, child) {
-          return SelectFavoriteTeamScreen(
-            provider: provider,
-            confirmButtonText: UiStrings.actionContinue,
-            onTeamTap: provider.selectTeam,
-            onConfirmTap: provider.confirmSelection,
-            onSkipTap: provider.skipOnboarding,
-            onSelectionComplete: (_) => onOnboardingComplete(),
-          );
-        },
+    return BlocProvider(
+      create: (BuildContext context) => SelectTeamOnboardingCubit(
+        locator(),
+        locator(),
       ),
+      child: Builder(builder: (context) {
+        return SelectFavoriteTeamView<SelectTeamOnboardingCubit>(
+          confirmButtonText: UiStrings.actionContinue,
+          onSkipTap: context.read<SelectTeamOnboardingCubit>().skipOnboarding,
+          onSelectionComplete: onOnboardingComplete,
+        );
+      }),
     );
-  }
-
-  void handleEvent(BuildContext context, SelectFavoriteTeamEvent? event) {
-    switch (event) {
-      case FavoriteTeamSelectionComplete():
-        onOnboardingComplete();
-      case null:
-        break;
-    }
   }
 }

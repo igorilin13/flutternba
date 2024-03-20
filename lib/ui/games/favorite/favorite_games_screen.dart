@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/games/favorite/favorite_games_provider.dart';
-import 'package:flutternba/ui/settings/settings_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/ui/games/favorite/favorite_games_cubit.dart';
+import 'package:flutternba/ui/settings/settings_cubit.dart';
 
 import '../../../common/di/locator.dart';
 import '../../../domain/games/game_item.dart';
 import '../../favorite/change/change_favorite_screen.dart';
-import '../../settings/settings_state.dart' as settings_state;
 import '../../util/strings.dart';
 import '../../util/widgets/error_display.dart';
 import '../../util/widgets/game_card.dart';
@@ -26,30 +25,15 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return ChangeNotifierProxyProvider<SettingsProvider,
-        FavoriteTeamGamesProvider>(
-      create: (context) => FavoriteTeamGamesProvider(locator()),
-      update: (_, settings, teamsProvider) {
-        if (teamsProvider == null) {
-          return FavoriteTeamGamesProvider(locator());
-        } else {
-          final favoriteTeamState = settings.state.favoriteTeamState;
-          if (favoriteTeamState is settings_state.HasFavoriteTeamState) {
-            teamsProvider.loadGames(favoriteTeamState.team.id);
-          } else {
-            teamsProvider.loadGames(null);
-          }
-          return teamsProvider;
-        }
-      },
-      child: Consumer<FavoriteTeamGamesProvider>(
-        builder: (context, provider, child) {
-          final hideScores = context.select<SettingsProvider, bool>(
-            (value) => value.state.shouldHideScores ?? false,
-          );
-          return _buildBody(context, provider.state, hideScores);
-        },
-      ),
+    return BlocProvider(
+      create: (context) => FavoriteTeamGamesCubit(locator()),
+      child: BlocBuilder<FavoriteTeamGamesCubit, FavoriteTeamGamesState>(
+          builder: (context, state) {
+        final hideScores = context.select<SettingsCubit, bool>(
+          (cubit) => cubit.state.shouldHideScores ?? false,
+        );
+        return _buildBody(context, state, hideScores);
+      }),
     );
   }
 

@@ -1,25 +1,19 @@
 import 'package:flutternba/domain/games/game_item.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class FavoriteTeamGamesState {}
+part 'favorite_games_state.freezed.dart';
 
-class LoadingState extends FavoriteTeamGamesState {}
-
-class NoFavoriteTeamState extends FavoriteTeamGamesState {}
-
-class NoGamesAvailableState extends FavoriteTeamGamesState {}
-
-class ErrorState extends FavoriteTeamGamesState {}
-
-class DisplayDataState extends FavoriteTeamGamesState {
-  final GameItem? nextGame;
-  final GameItem? previousGame;
-  final List<GameItem> upcomingGames;
-  final List<GameItem> previousGames;
-
-  DisplayDataState({
-    required this.nextGame,
-    required this.previousGame,
-    required this.upcomingGames,
-    required this.previousGames,
-  });
+@freezed
+sealed class FavoriteTeamGamesState with _$FavoriteTeamGamesState {
+  const factory FavoriteTeamGamesState.loading() = LoadingState;
+  const factory FavoriteTeamGamesState.error() = ErrorState;
+  const factory FavoriteTeamGamesState.noFavorite() = NoFavoriteTeamState;
+  const factory FavoriteTeamGamesState.noGamesAvailable() =
+      NoGamesAvailableState;
+  const factory FavoriteTeamGamesState.displayData({
+    required GameItem? nextGame,
+    required GameItem? previousGame,
+    required List<GameItem> upcomingGames,
+    required List<GameItem> previousGames,
+  }) = DisplayDataState;
 }

@@ -1,0 +1,52 @@
+import 'dart:async';
+
+import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/data/teams/team_repository.dart';
+import 'package:flutternba/ui/settings/settings_state.dart';
+import 'package:rxdart/rxdart.dart';
+
+import '../util/bloc/base_bloc.dart';
+
+class SettingsCubit extends BaseCubit<SettingsState> {
+  final SettingsRepository _settingsRepository;
+  final TeamsRepository _teamsRepository;
+
+  SettingsCubit(
+    this._settingsRepository,
+    this._teamsRepository,
+  ) : super(SettingsState.initial) {
+    _loadSettings();
+  }
+
+  void _loadSettings() async {
+    final favoriteTeamSettingStream = _settingsRepository
+        .getFavoriteTeamId()
+        .switchMap(buildFavoriteTeamState);
+
+    CombineLatestStream.combine2(
+      _settingsRepository.shouldHideScores(),
+      favoriteTeamSettingStream,
+      (hideScores, favoriteTeam) => SettingsState(
+        shouldHideScores: hideScores,
+        favoriteTeamState: favoriteTeam,
+      ),
+    ).listen(emit).disposeOnClose(this);
+  }
+
+  void setHideScores(bool value) async {
+    await _settingsRepository.setHideScores(value);
+  }
+
+  Stream<FavoriteTeamSettingState> buildFavoriteTeamState(int? teamId) {
+    if (teamId != null) {
+      return _teamsRepository.getTeam(teamId).map((result) {
+        return result.fold(
+          onSuccess: (team) => FavoriteTeamSettingState.hasFavorite(team),
+          onFailure: (_) => const FavoriteTeamSettingState.error(),
+        );
+      });
+    } else {
+      return Stream.value(const FavoriteTeamSettingState.noFavorite());
+    }
+  }
+}

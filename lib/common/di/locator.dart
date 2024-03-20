@@ -31,14 +31,14 @@ Future<void> initLocator() async {
 
   locator.registerFactory(() => TeamsRemoteDataSource(locator()));
   locator.registerFactory(() => TeamsLocalDataSource(locator()));
-  locator.registerFactory(() => TeamsRepository(locator(), locator()));
+  locator.registerLazySingleton(() => TeamsRepository(locator(), locator()));
 
   locator.registerFactory(() => GamesRemoteDataSource(locator()));
   locator.registerFactory(() => GamesRepository(locator()));
 
   locator.registerFactory(() => FormatGameDateUseCase());
   locator.registerFactory(
-    () => GetFavoriteTeamGamesUseCase(locator(), locator()),
+    () => GetFavoriteTeamGamesUseCase(locator(), locator(), locator()),
   );
   locator.registerFactory(
     () => GetLeagueGamesUseCase(locator(), locator()),

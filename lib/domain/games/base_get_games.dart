@@ -16,9 +16,7 @@ abstract class BaseGetGamesUseCase {
   Future<Result<List<GameItem>>> createResult({
     required Future<Result<List<Game>>> games,
   }) async {
-    return games.mapResult(
-      (games) => games.mapList((game) => _toGameItem(game)),
-    );
+    return games.mapResult((games) => games.mapList(_toGameItem));
   }
 
   GameItem _toGameItem(Game game) {

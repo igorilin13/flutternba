@@ -1,11 +1,12 @@
 import 'package:flutternba/data/games/game_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class GameItem {
-  final Game game;
-  final String formattedDate;
+part 'game_item.freezed.dart';
 
-  GameItem({
-    required this.game,
-    required this.formattedDate,
-  });
+@freezed
+class GameItem with _$GameItem {
+  const factory GameItem({
+    required Game game,
+    required String formattedDate,
+  }) = _GameItem;
 }

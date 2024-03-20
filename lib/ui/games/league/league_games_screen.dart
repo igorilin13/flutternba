@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/di/locator.dart';
-import '../../settings/settings_provider.dart';
+import '../../settings/settings_cubit.dart';
 import '../../util/strings.dart';
 import '../../util/widgets/error_display.dart';
 import '../../util/widgets/game_card.dart';
-import 'league_games_provider.dart';
+import 'league_games_cubit.dart';
 import 'league_games_state.dart';
 
 class LeagueGamesScreen extends StatefulWidget {
@@ -21,14 +21,15 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ChangeNotifierProvider(
-      create: (context) => LeagueGamesProvider(locator()),
-      child: Consumer<LeagueGamesProvider>(
-        builder: (context, provider, child) {
-          final hideScores = context.select<SettingsProvider, bool>(
-            (value) => value.state.shouldHideScores ?? false,
+
+    return BlocProvider(
+      create: (context) => LeagueGamesCubit(locator()),
+      child: BlocBuilder<LeagueGamesCubit, LeagueGamesState>(
+        builder: (context, state) {
+          final hideScores = context.select<SettingsCubit, bool>(
+            (cubit) => cubit.state.shouldHideScores ?? false,
           );
-          return _buildBody(context, provider.state, hideScores);
+          return _buildBody(context, state, hideScores);
         },
       ),
     );

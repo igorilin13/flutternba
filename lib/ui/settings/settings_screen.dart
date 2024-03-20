@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/settings/settings_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/ui/settings/settings_cubit.dart';
 import 'package:flutternba/ui/settings/settings_state.dart';
 import 'package:flutternba/ui/util/extensions.dart';
 import 'package:flutternba/ui/util/strings.dart';
-import 'package:provider/provider.dart';
 
 import '../favorite/change/change_favorite_screen.dart';
 import '../util/asset_paths.dart';
@@ -20,10 +20,9 @@ class _SettingsScreenState extends State<SettingsScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Consumer<SettingsProvider>(
-      builder: (context, provider, child) {
-        final state = provider.state;
 
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               buildHideScoresSetting(
                 context,
                 state.shouldHideScores!,
-                provider.setHideScores,
+                (value) => context.read<SettingsCubit>().setHideScores(value),
               ),
             const SizedBox(height: 12),
             buildFavoriteTeamSetting(

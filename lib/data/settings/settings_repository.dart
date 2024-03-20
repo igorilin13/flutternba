@@ -11,11 +11,12 @@ class SettingsRepository {
   Future<void> setOnboardingComplete(bool value) =>
       _localDataSource.setOnboardingComplete(value);
 
-  int? getFavoriteTeamId() => _localDataSource.getFavoriteTeamId();
+  Stream<int?> getFavoriteTeamId() => _localDataSource.getFavoriteTeamId();
 
   Future<void> setFavoriteTeam(int id) => _localDataSource.setFavoriteTeam(id);
 
-  bool shouldHideScores() => _localDataSource.shouldHideScores() ?? false;
+  Stream<bool> shouldHideScores() =>
+      _localDataSource.shouldHideScores().map((event) => event ?? false);
 
   Future<void> setHideScores(bool value) =>
       _localDataSource.setHideScores(value);

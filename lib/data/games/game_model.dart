@@ -1,29 +1,23 @@
 import 'package:flutternba/data/games/remote/game_response.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../teams/team_model.dart';
 
-class Game {
-  final int id;
-  final DateTime date;
-  final Team homeTeam;
-  final int homeTeamScore;
-  final bool postseason;
-  final String? time;
-  final int visitorTeamScore;
-  final Team visitorTeam;
-  final GameStatus gameStatus;
+part 'game_model.freezed.dart';
 
-  Game({
-    required this.id,
-    required this.date,
-    required this.homeTeam,
-    required this.homeTeamScore,
-    required this.postseason,
-    required this.time,
-    required this.visitorTeamScore,
-    required this.visitorTeam,
-    required this.gameStatus,
-  });
+@freezed
+class Game with _$Game {
+  const factory Game({
+    required int id,
+    required DateTime date,
+    required Team homeTeam,
+    required int homeTeamScore,
+    required bool postseason,
+    required String? time,
+    required int visitorTeamScore,
+    required Team visitorTeam,
+    required GameStatus gameStatus,
+  }) = _Game;
 
   factory Game.fromResponse(GameResponse response) {
     final GameStatus gameStatus;

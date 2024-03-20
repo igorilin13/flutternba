@@ -1,25 +1,26 @@
 import 'package:flutternba/data/teams/team_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SettingsState {
-  final bool? shouldHideScores;
-  final FavoriteTeamSettingState favoriteTeamState;
+part 'settings_state.freezed.dart';
 
-  SettingsState({
-    required this.shouldHideScores,
-    required this.favoriteTeamState,
-  });
+@freezed
+class SettingsState with _$SettingsState {
+  static const initial = SettingsState(
+    shouldHideScores: null,
+    favoriteTeamState: LoadingFavoriteTeamState(),
+  );
+
+  const factory SettingsState({
+    required bool? shouldHideScores,
+    required FavoriteTeamSettingState favoriteTeamState,
+  }) = _SettingsState;
 }
 
-sealed class FavoriteTeamSettingState {}
-
-class LoadingFavoriteTeamState extends FavoriteTeamSettingState {}
-
-class FavoriteTeamErrorState extends FavoriteTeamSettingState {}
-
-class NoFavoriteTeamState extends FavoriteTeamSettingState {}
-
-class HasFavoriteTeamState extends FavoriteTeamSettingState {
-  final Team team;
-
-  HasFavoriteTeamState(this.team);
+@freezed
+sealed class FavoriteTeamSettingState with _$FavoriteTeamSettingState {
+  const factory FavoriteTeamSettingState.loading() = LoadingFavoriteTeamState;
+  const factory FavoriteTeamSettingState.error() = FavoriteTeamErrorState;
+  const factory FavoriteTeamSettingState.noFavorite() = NoFavoriteTeamState;
+  const factory FavoriteTeamSettingState.hasFavorite(Team team) =
+      HasFavoriteTeamState;
 }
