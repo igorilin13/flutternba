@@ -1,19 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'api_response.g.dart';
+part 'ball_api_response.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
-class ApiResponse<T> {
+class BallApiResponse<T> {
   final T data;
   final MetaDataResponse? meta;
 
-  ApiResponse({required this.data, this.meta});
+  BallApiResponse({required this.data, this.meta});
 
-  factory ApiResponse.fromJson(
+  factory BallApiResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,
   ) =>
-      _$ApiResponseFromJson(json, fromJsonT);
+      _$BallApiResponseFromJson(json, fromJsonT);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)

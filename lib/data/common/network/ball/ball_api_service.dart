@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutternba/common/util/result.dart';
-import 'package:flutternba/data/common/network/api_response.dart';
+import 'package:flutternba/data/common/network/ball/ball_api_response.dart';
+import 'package:flutternba/data/common/network/dio_ext.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
+import 'package:flutternba/data/teams/remote/team_response.dart';
 
-import '../../teams/remote/team_response.dart';
-
-class ApiService {
+class BallApiService {
   final Dio _dio;
 
-  const ApiService(this._dio);
+  const BallApiService(this._dio);
 
-  Future<Result<ApiResponse<List<TeamResponse>>>> getTeams() async {
+  Future<Result<BallApiResponse<List<TeamResponse>>>> getTeams() async {
     return performGet(
       "teams?per_page=100",
       (json) =>
@@ -18,7 +18,7 @@ class ApiService {
     );
   }
 
-  Future<Result<ApiResponse<List<GameResponse>>>> getTeamGames(
+  Future<Result<BallApiResponse<List<GameResponse>>>> getTeamGames(
     List<int> teamIds,
     List<int> seasons,
     int? cursor,
@@ -32,7 +32,7 @@ class ApiService {
     );
   }
 
-  Future<Result<ApiResponse<List<GameResponse>>>> getLeagueGames(
+  Future<Result<BallApiResponse<List<GameResponse>>>> getLeagueGames(
     List<String> dates,
   ) async {
     return performGet(
@@ -42,18 +42,14 @@ class ApiService {
     );
   }
 
-  Future<Result<ApiResponse<T>>> performGet<T>(
+  Future<Result<BallApiResponse<T>>> performGet<T>(
     String path,
     T Function(Object? json) fromJson,
   ) {
-    return runCatchingAsync(() async {
-      final response = await _dio.get(path);
-
-      if (response.statusCode == 200) {
-        return ApiResponse.fromJson(response.data, fromJson);
-      } else {
-        throw Exception('Failed to load data (code = ${response.statusCode})');
-      }
-    });
+    return _dio.performGet(
+      path,
+      (json) =>
+          BallApiResponse.fromJson(json as Map<String, dynamic>, fromJson),
+    );
   }
 }

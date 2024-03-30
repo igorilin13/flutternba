@@ -1,14 +1,14 @@
 import 'package:flutternba/common/util/async_util.dart';
 import 'package:flutternba/common/util/collections.dart';
-import 'package:flutternba/data/common/network/api_response.dart';
-import 'package:flutternba/data/common/network/api_service.dart';
+import 'package:flutternba/common/util/result.dart';
+import 'package:flutternba/data/common/network/api_season.dart';
+import 'package:flutternba/data/common/network/ball/ball_api_response.dart';
+import 'package:flutternba/data/common/network/ball/ball_api_service.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
 
-import '../../../common/util/result.dart';
-
 class GamesRemoteDataSource {
-  final ApiService _networkService;
-  final int _currentSeason = _calculateCurrentApiSeason();
+  final BallApiService _networkService;
+  final int _currentSeason = calculateCurrentApiSeason();
 
   GamesRemoteDataSource(this._networkService);
 
@@ -25,11 +25,11 @@ class GamesRemoteDataSource {
       );
 
       switch (pageResult) {
-        case Success<ApiResponse<List<GameResponse>>> success:
+        case Success<BallApiResponse<List<GameResponse>>> success:
           result.addAll(success.value.data);
           currentCursor = success.value.meta?.nextCursor;
           loadedAllPages = currentCursor == null;
-        case Failure<ApiResponse<List<GameResponse>>> failure:
+        case Failure<BallApiResponse<List<GameResponse>>> failure:
           return Result.failure(failure.error);
       }
     }
@@ -44,10 +44,5 @@ class GamesRemoteDataSource {
         "${date.day.toString().padLeft(2, "0")}";
     return _networkService
         .getLeagueGames([formattedDate]).mapResult((response) => response.data);
-  }
-
-  static int _calculateCurrentApiSeason() {
-    final now = DateTime.now();
-    return now.month >= DateTime.august ? now.year : now.year - 1;
   }
 }

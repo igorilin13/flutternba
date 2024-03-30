@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api_response.dart';
+part of 'ball_api_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApiResponse<T> _$ApiResponseFromJson<T>(
+BallApiResponse<T> _$BallApiResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    ApiResponse<T>(
+    BallApiResponse<T>(
       data: fromJsonT(json['data']),
       meta: json['meta'] == null
           ? null
           : MetaDataResponse.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ApiResponseToJson<T>(
-  ApiResponse<T> instance,
+Map<String, dynamic> _$BallApiResponseToJson<T>(
+  BallApiResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 
-class AuthInterceptor extends Interceptor {
+class BallAuthInterceptor extends Interceptor {
   final String _apiKey;
 
-  AuthInterceptor(this._apiKey);
+  BallAuthInterceptor(this._apiKey);
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
