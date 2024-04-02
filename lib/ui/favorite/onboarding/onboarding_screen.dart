@@ -23,7 +23,7 @@ class SelectTeamOnboardingScreen extends StatelessWidget {
       ),
       child: Builder(builder: (context) {
         return SelectFavoriteTeamView<SelectTeamOnboardingCubit>(
-          confirmButtonText: UiStrings.actionContinue,
+          confirmButtonText: UiStrings.actionCompleteOnboarding,
           onSkipTap: context.read<SelectTeamOnboardingCubit>().skipOnboarding,
           onSelectionComplete: onOnboardingComplete,
         );

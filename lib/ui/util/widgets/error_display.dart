@@ -36,7 +36,11 @@ class ErrorDisplay extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Flexible(
-                  child: Text(message, style: theme.textTheme.titleMedium),
+                  child: Text(
+                    message,
+                    style: theme.textTheme.titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),

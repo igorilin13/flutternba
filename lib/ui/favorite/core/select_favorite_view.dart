@@ -76,7 +76,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           TextButton(
             onPressed: onSkipClick,
             child: Text(
-              UiStrings.actionSkip,
+              UiStrings.actionSkipOnboarding,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

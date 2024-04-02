@@ -58,7 +58,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
         return const Center(
           child: ErrorDisplay(
             message: UiStrings.noGamesMessage,
-            icon: Icons.calendar_today,
+            icon: Icons.event_busy,
           ),
         );
       case NoFavoriteTeamState():

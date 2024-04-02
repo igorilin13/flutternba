@@ -45,7 +45,7 @@ class _StandingsScreenState extends State<StandingsScreen>
             padding: const EdgeInsets.all(16.0),
             child: ActionMessageDisplay(
               message: UiStrings.standingsHideScoresMessage,
-              actionText: UiStrings.actionConfirm,
+              actionText: UiStrings.actionRevealStandings,
               icon: Icons.check,
               onAction: context.read<StandingsCubit>().overrideHideScores,
             ),
