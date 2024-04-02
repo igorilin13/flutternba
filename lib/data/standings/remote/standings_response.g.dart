@@ -38,12 +38,14 @@ _$StandingsTeamInfoImpl _$$StandingsTeamInfoImplFromJson(
         Map<String, dynamic> json) =>
     _$StandingsTeamInfoImpl(
       id: json['id'] as int,
+      nickname: json['nickname'] as String,
     );
 
 Map<String, dynamic> _$$StandingsTeamInfoImplToJson(
         _$StandingsTeamInfoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'nickname': instance.nickname,
     };
 
 _$TeamConferenceStandingsImpl _$$TeamConferenceStandingsImplFromJson(

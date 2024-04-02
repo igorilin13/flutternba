@@ -7,6 +7,7 @@ part 'standings_model.freezed.dart';
 class TeamStandings with _$TeamStandings {
   const factory TeamStandings({
     required int teamId,
+    required String teamName,
     required String conferenceName,
     required TeamRank conferenceRank,
     required String divisionName,
@@ -22,6 +23,7 @@ class TeamStandings with _$TeamStandings {
   factory TeamStandings.fromResponse(StandingsResponse response) {
     return TeamStandings(
       teamId: response.team.id,
+      teamName: response.team.nickname,
       conferenceName: response.conference.conferenceName,
       conferenceRank: TeamRank(
         rank: response.conference.rank,
@@ -64,8 +66,18 @@ class TeamRank with _$TeamRank {
 
 @freezed
 class WinLossRecord with _$WinLossRecord {
+  const WinLossRecord._();
+
   const factory WinLossRecord({
     required int wins,
     required int losses,
   }) = _WinLossRecord;
+
+  double get percentage {
+    final total = wins + losses;
+    if (total == 0) {
+      return 0;
+    }
+    return wins / total;
+  }
 }

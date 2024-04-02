@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutternba/common/util/async_util.dart';
-import 'package:flutternba/common/util/collections.dart';
+import 'package:flutternba/common/util/async_ext.dart';
+import 'package:flutternba/common/util/collections_ext.dart';
 
 import '../../common/util/result.dart';
 import '../../data/games/game_model.dart';

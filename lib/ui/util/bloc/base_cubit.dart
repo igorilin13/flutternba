@@ -5,10 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class BaseCubit<State> extends Cubit<State> {
+  final BehaviorSubject<int> retrySubject = BehaviorSubject.seeded(0);
   final CompositeSubscription _compositeSubscription = CompositeSubscription();
   final List<StreamController> _controllers = [];
 
-  BaseCubit(super.initialState);
+  BaseCubit(super.initialState) {
+    _controllers.add(retrySubject);
+
+    retrySubject
+        .switchMap((value) => buildStateStream())
+        .listen(emit)
+        .disposeOnClose(this);
+  }
+
+  Stream<State> buildStateStream();
 
   @protected
   void disposeOnClose(StreamSubscription subscription) {
@@ -18,6 +28,10 @@ abstract class BaseCubit<State> extends Cubit<State> {
   @protected
   void disposeControllersOnClose(List<StreamController> controllers) {
     _controllers.addAll(controllers);
+  }
+
+  void retryLoading() {
+    retrySubject.value = retrySubject.value + 1;
   }
 
   @override

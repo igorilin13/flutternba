@@ -26,6 +26,7 @@ class StandingsTeamInfo with _$StandingsTeamInfo {
   @JsonSerializable()
   factory StandingsTeamInfo({
     required int id,
+    required String nickname,
   }) = _StandingsTeamInfo;
 
   factory StandingsTeamInfo.fromJson(Map<String, dynamic> json) =>

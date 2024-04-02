@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutternba/common/util/async_ext.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
-import 'package:flutternba/ui/util/bloc/base_bloc.dart';
+import 'package:flutternba/ui/util/bloc/base_cubit.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../common/util/result.dart';
@@ -24,19 +25,22 @@ abstract class BaseSelectFavoriteTeamCubit
     this.settingsRepository,
   ) : super(const SelectFavoriteTeamState.loading()) {
     disposeControllersOnClose([_selectionCompleteSubject]);
+  }
 
-    CombineLatestStream.combine2(
-      _teamsRepository.getTeams(),
+  @override
+  Stream<SelectFavoriteTeamState> buildStateStream() {
+    return CombineLatestStream.combine2(
+      _teamsRepository.getTeams().nullable().startWith(null),
       _selectionCompleteSubject.stream,
       _mapToState,
-    ).listen(emit).disposeOnClose(this);
+    );
   }
 
   SelectFavoriteTeamState _mapToState(
-    Result<List<Team>> teamsResult,
+    Result<List<Team>>? teamsResult,
     bool selectionComplete,
   ) {
-    return teamsResult.fold(
+    return teamsResult?.fold(
           onSuccess: (teams) => SelectFavoriteTeamState.display(
             teams: teams,
             selectionComplete: selectionComplete,

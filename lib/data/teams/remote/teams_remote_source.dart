@@ -1,5 +1,5 @@
-import 'package:flutternba/common/util/async_util.dart';
-import 'package:flutternba/common/util/collections.dart';
+import 'package:flutternba/common/util/async_ext.dart';
+import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/common/network/ball/ball_api_service.dart';
 import 'package:flutternba/data/teams/remote/team_response.dart';

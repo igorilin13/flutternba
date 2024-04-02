@@ -365,6 +365,7 @@ StandingsTeamInfo _$StandingsTeamInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StandingsTeamInfo {
   int get id => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -378,7 +379,7 @@ abstract class $StandingsTeamInfoCopyWith<$Res> {
           StandingsTeamInfo value, $Res Function(StandingsTeamInfo) then) =
       _$StandingsTeamInfoCopyWithImpl<$Res, StandingsTeamInfo>;
   @useResult
-  $Res call({int id});
+  $Res call({int id, String nickname});
 }
 
 /// @nodoc
@@ -395,12 +396,17 @@ class _$StandingsTeamInfoCopyWithImpl<$Res, $Val extends StandingsTeamInfo>
   @override
   $Res call({
     Object? id = null,
+    Object? nickname = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -413,7 +419,7 @@ abstract class _$$StandingsTeamInfoImplCopyWith<$Res>
       __$$StandingsTeamInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id});
+  $Res call({int id, String nickname});
 }
 
 /// @nodoc
@@ -428,12 +434,17 @@ class __$$StandingsTeamInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? nickname = null,
   }) {
     return _then(_$StandingsTeamInfoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -442,17 +453,19 @@ class __$$StandingsTeamInfoImplCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$StandingsTeamInfoImpl implements _StandingsTeamInfo {
-  _$StandingsTeamInfoImpl({required this.id});
+  _$StandingsTeamInfoImpl({required this.id, required this.nickname});
 
   factory _$StandingsTeamInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$StandingsTeamInfoImplFromJson(json);
 
   @override
   final int id;
+  @override
+  final String nickname;
 
   @override
   String toString() {
-    return 'StandingsTeamInfo(id: $id)';
+    return 'StandingsTeamInfo(id: $id, nickname: $nickname)';
   }
 
   @override
@@ -460,12 +473,14 @@ class _$StandingsTeamInfoImpl implements _StandingsTeamInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StandingsTeamInfoImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, nickname);
 
   @JsonKey(ignore: true)
   @override
@@ -483,13 +498,17 @@ class _$StandingsTeamInfoImpl implements _StandingsTeamInfo {
 }
 
 abstract class _StandingsTeamInfo implements StandingsTeamInfo {
-  factory _StandingsTeamInfo({required final int id}) = _$StandingsTeamInfoImpl;
+  factory _StandingsTeamInfo(
+      {required final int id,
+      required final String nickname}) = _$StandingsTeamInfoImpl;
 
   factory _StandingsTeamInfo.fromJson(Map<String, dynamic> json) =
       _$StandingsTeamInfoImpl.fromJson;
 
   @override
   int get id;
+  @override
+  String get nickname;
   @override
   @JsonKey(ignore: true)
   _$$StandingsTeamInfoImplCopyWith<_$StandingsTeamInfoImpl> get copyWith =>

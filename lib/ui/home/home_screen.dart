@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_screen.dart';
 import 'package:flutternba/ui/games/league/league_games_screen.dart';
+import 'package:flutternba/ui/standings/standings_screen.dart';
 import 'package:flutternba/ui/util/widgets/system_overlay.dart';
 
 import '../../common/di/locator.dart';
@@ -31,10 +32,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
-  final PageController _pageController = PageController();
-  final _currentPageIndex = RestorableInt(0);
+  final PageController _pageController = PageController(initialPage: 1);
+  final _currentPageIndex = RestorableInt(1);
 
   final _screens = <Widget>[
+    const StandingsScreen(),
     const FavoriteTeamGamesScreen(),
     const LeagueGamesScreen(),
     const SettingsScreen(),
@@ -57,11 +59,15 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
               selectedIndex: _currentPageIndex.value,
               destinations: const <Widget>[
                 NavigationDestination(
+                  icon: Icon(Icons.format_list_numbered),
+                  label: UiStrings.navigationStandings,
+                ),
+                NavigationDestination(
                   icon: Icon(Icons.favorite),
                   label: UiStrings.navigationFavorite,
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.list),
+                  icon: Icon(Icons.event),
                   label: UiStrings.navigationLeague,
                 ),
                 NavigationDestination(

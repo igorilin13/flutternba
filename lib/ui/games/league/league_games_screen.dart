@@ -44,12 +44,18 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
       case LoadingState():
         return const Center(child: CircularProgressIndicator());
       case ErrorState():
-        return const Center(
-          child: ErrorDisplay(message: UiStrings.gameListLoadError),
+        return Center(
+          child: ErrorDisplay(
+            message: UiStrings.gameListLoadError,
+            onTap: context.read<LeagueGamesCubit>().retryLoading,
+          ),
         );
       case NoGamesAvailableState():
         return const Center(
-          child: ErrorDisplay(message: UiStrings.noGamesMessage),
+          child: ErrorDisplay(
+            message: UiStrings.noGamesMessage,
+            icon: Icons.calendar_today,
+          ),
         );
       case DisplayDataState():
         return _buildGameList(context, state, hideScores);

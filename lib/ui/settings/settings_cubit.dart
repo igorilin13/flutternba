@@ -5,7 +5,7 @@ import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/ui/settings/settings_state.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../util/bloc/base_bloc.dart';
+import '../util/bloc/base_cubit.dart';
 
 class SettingsCubit extends BaseCubit<SettingsState> {
   final SettingsRepository _settingsRepository;
@@ -14,23 +14,22 @@ class SettingsCubit extends BaseCubit<SettingsState> {
   SettingsCubit(
     this._settingsRepository,
     this._teamsRepository,
-  ) : super(SettingsState.initial) {
-    _loadSettings();
-  }
+  ) : super(SettingsState.initial);
 
-  void _loadSettings() async {
+  @override
+  Stream<SettingsState> buildStateStream() {
     final favoriteTeamSettingStream = _settingsRepository
         .getFavoriteTeamId()
         .switchMap(buildFavoriteTeamState);
 
-    CombineLatestStream.combine2(
+    return CombineLatestStream.combine2(
       _settingsRepository.shouldHideScores(),
       favoriteTeamSettingStream,
       (hideScores, favoriteTeam) => SettingsState(
         shouldHideScores: hideScores,
         favoriteTeamState: favoriteTeam,
       ),
-    ).listen(emit).disposeOnClose(this);
+    );
   }
 
   void setHideScores(bool value) async {

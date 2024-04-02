@@ -115,8 +115,11 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
       case LoadingState():
         return const Center(child: CircularProgressIndicator());
       case ErrorState():
-        return const Center(
-          child: ErrorDisplay(message: UiStrings.teamListLoadError),
+        return Center(
+          child: ErrorDisplay(
+            message: UiStrings.teamListLoadError,
+            onTap: context.read<T>().retryLoading,
+          ),
         );
       case DisplayState():
         const itemWidth = 160.0;

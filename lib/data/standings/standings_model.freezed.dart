@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TeamStandings {
   int get teamId => throw _privateConstructorUsedError;
+  String get teamName => throw _privateConstructorUsedError;
   String get conferenceName => throw _privateConstructorUsedError;
   TeamRank get conferenceRank => throw _privateConstructorUsedError;
   String get divisionName => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $TeamStandingsCopyWith<$Res> {
   @useResult
   $Res call(
       {int teamId,
+      String teamName,
       String conferenceName,
       TeamRank conferenceRank,
       String divisionName,
@@ -74,6 +76,7 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
   @override
   $Res call({
     Object? teamId = null,
+    Object? teamName = null,
     Object? conferenceName = null,
     Object? conferenceRank = null,
     Object? divisionName = null,
@@ -90,6 +93,10 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as int,
+      teamName: null == teamName
+          ? _value.teamName
+          : teamName // ignore: cast_nullable_to_non_nullable
+              as String,
       conferenceName: null == conferenceName
           ? _value.conferenceName
           : conferenceName // ignore: cast_nullable_to_non_nullable
@@ -192,6 +199,7 @@ abstract class _$$TeamStandingsImplCopyWith<$Res>
   @useResult
   $Res call(
       {int teamId,
+      String teamName,
       String conferenceName,
       TeamRank conferenceRank,
       String divisionName,
@@ -229,6 +237,7 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? teamId = null,
+    Object? teamName = null,
     Object? conferenceName = null,
     Object? conferenceRank = null,
     Object? divisionName = null,
@@ -245,6 +254,10 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as int,
+      teamName: null == teamName
+          ? _value.teamName
+          : teamName // ignore: cast_nullable_to_non_nullable
+              as String,
       conferenceName: null == conferenceName
           ? _value.conferenceName
           : conferenceName // ignore: cast_nullable_to_non_nullable
@@ -294,6 +307,7 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
 class _$TeamStandingsImpl implements _TeamStandings {
   const _$TeamStandingsImpl(
       {required this.teamId,
+      required this.teamName,
       required this.conferenceName,
       required this.conferenceRank,
       required this.divisionName,
@@ -307,6 +321,8 @@ class _$TeamStandingsImpl implements _TeamStandings {
 
   @override
   final int teamId;
+  @override
+  final String teamName;
   @override
   final String conferenceName;
   @override
@@ -330,7 +346,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
 
   @override
   String toString() {
-    return 'TeamStandings(teamId: $teamId, conferenceName: $conferenceName, conferenceRank: $conferenceRank, divisionName: $divisionName, divisionRank: $divisionRank, overallRecord: $overallRecord, homeRecord: $homeRecord, awayRecord: $awayRecord, lastTenRecord: $lastTenRecord, streak: $streak, winStreak: $winStreak)';
+    return 'TeamStandings(teamId: $teamId, teamName: $teamName, conferenceName: $conferenceName, conferenceRank: $conferenceRank, divisionName: $divisionName, divisionRank: $divisionRank, overallRecord: $overallRecord, homeRecord: $homeRecord, awayRecord: $awayRecord, lastTenRecord: $lastTenRecord, streak: $streak, winStreak: $winStreak)';
   }
 
   @override
@@ -339,6 +355,8 @@ class _$TeamStandingsImpl implements _TeamStandings {
         (other.runtimeType == runtimeType &&
             other is _$TeamStandingsImpl &&
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
+            (identical(other.teamName, teamName) ||
+                other.teamName == teamName) &&
             (identical(other.conferenceName, conferenceName) ||
                 other.conferenceName == conferenceName) &&
             (identical(other.conferenceRank, conferenceRank) ||
@@ -364,6 +382,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
   int get hashCode => Object.hash(
       runtimeType,
       teamId,
+      teamName,
       conferenceName,
       conferenceRank,
       divisionName,
@@ -385,6 +404,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
 abstract class _TeamStandings implements TeamStandings {
   const factory _TeamStandings(
       {required final int teamId,
+      required final String teamName,
       required final String conferenceName,
       required final TeamRank conferenceRank,
       required final String divisionName,
@@ -398,6 +418,8 @@ abstract class _TeamStandings implements TeamStandings {
 
   @override
   int get teamId;
+  @override
+  String get teamName;
   @override
   String get conferenceName;
   @override
@@ -647,8 +669,9 @@ class __$$WinLossRecordImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$WinLossRecordImpl implements _WinLossRecord {
-  const _$WinLossRecordImpl({required this.wins, required this.losses});
+class _$WinLossRecordImpl extends _WinLossRecord {
+  const _$WinLossRecordImpl({required this.wins, required this.losses})
+      : super._();
 
   @override
   final int wins;
@@ -679,10 +702,11 @@ class _$WinLossRecordImpl implements _WinLossRecord {
       __$$WinLossRecordImplCopyWithImpl<_$WinLossRecordImpl>(this, _$identity);
 }
 
-abstract class _WinLossRecord implements WinLossRecord {
+abstract class _WinLossRecord extends WinLossRecord {
   const factory _WinLossRecord(
       {required final int wins,
       required final int losses}) = _$WinLossRecordImpl;
+  const _WinLossRecord._() : super._();
 
   @override
   int get wins;

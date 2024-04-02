@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_cubit.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
+import 'package:flutternba/ui/util/widgets/cta_message.dart';
+import 'package:flutternba/ui/util/widgets/header_item.dart';
 
 import '../../../common/di/locator.dart';
 import '../../../domain/games/game_item.dart';
@@ -46,12 +48,18 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       case LoadingState():
         return const Center(child: CircularProgressIndicator());
       case ErrorState():
-        return const Center(
-          child: ErrorDisplay(message: UiStrings.gameListLoadError),
+        return Center(
+          child: ErrorDisplay(
+            message: UiStrings.gameListLoadError,
+            onTap: context.read<FavoriteTeamGamesCubit>().retryLoading,
+          ),
         );
       case NoGamesAvailableState():
         return const Center(
-          child: ErrorDisplay(message: UiStrings.noGamesMessage),
+          child: ErrorDisplay(
+            message: UiStrings.noGamesMessage,
+            icon: Icons.calendar_today,
+          ),
         );
       case NoFavoriteTeamState():
         return _buildNoFavoriteTeamMessage(
@@ -68,19 +76,14 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     VoidCallback onSelectClick,
   ) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            UiStrings.noFavoriteTeamMessage,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 4),
-          TextButton(
-            onPressed: onSelectClick,
-            child: Text(UiStrings.actionSelect.toUpperCase()),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ActionMessageDisplay(
+          message: UiStrings.noFavoriteTeamMessage,
+          onAction: onSelectClick,
+          actionText: UiStrings.actionChooseTeam,
+          icon: Icons.favorite_border,
+        ),
       ),
     );
   }
@@ -134,7 +137,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     bool hideScores,
   ) {
     return [
-      _HeaderItem(title),
+      HeaderItem(text: title),
       for (var game in games)
         GameCard(
           item: game,
@@ -145,21 +148,4 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class _HeaderItem extends StatelessWidget {
-  final String _text;
-
-  const _HeaderItem(this._text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 12),
-      child: Text(
-        _text,
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
-    );
-  }
 }
