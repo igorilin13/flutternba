@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/games/game_model.dart';
+import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/domain/games/game_item.dart';
+import 'package:flutternba/ui/util/colors.dart';
 import 'package:flutternba/ui/util/extensions.dart';
 
 import '../../../data/teams/team_model.dart';
@@ -10,11 +12,20 @@ import '../strings.dart';
 class GameCard extends StatelessWidget {
   final GameItem item;
   final bool hideScores;
+  final int? teamOutcomeId;
 
-  const GameCard({super.key, required this.item, required this.hideScores});
+  const GameCard({
+    super.key,
+    required this.item,
+    required this.hideScores,
+    this.teamOutcomeId,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final teamOutcome =
+        teamOutcomeId != null ? item.game.getTeamOutcome(teamOutcomeId!) : null;
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -24,9 +35,8 @@ class GameCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 2),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     item.game.postseason
@@ -34,6 +44,11 @@ class GameCard extends StatelessWidget {
                         : item.formattedDate,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
+                  const Spacer(),
+                  if (teamOutcome != null && !hideScores) ...[
+                    _buildTeamOutcomeLabel(context, teamOutcome),
+                    const SizedBox(width: 4),
+                  ],
                   if (item.game.time != null)
                     Text(
                       item.game.time!,
@@ -52,11 +67,15 @@ class GameCard extends StatelessWidget {
                     _buildTeamInfo(
                       context,
                       item.game.homeTeam,
+                      item.homeTeamStandings,
+                      hideScores,
                       CrossAxisAlignment.start,
                     ),
                     _buildTeamInfo(
                       context,
                       item.game.visitorTeam,
+                      item.visitorTeamStandings,
+                      hideScores,
                       CrossAxisAlignment.end,
                     ),
                   ],
@@ -76,6 +95,8 @@ class GameCard extends StatelessWidget {
   Widget _buildTeamInfo(
     BuildContext context,
     Team team,
+    TeamStandings? standings,
+    bool hideScores,
     CrossAxisAlignment alignment,
   ) {
     return Column(
@@ -92,7 +113,16 @@ class GameCard extends StatelessWidget {
         Text(
           team.name,
           style: Theme.of(context).textTheme.titleSmall,
-        )
+        ),
+        if (standings != null && !hideScores)
+          Text(
+            UiStrings.teamRecordCaptionFormat(
+              standings.overallRecord.wins,
+              standings.overallRecord.losses,
+            ),
+            style:
+                Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),
+          ),
       ],
     );
   }
@@ -113,5 +143,27 @@ class GameCard extends StatelessWidget {
     } else {
       return const Text(UiStrings.versus);
     }
+  }
+
+  Widget _buildTeamOutcomeLabel(BuildContext context, TeamOutcome outcome) {
+    final String text;
+    final Color color;
+
+    switch (outcome) {
+      case TeamOutcome.win:
+        text = UiStrings.shortLabelWin;
+        color = Theme.of(context).colorScheme.win;
+      case TeamOutcome.loss:
+        text = UiStrings.shortLabelLoss;
+        color = Theme.of(context).colorScheme.loss;
+    }
+
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+    );
   }
 }

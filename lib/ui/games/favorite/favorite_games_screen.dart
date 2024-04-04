@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/ui/games/favorite/favorite_games_cubit.dart';
+import 'package:flutternba/ui/games/favorite/widgets/TeamPageHeader.dart';
+import 'package:flutternba/ui/games/favorite/widgets/TeamTidbitCard.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
+import 'package:flutternba/ui/util/colors.dart';
 import 'package:flutternba/ui/util/widgets/cta_message.dart';
 import 'package:flutternba/ui/util/widgets/header_item.dart';
 
@@ -28,7 +32,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     super.build(context);
 
     return BlocProvider(
-      create: (context) => FavoriteTeamGamesCubit(locator()),
+      create: (context) => FavoriteTeamGamesCubit(locator(), locator()),
       child: BlocBuilder<FavoriteTeamGamesCubit, FavoriteTeamGamesState>(
           builder: (context, state) {
         final hideScores = context.select<SettingsCubit, bool>(
@@ -93,30 +97,38 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     DisplayDataState state,
     bool hideScores,
   ) {
+    final teamStandings = state.standings?.getOrNull();
     final items = <Widget>[
+      if (teamStandings != null && !hideScores)
+        ..._buildStandingsSection(context, teamStandings),
       if (state.nextGame != null)
         ..._buildSectionItems(
           UiStrings.sectionNextGame,
           [state.nextGame!],
           hideScores,
+          state.favoriteTeamId,
         ),
       if (state.previousGame != null)
         ..._buildSectionItems(
           UiStrings.sectionPreviousGame,
           [state.previousGame!],
           hideScores,
+          state.favoriteTeamId,
         ),
       if (state.upcomingGames.isNotEmpty)
         ..._buildSectionItems(
           UiStrings.sectionUpcomingGames,
           state.upcomingGames,
           hideScores,
+          state.favoriteTeamId,
         ),
+      if (state.hasHiddenUpcomingGames) const _ExpandUpcomingButtonItem(),
       if (state.previousGames.isNotEmpty)
         ..._buildSectionItems(
           UiStrings.sectionPreviousGames,
           state.previousGames,
           hideScores,
+          state.favoriteTeamId,
         ),
     ];
 
@@ -124,10 +136,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
       restorationId: "favoriteTeamGames",
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: items[index],
-      ),
+      itemBuilder: (context, index) => items[index],
     );
   }
 
@@ -135,17 +144,94 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     String title,
     List<GameItem> games,
     bool hideScores,
+    int teamId,
   ) {
     return [
-      HeaderItem(text: title),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8, left: 12, top: 12),
+        child: HeaderItem(text: title),
+      ),
       for (var game in games)
-        GameCard(
-          item: game,
-          hideScores: hideScores,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: GameCard(
+            item: game,
+            hideScores: hideScores,
+            teamOutcomeId: teamId,
+          ),
         )
+    ];
+  }
+
+  List<Widget> _buildStandingsSection(
+    BuildContext context,
+    TeamStandings standings,
+  ) {
+    return [
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: TeamPageHeader(
+          teamId: standings.teamId,
+          teamName: standings.fullTeamName,
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 4),
+        child: Row(
+          children: [
+            TeamTidbitCard(
+              contentValue: UiStrings.teamRecordFormat(
+                standings.overallRecord.wins,
+                standings.overallRecord.losses,
+              ),
+              caption: UiStrings.conferencePositionCaption(
+                standings.conferenceRank.rank,
+                standings.conferenceName,
+              ),
+            ),
+            TeamTidbitCard(
+              caption: UiStrings.captionLastTen,
+              contentValue: UiStrings.teamRecordFormat(
+                standings.lastTenRecord.wins,
+                standings.lastTenRecord.losses,
+              ),
+            ),
+            TeamTidbitCard(
+              caption: UiStrings.captionStreak,
+              contentStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: standings.winStreak
+                        ? Theme.of(context).colorScheme.win
+                        : Theme.of(context).colorScheme.loss,
+                    fontWeight: FontWeight.w600,
+                  ),
+              contentValue: UiStrings.teamStreak(
+                standings.streak,
+                standings.winStreak,
+              ),
+            ),
+          ],
+        ),
+      )
     ];
   }
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class _ExpandUpcomingButtonItem extends StatelessWidget {
+  const _ExpandUpcomingButtonItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 4),
+        child: TextButton(
+          onPressed: context.read<FavoriteTeamGamesCubit>().showAllUpcoming,
+          child: Text(UiStrings.actionShowAll),
+        ),
+      ),
+    );
+  }
 }

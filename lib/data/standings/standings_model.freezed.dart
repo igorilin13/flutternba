@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TeamStandings {
   int get teamId => throw _privateConstructorUsedError;
   String get teamName => throw _privateConstructorUsedError;
+  String get fullTeamName => throw _privateConstructorUsedError;
   String get conferenceName => throw _privateConstructorUsedError;
   TeamRank get conferenceRank => throw _privateConstructorUsedError;
   String get divisionName => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $TeamStandingsCopyWith<$Res> {
   $Res call(
       {int teamId,
       String teamName,
+      String fullTeamName,
       String conferenceName,
       TeamRank conferenceRank,
       String divisionName,
@@ -77,6 +79,7 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
   $Res call({
     Object? teamId = null,
     Object? teamName = null,
+    Object? fullTeamName = null,
     Object? conferenceName = null,
     Object? conferenceRank = null,
     Object? divisionName = null,
@@ -96,6 +99,10 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
       teamName: null == teamName
           ? _value.teamName
           : teamName // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullTeamName: null == fullTeamName
+          ? _value.fullTeamName
+          : fullTeamName // ignore: cast_nullable_to_non_nullable
               as String,
       conferenceName: null == conferenceName
           ? _value.conferenceName
@@ -200,6 +207,7 @@ abstract class _$$TeamStandingsImplCopyWith<$Res>
   $Res call(
       {int teamId,
       String teamName,
+      String fullTeamName,
       String conferenceName,
       TeamRank conferenceRank,
       String divisionName,
@@ -238,6 +246,7 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
   $Res call({
     Object? teamId = null,
     Object? teamName = null,
+    Object? fullTeamName = null,
     Object? conferenceName = null,
     Object? conferenceRank = null,
     Object? divisionName = null,
@@ -257,6 +266,10 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
       teamName: null == teamName
           ? _value.teamName
           : teamName // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullTeamName: null == fullTeamName
+          ? _value.fullTeamName
+          : fullTeamName // ignore: cast_nullable_to_non_nullable
               as String,
       conferenceName: null == conferenceName
           ? _value.conferenceName
@@ -308,6 +321,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
   const _$TeamStandingsImpl(
       {required this.teamId,
       required this.teamName,
+      required this.fullTeamName,
       required this.conferenceName,
       required this.conferenceRank,
       required this.divisionName,
@@ -323,6 +337,8 @@ class _$TeamStandingsImpl implements _TeamStandings {
   final int teamId;
   @override
   final String teamName;
+  @override
+  final String fullTeamName;
   @override
   final String conferenceName;
   @override
@@ -346,7 +362,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
 
   @override
   String toString() {
-    return 'TeamStandings(teamId: $teamId, teamName: $teamName, conferenceName: $conferenceName, conferenceRank: $conferenceRank, divisionName: $divisionName, divisionRank: $divisionRank, overallRecord: $overallRecord, homeRecord: $homeRecord, awayRecord: $awayRecord, lastTenRecord: $lastTenRecord, streak: $streak, winStreak: $winStreak)';
+    return 'TeamStandings(teamId: $teamId, teamName: $teamName, fullTeamName: $fullTeamName, conferenceName: $conferenceName, conferenceRank: $conferenceRank, divisionName: $divisionName, divisionRank: $divisionRank, overallRecord: $overallRecord, homeRecord: $homeRecord, awayRecord: $awayRecord, lastTenRecord: $lastTenRecord, streak: $streak, winStreak: $winStreak)';
   }
 
   @override
@@ -357,6 +373,8 @@ class _$TeamStandingsImpl implements _TeamStandings {
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
             (identical(other.teamName, teamName) ||
                 other.teamName == teamName) &&
+            (identical(other.fullTeamName, fullTeamName) ||
+                other.fullTeamName == fullTeamName) &&
             (identical(other.conferenceName, conferenceName) ||
                 other.conferenceName == conferenceName) &&
             (identical(other.conferenceRank, conferenceRank) ||
@@ -383,6 +401,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
       runtimeType,
       teamId,
       teamName,
+      fullTeamName,
       conferenceName,
       conferenceRank,
       divisionName,
@@ -405,6 +424,7 @@ abstract class _TeamStandings implements TeamStandings {
   const factory _TeamStandings(
       {required final int teamId,
       required final String teamName,
+      required final String fullTeamName,
       required final String conferenceName,
       required final TeamRank conferenceRank,
       required final String divisionName,
@@ -420,6 +440,8 @@ abstract class _TeamStandings implements TeamStandings {
   int get teamId;
   @override
   String get teamName;
+  @override
+  String get fullTeamName;
   @override
   String get conferenceName;
   @override

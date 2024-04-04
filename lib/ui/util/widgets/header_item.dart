@@ -9,7 +9,7 @@ class HeaderItem extends StatelessWidget {
     super.key,
     required this.text,
     this.style,
-    this.padding = const EdgeInsets.only(left: 12),
+    this.padding = EdgeInsets.zero,
   });
 
   @override

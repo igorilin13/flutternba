@@ -13,15 +13,17 @@ class GetFavoriteTeamGamesUseCase extends BaseGetGamesUseCase {
     this._gamesRepository,
     this._settingsRepository,
     super._formatGameDateUseCase,
+    super._getStandingsUseCase,
   );
 
   Stream<FavoriteTeamGamesResult> call() {
     return _settingsRepository.getFavoriteTeamId().switchMap((teamId) {
       if (teamId != null) {
-        return createResult(games: _gamesRepository.getTeamGames(teamId))
-            .asStream()
-            .map((event) => FavoriteTeamGamesResult.hasFavorite(event))
-            .startWith(const FavoriteTeamGamesResult.hasFavorite(null));
+        return createResult(
+          loadGames: _gamesRepository.getTeamGames(teamId).asStream(),
+        )
+            .map((event) => FavoriteTeamGamesResult.hasFavorite(event, teamId))
+            .startWith(FavoriteTeamGamesResult.hasFavorite(null, teamId));
       } else {
         return Stream.value(const FavoriteTeamGamesResult.noFavorite());
       }

@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameItem {
   Game get game => throw _privateConstructorUsedError;
   String get formattedDate => throw _privateConstructorUsedError;
+  TeamStandings? get homeTeamStandings => throw _privateConstructorUsedError;
+  TeamStandings? get visitorTeamStandings => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GameItemCopyWith<GameItem> get copyWith =>
@@ -29,9 +31,15 @@ abstract class $GameItemCopyWith<$Res> {
   factory $GameItemCopyWith(GameItem value, $Res Function(GameItem) then) =
       _$GameItemCopyWithImpl<$Res, GameItem>;
   @useResult
-  $Res call({Game game, String formattedDate});
+  $Res call(
+      {Game game,
+      String formattedDate,
+      TeamStandings? homeTeamStandings,
+      TeamStandings? visitorTeamStandings});
 
   $GameCopyWith<$Res> get game;
+  $TeamStandingsCopyWith<$Res>? get homeTeamStandings;
+  $TeamStandingsCopyWith<$Res>? get visitorTeamStandings;
 }
 
 /// @nodoc
@@ -49,6 +57,8 @@ class _$GameItemCopyWithImpl<$Res, $Val extends GameItem>
   $Res call({
     Object? game = null,
     Object? formattedDate = null,
+    Object? homeTeamStandings = freezed,
+    Object? visitorTeamStandings = freezed,
   }) {
     return _then(_value.copyWith(
       game: null == game
@@ -59,6 +69,14 @@ class _$GameItemCopyWithImpl<$Res, $Val extends GameItem>
           ? _value.formattedDate
           : formattedDate // ignore: cast_nullable_to_non_nullable
               as String,
+      homeTeamStandings: freezed == homeTeamStandings
+          ? _value.homeTeamStandings
+          : homeTeamStandings // ignore: cast_nullable_to_non_nullable
+              as TeamStandings?,
+      visitorTeamStandings: freezed == visitorTeamStandings
+          ? _value.visitorTeamStandings
+          : visitorTeamStandings // ignore: cast_nullable_to_non_nullable
+              as TeamStandings?,
     ) as $Val);
   }
 
@@ -67,6 +85,30 @@ class _$GameItemCopyWithImpl<$Res, $Val extends GameItem>
   $GameCopyWith<$Res> get game {
     return $GameCopyWith<$Res>(_value.game, (value) {
       return _then(_value.copyWith(game: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TeamStandingsCopyWith<$Res>? get homeTeamStandings {
+    if (_value.homeTeamStandings == null) {
+      return null;
+    }
+
+    return $TeamStandingsCopyWith<$Res>(_value.homeTeamStandings!, (value) {
+      return _then(_value.copyWith(homeTeamStandings: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TeamStandingsCopyWith<$Res>? get visitorTeamStandings {
+    if (_value.visitorTeamStandings == null) {
+      return null;
+    }
+
+    return $TeamStandingsCopyWith<$Res>(_value.visitorTeamStandings!, (value) {
+      return _then(_value.copyWith(visitorTeamStandings: value) as $Val);
     });
   }
 }
@@ -79,10 +121,18 @@ abstract class _$$GameItemImplCopyWith<$Res>
       __$$GameItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Game game, String formattedDate});
+  $Res call(
+      {Game game,
+      String formattedDate,
+      TeamStandings? homeTeamStandings,
+      TeamStandings? visitorTeamStandings});
 
   @override
   $GameCopyWith<$Res> get game;
+  @override
+  $TeamStandingsCopyWith<$Res>? get homeTeamStandings;
+  @override
+  $TeamStandingsCopyWith<$Res>? get visitorTeamStandings;
 }
 
 /// @nodoc
@@ -98,6 +148,8 @@ class __$$GameItemImplCopyWithImpl<$Res>
   $Res call({
     Object? game = null,
     Object? formattedDate = null,
+    Object? homeTeamStandings = freezed,
+    Object? visitorTeamStandings = freezed,
   }) {
     return _then(_$GameItemImpl(
       game: null == game
@@ -108,6 +160,14 @@ class __$$GameItemImplCopyWithImpl<$Res>
           ? _value.formattedDate
           : formattedDate // ignore: cast_nullable_to_non_nullable
               as String,
+      homeTeamStandings: freezed == homeTeamStandings
+          ? _value.homeTeamStandings
+          : homeTeamStandings // ignore: cast_nullable_to_non_nullable
+              as TeamStandings?,
+      visitorTeamStandings: freezed == visitorTeamStandings
+          ? _value.visitorTeamStandings
+          : visitorTeamStandings // ignore: cast_nullable_to_non_nullable
+              as TeamStandings?,
     ));
   }
 }
@@ -115,16 +175,24 @@ class __$$GameItemImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GameItemImpl implements _GameItem {
-  const _$GameItemImpl({required this.game, required this.formattedDate});
+  const _$GameItemImpl(
+      {required this.game,
+      required this.formattedDate,
+      required this.homeTeamStandings,
+      required this.visitorTeamStandings});
 
   @override
   final Game game;
   @override
   final String formattedDate;
+  @override
+  final TeamStandings? homeTeamStandings;
+  @override
+  final TeamStandings? visitorTeamStandings;
 
   @override
   String toString() {
-    return 'GameItem(game: $game, formattedDate: $formattedDate)';
+    return 'GameItem(game: $game, formattedDate: $formattedDate, homeTeamStandings: $homeTeamStandings, visitorTeamStandings: $visitorTeamStandings)';
   }
 
   @override
@@ -134,11 +202,16 @@ class _$GameItemImpl implements _GameItem {
             other is _$GameItemImpl &&
             (identical(other.game, game) || other.game == game) &&
             (identical(other.formattedDate, formattedDate) ||
-                other.formattedDate == formattedDate));
+                other.formattedDate == formattedDate) &&
+            (identical(other.homeTeamStandings, homeTeamStandings) ||
+                other.homeTeamStandings == homeTeamStandings) &&
+            (identical(other.visitorTeamStandings, visitorTeamStandings) ||
+                other.visitorTeamStandings == visitorTeamStandings));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, game, formattedDate);
+  int get hashCode => Object.hash(runtimeType, game, formattedDate,
+      homeTeamStandings, visitorTeamStandings);
 
   @JsonKey(ignore: true)
   @override
@@ -150,12 +223,18 @@ class _$GameItemImpl implements _GameItem {
 abstract class _GameItem implements GameItem {
   const factory _GameItem(
       {required final Game game,
-      required final String formattedDate}) = _$GameItemImpl;
+      required final String formattedDate,
+      required final TeamStandings? homeTeamStandings,
+      required final TeamStandings? visitorTeamStandings}) = _$GameItemImpl;
 
   @override
   Game get game;
   @override
   String get formattedDate;
+  @override
+  TeamStandings? get homeTeamStandings;
+  @override
+  TeamStandings? get visitorTeamStandings;
   @override
   @JsonKey(ignore: true)
   _$$GameItemImplCopyWith<_$GameItemImpl> get copyWith =>

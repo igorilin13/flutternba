@@ -22,8 +22,14 @@ mixin _$FavoriteTeamGamesState {
     required TResult Function() error,
     required TResult Function() noFavorite,
     required TResult Function() noGamesAvailable,
-    required TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)
+    required TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)
         displayData,
   }) =>
       throw _privateConstructorUsedError;
@@ -33,8 +39,14 @@ mixin _$FavoriteTeamGamesState {
     TResult? Function()? error,
     TResult? Function()? noFavorite,
     TResult? Function()? noGamesAvailable,
-    TResult? Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult? Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
   }) =>
       throw _privateConstructorUsedError;
@@ -44,8 +56,14 @@ mixin _$FavoriteTeamGamesState {
     TResult Function()? error,
     TResult Function()? noFavorite,
     TResult Function()? noGamesAvailable,
-    TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
     required TResult orElse(),
   }) =>
@@ -141,8 +159,14 @@ class _$LoadingStateImpl implements LoadingState {
     required TResult Function() error,
     required TResult Function() noFavorite,
     required TResult Function() noGamesAvailable,
-    required TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)
+    required TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)
         displayData,
   }) {
     return loading();
@@ -155,8 +179,14 @@ class _$LoadingStateImpl implements LoadingState {
     TResult? Function()? error,
     TResult? Function()? noFavorite,
     TResult? Function()? noGamesAvailable,
-    TResult? Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult? Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
   }) {
     return loading?.call();
@@ -169,8 +199,14 @@ class _$LoadingStateImpl implements LoadingState {
     TResult Function()? error,
     TResult Function()? noFavorite,
     TResult Function()? noGamesAvailable,
-    TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
     required TResult orElse(),
   }) {
@@ -267,8 +303,14 @@ class _$ErrorStateImpl implements ErrorState {
     required TResult Function() error,
     required TResult Function() noFavorite,
     required TResult Function() noGamesAvailable,
-    required TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)
+    required TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)
         displayData,
   }) {
     return error();
@@ -281,8 +323,14 @@ class _$ErrorStateImpl implements ErrorState {
     TResult? Function()? error,
     TResult? Function()? noFavorite,
     TResult? Function()? noGamesAvailable,
-    TResult? Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult? Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
   }) {
     return error?.call();
@@ -295,8 +343,14 @@ class _$ErrorStateImpl implements ErrorState {
     TResult Function()? error,
     TResult Function()? noFavorite,
     TResult Function()? noGamesAvailable,
-    TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
     required TResult orElse(),
   }) {
@@ -395,8 +449,14 @@ class _$NoFavoriteTeamStateImpl implements NoFavoriteTeamState {
     required TResult Function() error,
     required TResult Function() noFavorite,
     required TResult Function() noGamesAvailable,
-    required TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)
+    required TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)
         displayData,
   }) {
     return noFavorite();
@@ -409,8 +469,14 @@ class _$NoFavoriteTeamStateImpl implements NoFavoriteTeamState {
     TResult? Function()? error,
     TResult? Function()? noFavorite,
     TResult? Function()? noGamesAvailable,
-    TResult? Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult? Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
   }) {
     return noFavorite?.call();
@@ -423,8 +489,14 @@ class _$NoFavoriteTeamStateImpl implements NoFavoriteTeamState {
     TResult Function()? error,
     TResult Function()? noFavorite,
     TResult Function()? noGamesAvailable,
-    TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
     required TResult orElse(),
   }) {
@@ -524,8 +596,14 @@ class _$NoGamesAvailableStateImpl implements NoGamesAvailableState {
     required TResult Function() error,
     required TResult Function() noFavorite,
     required TResult Function() noGamesAvailable,
-    required TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)
+    required TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)
         displayData,
   }) {
     return noGamesAvailable();
@@ -538,8 +616,14 @@ class _$NoGamesAvailableStateImpl implements NoGamesAvailableState {
     TResult? Function()? error,
     TResult? Function()? noFavorite,
     TResult? Function()? noGamesAvailable,
-    TResult? Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult? Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
   }) {
     return noGamesAvailable?.call();
@@ -552,8 +636,14 @@ class _$NoGamesAvailableStateImpl implements NoGamesAvailableState {
     TResult Function()? error,
     TResult Function()? noFavorite,
     TResult Function()? noGamesAvailable,
-    TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
     required TResult orElse(),
   }) {
@@ -618,7 +708,10 @@ abstract class _$$DisplayDataStateImplCopyWith<$Res> {
       {GameItem? nextGame,
       GameItem? previousGame,
       List<GameItem> upcomingGames,
-      List<GameItem> previousGames});
+      List<GameItem> previousGames,
+      int favoriteTeamId,
+      bool hasHiddenUpcomingGames,
+      Result<TeamStandings>? standings});
 
   $GameItemCopyWith<$Res>? get nextGame;
   $GameItemCopyWith<$Res>? get previousGame;
@@ -639,6 +732,9 @@ class __$$DisplayDataStateImplCopyWithImpl<$Res>
     Object? previousGame = freezed,
     Object? upcomingGames = null,
     Object? previousGames = null,
+    Object? favoriteTeamId = null,
+    Object? hasHiddenUpcomingGames = null,
+    Object? standings = freezed,
   }) {
     return _then(_$DisplayDataStateImpl(
       nextGame: freezed == nextGame
@@ -657,6 +753,18 @@ class __$$DisplayDataStateImplCopyWithImpl<$Res>
           ? _value._previousGames
           : previousGames // ignore: cast_nullable_to_non_nullable
               as List<GameItem>,
+      favoriteTeamId: null == favoriteTeamId
+          ? _value.favoriteTeamId
+          : favoriteTeamId // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasHiddenUpcomingGames: null == hasHiddenUpcomingGames
+          ? _value.hasHiddenUpcomingGames
+          : hasHiddenUpcomingGames // ignore: cast_nullable_to_non_nullable
+              as bool,
+      standings: freezed == standings
+          ? _value.standings
+          : standings // ignore: cast_nullable_to_non_nullable
+              as Result<TeamStandings>?,
     ));
   }
 
@@ -692,7 +800,10 @@ class _$DisplayDataStateImpl implements DisplayDataState {
       {required this.nextGame,
       required this.previousGame,
       required final List<GameItem> upcomingGames,
-      required final List<GameItem> previousGames})
+      required final List<GameItem> previousGames,
+      required this.favoriteTeamId,
+      required this.hasHiddenUpcomingGames,
+      required this.standings})
       : _upcomingGames = upcomingGames,
         _previousGames = previousGames;
 
@@ -717,8 +828,15 @@ class _$DisplayDataStateImpl implements DisplayDataState {
   }
 
   @override
+  final int favoriteTeamId;
+  @override
+  final bool hasHiddenUpcomingGames;
+  @override
+  final Result<TeamStandings>? standings;
+
+  @override
   String toString() {
-    return 'FavoriteTeamGamesState.displayData(nextGame: $nextGame, previousGame: $previousGame, upcomingGames: $upcomingGames, previousGames: $previousGames)';
+    return 'FavoriteTeamGamesState.displayData(nextGame: $nextGame, previousGame: $previousGame, upcomingGames: $upcomingGames, previousGames: $previousGames, favoriteTeamId: $favoriteTeamId, hasHiddenUpcomingGames: $hasHiddenUpcomingGames, standings: $standings)';
   }
 
   @override
@@ -733,7 +851,13 @@ class _$DisplayDataStateImpl implements DisplayDataState {
             const DeepCollectionEquality()
                 .equals(other._upcomingGames, _upcomingGames) &&
             const DeepCollectionEquality()
-                .equals(other._previousGames, _previousGames));
+                .equals(other._previousGames, _previousGames) &&
+            (identical(other.favoriteTeamId, favoriteTeamId) ||
+                other.favoriteTeamId == favoriteTeamId) &&
+            (identical(other.hasHiddenUpcomingGames, hasHiddenUpcomingGames) ||
+                other.hasHiddenUpcomingGames == hasHiddenUpcomingGames) &&
+            (identical(other.standings, standings) ||
+                other.standings == standings));
   }
 
   @override
@@ -742,7 +866,10 @@ class _$DisplayDataStateImpl implements DisplayDataState {
       nextGame,
       previousGame,
       const DeepCollectionEquality().hash(_upcomingGames),
-      const DeepCollectionEquality().hash(_previousGames));
+      const DeepCollectionEquality().hash(_previousGames),
+      favoriteTeamId,
+      hasHiddenUpcomingGames,
+      standings);
 
   @JsonKey(ignore: true)
   @override
@@ -758,11 +885,18 @@ class _$DisplayDataStateImpl implements DisplayDataState {
     required TResult Function() error,
     required TResult Function() noFavorite,
     required TResult Function() noGamesAvailable,
-    required TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)
+    required TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)
         displayData,
   }) {
-    return displayData(nextGame, previousGame, upcomingGames, previousGames);
+    return displayData(nextGame, previousGame, upcomingGames, previousGames,
+        favoriteTeamId, hasHiddenUpcomingGames, standings);
   }
 
   @override
@@ -772,12 +906,18 @@ class _$DisplayDataStateImpl implements DisplayDataState {
     TResult? Function()? error,
     TResult? Function()? noFavorite,
     TResult? Function()? noGamesAvailable,
-    TResult? Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult? Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
   }) {
-    return displayData?.call(
-        nextGame, previousGame, upcomingGames, previousGames);
+    return displayData?.call(nextGame, previousGame, upcomingGames,
+        previousGames, favoriteTeamId, hasHiddenUpcomingGames, standings);
   }
 
   @override
@@ -787,13 +927,20 @@ class _$DisplayDataStateImpl implements DisplayDataState {
     TResult Function()? error,
     TResult Function()? noFavorite,
     TResult Function()? noGamesAvailable,
-    TResult Function(GameItem? nextGame, GameItem? previousGame,
-            List<GameItem> upcomingGames, List<GameItem> previousGames)?
+    TResult Function(
+            GameItem? nextGame,
+            GameItem? previousGame,
+            List<GameItem> upcomingGames,
+            List<GameItem> previousGames,
+            int favoriteTeamId,
+            bool hasHiddenUpcomingGames,
+            Result<TeamStandings>? standings)?
         displayData,
     required TResult orElse(),
   }) {
     if (displayData != null) {
-      return displayData(nextGame, previousGame, upcomingGames, previousGames);
+      return displayData(nextGame, previousGame, upcomingGames, previousGames,
+          favoriteTeamId, hasHiddenUpcomingGames, standings);
     }
     return orElse();
   }
@@ -841,15 +988,22 @@ class _$DisplayDataStateImpl implements DisplayDataState {
 
 abstract class DisplayDataState implements FavoriteTeamGamesState {
   const factory DisplayDataState(
-      {required final GameItem? nextGame,
-      required final GameItem? previousGame,
-      required final List<GameItem> upcomingGames,
-      required final List<GameItem> previousGames}) = _$DisplayDataStateImpl;
+          {required final GameItem? nextGame,
+          required final GameItem? previousGame,
+          required final List<GameItem> upcomingGames,
+          required final List<GameItem> previousGames,
+          required final int favoriteTeamId,
+          required final bool hasHiddenUpcomingGames,
+          required final Result<TeamStandings>? standings}) =
+      _$DisplayDataStateImpl;
 
   GameItem? get nextGame;
   GameItem? get previousGame;
   List<GameItem> get upcomingGames;
   List<GameItem> get previousGames;
+  int get favoriteTeamId;
+  bool get hasHiddenUpcomingGames;
+  Result<TeamStandings>? get standings;
   @JsonKey(ignore: true)
   _$$DisplayDataStateImplCopyWith<_$DisplayDataStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

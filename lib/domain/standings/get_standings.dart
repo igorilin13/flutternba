@@ -12,6 +12,15 @@ class GetStandingsUseCase {
 
   GetStandingsUseCase(this._standingsRepository);
 
+  Future<Result<List<TeamStandings>>> getTeams() {
+    return getStandings(StandingsType.conference).mapResult(
+      (standings) => standings
+          .expand((element) => element.groups)
+          .expand((element) => element.teams)
+          .toList(growable: false),
+    );
+  }
+
   Future<Result<List<StandingsCollection>>> getStandings(
     StandingsType type,
   ) {

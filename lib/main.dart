@@ -26,11 +26,11 @@ class _MyApp extends StatelessWidget {
       title: "NBA Schedules",
       restorationScopeId: "root",
       darkTheme: ThemeData(
-        colorScheme: AppColors.darkColorScheme,
+        colorScheme: AppColorSchemes.dark,
         useMaterial3: true,
       ),
       theme: ThemeData(
-        colorScheme: AppColors.lightColorScheme,
+        colorScheme: AppColorSchemes.light,
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,

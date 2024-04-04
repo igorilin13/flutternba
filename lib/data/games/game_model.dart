@@ -5,6 +5,10 @@ import '../teams/team_model.dart';
 
 part 'game_model.freezed.dart';
 
+enum GameStatus { scheduled, live, finished }
+
+enum TeamOutcome { win, loss }
+
 @freezed
 class Game with _$Game {
   const factory Game({
@@ -18,6 +22,22 @@ class Game with _$Game {
     required Team visitorTeam,
     required GameStatus gameStatus,
   }) = _Game;
+
+  const Game._();
+
+  TeamOutcome? getTeamOutcome(int teamId) {
+    if (gameStatus != GameStatus.finished) {
+      return null;
+    } else if (homeTeam.id == teamId) {
+      return homeTeamScore > visitorTeamScore
+          ? TeamOutcome.win
+          : TeamOutcome.loss;
+    } else {
+      return visitorTeamScore > homeTeamScore
+          ? TeamOutcome.win
+          : TeamOutcome.loss;
+    }
+  }
 
   factory Game.fromResponse(GameResponse response) {
     final GameStatus gameStatus;
@@ -55,5 +75,3 @@ class Game with _$Game {
     );
   }
 }
-
-enum GameStatus { scheduled, live, finished }

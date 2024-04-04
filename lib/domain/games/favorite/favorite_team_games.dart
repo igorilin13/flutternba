@@ -11,5 +11,6 @@ sealed class FavoriteTeamGamesResult with _$FavoriteTeamGamesResult {
 
   const factory FavoriteTeamGamesResult.hasFavorite(
     Result<List<GameItem>>? games,
+    int teamId,
   ) = HasFavoriteTeam;
 }

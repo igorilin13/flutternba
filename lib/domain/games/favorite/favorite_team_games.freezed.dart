@@ -19,19 +19,20 @@ mixin _$FavoriteTeamGamesResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() noFavorite,
-    required TResult Function(Result<List<GameItem>>? games) hasFavorite,
+    required TResult Function(Result<List<GameItem>>? games, int teamId)
+        hasFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noFavorite,
-    TResult? Function(Result<List<GameItem>>? games)? hasFavorite,
+    TResult? Function(Result<List<GameItem>>? games, int teamId)? hasFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noFavorite,
-    TResult Function(Result<List<GameItem>>? games)? hasFavorite,
+    TResult Function(Result<List<GameItem>>? games, int teamId)? hasFavorite,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,7 +115,8 @@ class _$NoFavoriteTeamImpl implements NoFavoriteTeam {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() noFavorite,
-    required TResult Function(Result<List<GameItem>>? games) hasFavorite,
+    required TResult Function(Result<List<GameItem>>? games, int teamId)
+        hasFavorite,
   }) {
     return noFavorite();
   }
@@ -123,7 +125,7 @@ class _$NoFavoriteTeamImpl implements NoFavoriteTeam {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noFavorite,
-    TResult? Function(Result<List<GameItem>>? games)? hasFavorite,
+    TResult? Function(Result<List<GameItem>>? games, int teamId)? hasFavorite,
   }) {
     return noFavorite?.call();
   }
@@ -132,7 +134,7 @@ class _$NoFavoriteTeamImpl implements NoFavoriteTeam {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noFavorite,
-    TResult Function(Result<List<GameItem>>? games)? hasFavorite,
+    TResult Function(Result<List<GameItem>>? games, int teamId)? hasFavorite,
     required TResult orElse(),
   }) {
     if (noFavorite != null) {
@@ -183,7 +185,7 @@ abstract class _$$HasFavoriteTeamImplCopyWith<$Res> {
           $Res Function(_$HasFavoriteTeamImpl) then) =
       __$$HasFavoriteTeamImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Result<List<GameItem>>? games});
+  $Res call({Result<List<GameItem>>? games, int teamId});
 }
 
 /// @nodoc
@@ -198,12 +200,17 @@ class __$$HasFavoriteTeamImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? games = freezed,
+    Object? teamId = null,
   }) {
     return _then(_$HasFavoriteTeamImpl(
       freezed == games
           ? _value.games
           : games // ignore: cast_nullable_to_non_nullable
               as Result<List<GameItem>>?,
+      null == teamId
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -211,14 +218,16 @@ class __$$HasFavoriteTeamImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HasFavoriteTeamImpl implements HasFavoriteTeam {
-  const _$HasFavoriteTeamImpl(this.games);
+  const _$HasFavoriteTeamImpl(this.games, this.teamId);
 
   @override
   final Result<List<GameItem>>? games;
+  @override
+  final int teamId;
 
   @override
   String toString() {
-    return 'FavoriteTeamGamesResult.hasFavorite(games: $games)';
+    return 'FavoriteTeamGamesResult.hasFavorite(games: $games, teamId: $teamId)';
   }
 
   @override
@@ -226,11 +235,12 @@ class _$HasFavoriteTeamImpl implements HasFavoriteTeam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HasFavoriteTeamImpl &&
-            (identical(other.games, games) || other.games == games));
+            (identical(other.games, games) || other.games == games) &&
+            (identical(other.teamId, teamId) || other.teamId == teamId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, games);
+  int get hashCode => Object.hash(runtimeType, games, teamId);
 
   @JsonKey(ignore: true)
   @override
@@ -243,29 +253,30 @@ class _$HasFavoriteTeamImpl implements HasFavoriteTeam {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() noFavorite,
-    required TResult Function(Result<List<GameItem>>? games) hasFavorite,
+    required TResult Function(Result<List<GameItem>>? games, int teamId)
+        hasFavorite,
   }) {
-    return hasFavorite(games);
+    return hasFavorite(games, teamId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noFavorite,
-    TResult? Function(Result<List<GameItem>>? games)? hasFavorite,
+    TResult? Function(Result<List<GameItem>>? games, int teamId)? hasFavorite,
   }) {
-    return hasFavorite?.call(games);
+    return hasFavorite?.call(games, teamId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noFavorite,
-    TResult Function(Result<List<GameItem>>? games)? hasFavorite,
+    TResult Function(Result<List<GameItem>>? games, int teamId)? hasFavorite,
     required TResult orElse(),
   }) {
     if (hasFavorite != null) {
-      return hasFavorite(games);
+      return hasFavorite(games, teamId);
     }
     return orElse();
   }
@@ -303,10 +314,12 @@ class _$HasFavoriteTeamImpl implements HasFavoriteTeam {
 }
 
 abstract class HasFavoriteTeam implements FavoriteTeamGamesResult {
-  const factory HasFavoriteTeam(final Result<List<GameItem>>? games) =
+  const factory HasFavoriteTeam(
+          final Result<List<GameItem>>? games, final int teamId) =
       _$HasFavoriteTeamImpl;
 
   Result<List<GameItem>>? get games;
+  int get teamId;
   @JsonKey(ignore: true)
   _$$HasFavoriteTeamImplCopyWith<_$HasFavoriteTeamImpl> get copyWith =>
       throw _privateConstructorUsedError;

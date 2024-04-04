@@ -13,7 +13,7 @@ class LeagueGamesCubit extends BaseCubit<LeagueGamesState> {
 
   @override
   Stream<LeagueGamesState> buildStateStream() {
-    return (_getLeagueGamesUseCase()).asNullableStream().startWith(null).map(
+    return _getLeagueGamesUseCase().nullable().startWith(null).map(
           (result) =>
               result?.fold(
                 onSuccess: (games) {

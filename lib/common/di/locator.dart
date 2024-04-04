@@ -61,10 +61,11 @@ Future<void> initLocator() async {
 
   locator.registerFactory(() => FormatGameDateUseCase());
   locator.registerFactory(
-    () => GetFavoriteTeamGamesUseCase(locator(), locator(), locator()),
+    () =>
+        GetFavoriteTeamGamesUseCase(locator(), locator(), locator(), locator()),
   );
   locator.registerFactory(
-    () => GetLeagueGamesUseCase(locator(), locator()),
+    () => GetLeagueGamesUseCase(locator(), locator(), locator()),
   );
 
   locator.registerFactory(() => GetStandingsUseCase(locator()));

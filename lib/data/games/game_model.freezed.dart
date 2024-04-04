@@ -217,7 +217,7 @@ class __$$GameImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GameImpl implements _Game {
+class _$GameImpl extends _Game {
   const _$GameImpl(
       {required this.id,
       required this.date,
@@ -227,7 +227,8 @@ class _$GameImpl implements _Game {
       required this.time,
       required this.visitorTeamScore,
       required this.visitorTeam,
-      required this.gameStatus});
+      required this.gameStatus})
+      : super._();
 
   @override
   final int id;
@@ -295,7 +296,7 @@ class _$GameImpl implements _Game {
       __$$GameImplCopyWithImpl<_$GameImpl>(this, _$identity);
 }
 
-abstract class _Game implements Game {
+abstract class _Game extends Game {
   const factory _Game(
       {required final int id,
       required final DateTime date,
@@ -306,6 +307,7 @@ abstract class _Game implements Game {
       required final int visitorTeamScore,
       required final Team visitorTeam,
       required final GameStatus gameStatus}) = _$GameImpl;
+  const _Game._() : super._();
 
   @override
   int get id;

@@ -10,9 +10,12 @@ class GetLeagueGamesUseCase extends BaseGetGamesUseCase {
   GetLeagueGamesUseCase(
     this._gamesRepository,
     super._formatGameDateUseCase,
+    super._getStandingsUseCase,
   );
 
-  Future<Result<List<GameItem>>> call() async {
-    return createResult(games: _gamesRepository.getLeagueGames(DateTime.now()));
+  Stream<Result<List<GameItem>>> call() {
+    return createResult(
+      loadGames: _gamesRepository.getLeagueGames(DateTime.now()).asStream(),
+    );
   }
 }

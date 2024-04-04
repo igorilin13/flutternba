@@ -8,6 +8,7 @@ class TeamStandings with _$TeamStandings {
   const factory TeamStandings({
     required int teamId,
     required String teamName,
+    required String fullTeamName,
     required String conferenceName,
     required TeamRank conferenceRank,
     required String divisionName,
@@ -24,6 +25,7 @@ class TeamStandings with _$TeamStandings {
     return TeamStandings(
       teamId: response.team.id,
       teamName: response.team.nickname,
+      fullTeamName: response.team.name,
       conferenceName: response.conference.conferenceName,
       conferenceRank: TeamRank(
         rank: response.conference.rank,
