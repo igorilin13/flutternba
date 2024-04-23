@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
+import 'package:flutternba/ui/games/team/team_games_screen.dart';
 import 'package:flutternba/ui/standings/standings_cubit.dart';
 import 'package:flutternba/ui/standings/widgets/standings_header_row.dart';
 import 'package:flutternba/ui/standings/widgets/standings_row.dart';
@@ -114,6 +115,7 @@ class _StandingsScreenState extends State<StandingsScreen>
                   : team.divisionRank,
               decoration: rowDecoration,
               isHighlighted: team.teamId == state.favoriteTeamId,
+              onTap: () => TeamGamesScreen.navigate(context, team.teamId),
             ),
           ],
         ],

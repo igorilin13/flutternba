@@ -16,7 +16,6 @@ class TeamTidbitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    print(theme.brightness);
     return SizedBox(
       width: 100,
       height: 100,

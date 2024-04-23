@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutternba/ui/games/favorite/favorite_games_screen.dart';
 import 'package:flutternba/ui/games/league/league_games_screen.dart';
+import 'package:flutternba/ui/games/team/favorite/favorite_games_screen.dart';
 import 'package:flutternba/ui/standings/standings_screen.dart';
 import 'package:flutternba/ui/util/widgets/system_overlay.dart';
 
-import '../../common/di/locator.dart';
-import '../settings/settings_cubit.dart';
 import '../settings/settings_screen.dart';
 import '../util/strings.dart';
 
@@ -44,53 +41,51 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (BuildContext context) => SettingsCubit(locator(), locator()),
-        child: SystemUiOverlay(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Scaffold(
-            bottomNavigationBar: NavigationBar(
-              onDestinationSelected: (int index) {
-                _pageController.jumpToPage(index);
-                setState(() {
-                  _currentPageIndex.value = index;
-                });
-              },
-              selectedIndex: _currentPageIndex.value,
-              destinations: const <Widget>[
-                NavigationDestination(
-                  icon: Icon(Icons.format_list_numbered),
-                  label: UiStrings.navigationStandings,
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.favorite),
-                  label: UiStrings.navigationFavorite,
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.event),
-                  label: UiStrings.navigationLeague,
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.settings),
-                  label: UiStrings.navigationSettings,
-                ),
-              ],
+    return SystemUiOverlay(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Scaffold(
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            _pageController.jumpToPage(index);
+            setState(() {
+              _currentPageIndex.value = index;
+            });
+          },
+          selectedIndex: _currentPageIndex.value,
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.format_list_numbered),
+              label: UiStrings.navigationStandings,
             ),
-            body: SafeArea(
-              child: PageView(
-                restorationId: "homeScreenContent",
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPageIndex.value = index;
-                  });
-                },
-                children: _screens,
-              ),
+            NavigationDestination(
+              icon: Icon(Icons.favorite),
+              label: UiStrings.navigationFavorite,
             ),
+            NavigationDestination(
+              icon: Icon(Icons.event),
+              label: UiStrings.navigationLeague,
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings),
+              label: UiStrings.navigationSettings,
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: PageView(
+            restorationId: "homeScreenContent",
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            onPageChanged: (index) {
+              setState(() {
+                _currentPageIndex.value = index;
+              });
+            },
+            children: _screens,
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   @override

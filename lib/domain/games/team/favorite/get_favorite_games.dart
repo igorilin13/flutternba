@@ -1,8 +1,8 @@
 import 'package:flutternba/data/games/games_repository.dart';
+import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/domain/games/base_get_games.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../data/settings/settings_repository.dart';
-import '../base_get_games.dart';
 import 'favorite_team_games.dart';
 
 class GetFavoriteTeamGamesUseCase extends BaseGetGamesUseCase {

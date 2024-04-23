@@ -1,7 +1,6 @@
+import 'package:flutternba/common/util/result.dart';
+import 'package:flutternba/domain/games/game_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../common/util/result.dart';
-import '../game_item.dart';
 
 part 'favorite_team_games.freezed.dart';
 

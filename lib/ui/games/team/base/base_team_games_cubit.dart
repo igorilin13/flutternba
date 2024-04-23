@@ -1,63 +1,73 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutternba/common/util/async_ext.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/games/game_model.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
-import 'package:flutternba/domain/games/favorite/get_favorite_games.dart';
+import 'package:flutternba/domain/games/game_item.dart';
 import 'package:flutternba/domain/standings/get_standings.dart';
+import 'package:flutternba/ui/games/team/base/team_games_state.dart';
+import 'package:flutternba/ui/util/bloc/base_cubit.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../domain/games/favorite/favorite_team_games.dart';
-import '../../../domain/games/game_item.dart';
-import '../../util/bloc/base_cubit.dart';
-import 'favorite_games_state.dart';
-
-class FavoriteTeamGamesCubit extends BaseCubit<FavoriteTeamGamesState> {
+abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
   static const int _displayedUpcomingGames = 5;
 
-  final GetFavoriteTeamGamesUseCase _getFavoriteTeamGamesUseCase;
   final GetStandingsUseCase _getStandingsUseCase;
 
-  final BehaviorSubject<bool> _expandUpcomingGames =
+  @protected
+  final BehaviorSubject<bool> expandUpcomingGames =
       BehaviorSubject.seeded(false);
 
-  FavoriteTeamGamesCubit(
-    this._getFavoriteTeamGamesUseCase,
-    this._getStandingsUseCase,
-  ) : super(const FavoriteTeamGamesState.loading()) {
-    disposeControllersOnClose([_expandUpcomingGames]);
+  BaseTeamGamesCubit(super.initial, this._getStandingsUseCase) {
+    disposeControllersOnClose([expandUpcomingGames]);
   }
 
-  @override
-  Stream<FavoriteTeamGamesState> buildStateStream() {
+  @protected
+  Stream<TeamGamesState> buildTeamGamesStateStream({
+    required int teamId,
+    required Stream<Result<List<GameItem>>?> gamesStream,
+  }) {
     return CombineLatestStream.combine3(
-      _getFavoriteTeamGamesUseCase(),
+      gamesStream,
       _getStandingsUseCase.getTeams().asNullableStream().startWith(null),
-      _expandUpcomingGames,
-      (loadResult, leagueStandings, expandUpcoming) => switch (loadResult) {
-        NoFavoriteTeam() => const FavoriteTeamGamesState.noFavorite(),
-        HasFavoriteTeam() => loadResult.games?.fold(
-              onSuccess: (games) => createDisplayDataState(
-                games,
-                loadResult.teamId,
-                expandUpcoming,
-                leagueStandings,
-              ),
-              onFailure: (_) => const FavoriteTeamGamesState.error(),
-            ) ??
-            const FavoriteTeamGamesState.loading(),
-      },
+      expandUpcomingGames,
+      (loadResult, leagueStandings, expandUpcoming) => mapToState(
+        teamId,
+        loadResult,
+        leagueStandings,
+        expandUpcoming,
+      ),
     );
   }
 
-  FavoriteTeamGamesState createDisplayDataState(
+  @protected
+  TeamGamesState mapToState(
+    int teamId,
+    Result<List<GameItem>>? loadGamesResult,
+    Result<List<TeamStandings>>? leagueStandings,
+    bool expandUpcoming,
+  ) {
+    return loadGamesResult?.fold(
+          onSuccess: (games) => _createGamesState(
+            games,
+            teamId,
+            expandUpcoming,
+            leagueStandings,
+          ),
+          onFailure: (_) => const TeamGamesState.error(),
+        ) ??
+        const TeamGamesState.loading();
+  }
+
+  TeamGamesState _createGamesState(
     List<GameItem> games,
     int teamId,
     bool expandUpcoming,
     Result<List<TeamStandings>>? leagueStandings,
   ) {
     if (games.isEmpty) {
-      return const FavoriteTeamGamesState.noGamesAvailable();
+      return const TeamGamesState.noGamesAvailable();
     }
 
     final pastGames = games.filterList(
@@ -75,12 +85,12 @@ class FavoriteTeamGamesCubit extends BaseCubit<FavoriteTeamGamesState> {
       (value) => value.firstWhere((item) => item.teamId == teamId),
     );
 
-    return FavoriteTeamGamesState.displayData(
+    return TeamGamesState.displayData(
       nextGame: upcomingGames.getOrNull(0),
       previousGame: pastGames.getOrNull(0),
       upcomingGames: displayedUpcomingGames,
       previousGames: pastGames,
-      favoriteTeamId: teamId,
+      teamId: teamId,
       hasHiddenUpcomingGames:
           upcomingGames.length > displayedUpcomingGames.length,
       standings: teamStandings,
@@ -88,6 +98,6 @@ class FavoriteTeamGamesCubit extends BaseCubit<FavoriteTeamGamesState> {
   }
 
   void showAllUpcoming() {
-    _expandUpcomingGames.value = true;
+    expandUpcomingGames.value = true;
   }
 }

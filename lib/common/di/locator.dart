@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/common/db/app_db.dart';
+import 'package:flutternba/data/common/network/ball/ball_api_service.dart';
+import 'package:flutternba/data/common/network/ball/ball_auth_interceptor.dart';
 import 'package:flutternba/data/common/network/sportsio/sportsio_api_service.dart';
 import 'package:flutternba/data/common/network/sportsio/sportsio_auth_interceptor.dart';
 import 'package:flutternba/data/common/network/team_mapping.dart';
@@ -14,14 +16,12 @@ import 'package:flutternba/data/teams/local/teams_local_source.dart';
 import 'package:flutternba/data/teams/remote/teams_remote_source.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/domain/date/date_formatter.dart';
-import 'package:flutternba/domain/games/favorite/get_favorite_games.dart';
 import 'package:flutternba/domain/games/league/get_league_games.dart';
+import 'package:flutternba/domain/games/team/favorite/get_favorite_games.dart';
+import 'package:flutternba/domain/games/team/get_team_games.dart';
 import 'package:flutternba/domain/standings/get_standings.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../data/common/network/ball/ball_api_service.dart';
-import '../../data/common/network/ball/ball_auth_interceptor.dart';
 
 final locator = GetIt.instance;
 
@@ -61,11 +61,18 @@ Future<void> initLocator() async {
 
   locator.registerFactory(() => FormatGameDateUseCase());
   locator.registerFactory(
-    () =>
-        GetFavoriteTeamGamesUseCase(locator(), locator(), locator(), locator()),
+    () => GetFavoriteTeamGamesUseCase(
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+    ),
   );
   locator.registerFactory(
     () => GetLeagueGamesUseCase(locator(), locator(), locator()),
+  );
+  locator.registerFactory(
+    () => GetTeamGamesUseCase(locator(), locator(), locator()),
   );
 
   locator.registerFactory(() => GetStandingsUseCase(locator()));
