@@ -13,9 +13,9 @@ class GetLeagueGamesUseCase extends BaseGetGamesUseCase {
     super._getStandingsUseCase,
   );
 
-  Stream<Result<List<GameItem>>> call() {
+  Stream<Result<List<GameItem>>> call(DateTime date) {
     return createResult(
-      loadGames: _gamesRepository.getLeagueGames(DateTime.now()).asStream(),
+      loadGames: _gamesRepository.getLeagueGames(date).asStream(),
     );
   }
 }

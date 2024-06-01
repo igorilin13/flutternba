@@ -59,7 +59,6 @@ class GameCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Stack(
-              alignment: Alignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +80,7 @@ class GameCard extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 80),
+                  padding: const EdgeInsets.only(left: 80, right: 80, top: 20),
                   child: _buildGameScore(context),
                 ),
               ],

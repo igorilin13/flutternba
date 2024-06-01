@@ -6,11 +6,11 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../common/util/result.dart';
 import '../../data/games/game_model.dart';
-import '../date/date_formatter.dart';
+import '../date/game_time_formatter.dart';
 import 'game_item.dart';
 
 abstract class BaseGetGamesUseCase {
-  final FormatGameDateUseCase _formatGameDateUseCase;
+  final FormatGameTimeUseCase _formatGameDateUseCase;
   final GetStandingsUseCase _getStandingsUseCase;
 
   BaseGetGamesUseCase(this._formatGameDateUseCase, this._getStandingsUseCase);

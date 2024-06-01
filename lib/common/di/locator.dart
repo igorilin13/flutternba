@@ -15,7 +15,8 @@ import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/data/teams/local/teams_local_source.dart';
 import 'package:flutternba/data/teams/remote/teams_remote_source.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
-import 'package:flutternba/domain/date/date_formatter.dart';
+import 'package:flutternba/domain/date/game_time_formatter.dart';
+import 'package:flutternba/domain/date/get_league_dates.dart';
 import 'package:flutternba/domain/games/league/get_league_games.dart';
 import 'package:flutternba/domain/games/team/favorite/get_favorite_games.dart';
 import 'package:flutternba/domain/games/team/get_team_games.dart';
@@ -59,7 +60,8 @@ Future<void> initLocator() async {
   locator.registerFactory(() => GamesRemoteDataSource(locator()));
   locator.registerFactory(() => GamesRepository(locator()));
 
-  locator.registerFactory(() => FormatGameDateUseCase());
+  locator.registerFactory(() => FormatGameTimeUseCase());
+  locator.registerFactory(() => GetLeagueDatesUseCase());
   locator.registerFactory(
     () => GetFavoriteTeamGamesUseCase(
       locator(),

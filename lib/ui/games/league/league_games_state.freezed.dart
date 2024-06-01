@@ -16,28 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LeagueGamesState {
+  LeagueDatesModel get datesModel => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() noGamesAvailable,
-    required TResult Function() error,
-    required TResult Function(List<GameItem> games) displayData,
+    required TResult Function(LeagueDatesModel datesModel) loading,
+    required TResult Function(LeagueDatesModel datesModel) noGamesAvailable,
+    required TResult Function(LeagueDatesModel datesModel) error,
+    required TResult Function(List<GameItem> games, LeagueDatesModel datesModel)
+        displayData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function()? noGamesAvailable,
-    TResult? Function()? error,
-    TResult? Function(List<GameItem> games)? displayData,
+    TResult? Function(LeagueDatesModel datesModel)? loading,
+    TResult? Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult? Function(LeagueDatesModel datesModel)? error,
+    TResult? Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? noGamesAvailable,
-    TResult Function()? error,
-    TResult Function(List<GameItem> games)? displayData,
+    TResult Function(LeagueDatesModel datesModel)? loading,
+    TResult Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult Function(LeagueDatesModel datesModel)? error,
+    TResult Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -66,6 +70,10 @@ mixin _$LeagueGamesState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $LeagueGamesStateCopyWith<LeagueGamesState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -73,6 +81,10 @@ abstract class $LeagueGamesStateCopyWith<$Res> {
   factory $LeagueGamesStateCopyWith(
           LeagueGamesState value, $Res Function(LeagueGamesState) then) =
       _$LeagueGamesStateCopyWithImpl<$Res, LeagueGamesState>;
+  @useResult
+  $Res call({LeagueDatesModel datesModel});
+
+  $LeagueDatesModelCopyWith<$Res> get datesModel;
 }
 
 /// @nodoc
@@ -84,13 +96,41 @@ class _$LeagueGamesStateCopyWithImpl<$Res, $Val extends LeagueGamesState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? datesModel = null,
+  }) {
+    return _then(_value.copyWith(
+      datesModel: null == datesModel
+          ? _value.datesModel
+          : datesModel // ignore: cast_nullable_to_non_nullable
+              as LeagueDatesModel,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LeagueDatesModelCopyWith<$Res> get datesModel {
+    return $LeagueDatesModelCopyWith<$Res>(_value.datesModel, (value) {
+      return _then(_value.copyWith(datesModel: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$LoadingStateImplCopyWith<$Res> {
+abstract class _$$LoadingStateImplCopyWith<$Res>
+    implements $LeagueGamesStateCopyWith<$Res> {
   factory _$$LoadingStateImplCopyWith(
           _$LoadingStateImpl value, $Res Function(_$LoadingStateImpl) then) =
       __$$LoadingStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({LeagueDatesModel datesModel});
+
+  @override
+  $LeagueDatesModelCopyWith<$Res> get datesModel;
 }
 
 /// @nodoc
@@ -100,60 +140,88 @@ class __$$LoadingStateImplCopyWithImpl<$Res>
   __$$LoadingStateImplCopyWithImpl(
       _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? datesModel = null,
+  }) {
+    return _then(_$LoadingStateImpl(
+      null == datesModel
+          ? _value.datesModel
+          : datesModel // ignore: cast_nullable_to_non_nullable
+              as LeagueDatesModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadingStateImpl implements LoadingState {
-  const _$LoadingStateImpl();
+  const _$LoadingStateImpl(this.datesModel);
+
+  @override
+  final LeagueDatesModel datesModel;
 
   @override
   String toString() {
-    return 'LeagueGamesState.loading()';
+    return 'LeagueGamesState.loading(datesModel: $datesModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingStateImpl &&
+            (identical(other.datesModel, datesModel) ||
+                other.datesModel == datesModel));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, datesModel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
+      __$$LoadingStateImplCopyWithImpl<_$LoadingStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() noGamesAvailable,
-    required TResult Function() error,
-    required TResult Function(List<GameItem> games) displayData,
+    required TResult Function(LeagueDatesModel datesModel) loading,
+    required TResult Function(LeagueDatesModel datesModel) noGamesAvailable,
+    required TResult Function(LeagueDatesModel datesModel) error,
+    required TResult Function(List<GameItem> games, LeagueDatesModel datesModel)
+        displayData,
   }) {
-    return loading();
+    return loading(datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function()? noGamesAvailable,
-    TResult? Function()? error,
-    TResult? Function(List<GameItem> games)? displayData,
+    TResult? Function(LeagueDatesModel datesModel)? loading,
+    TResult? Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult? Function(LeagueDatesModel datesModel)? error,
+    TResult? Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
   }) {
-    return loading?.call();
+    return loading?.call(datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? noGamesAvailable,
-    TResult Function()? error,
-    TResult Function(List<GameItem> games)? displayData,
+    TResult Function(LeagueDatesModel datesModel)? loading,
+    TResult Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult Function(LeagueDatesModel datesModel)? error,
+    TResult Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(datesModel);
     }
     return orElse();
   }
@@ -197,15 +265,30 @@ class _$LoadingStateImpl implements LoadingState {
 }
 
 abstract class LoadingState implements LeagueGamesState {
-  const factory LoadingState() = _$LoadingStateImpl;
+  const factory LoadingState(final LeagueDatesModel datesModel) =
+      _$LoadingStateImpl;
+
+  @override
+  LeagueDatesModel get datesModel;
+  @override
+  @JsonKey(ignore: true)
+  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$NoGamesAvailableStateImplCopyWith<$Res> {
+abstract class _$$NoGamesAvailableStateImplCopyWith<$Res>
+    implements $LeagueGamesStateCopyWith<$Res> {
   factory _$$NoGamesAvailableStateImplCopyWith(
           _$NoGamesAvailableStateImpl value,
           $Res Function(_$NoGamesAvailableStateImpl) then) =
       __$$NoGamesAvailableStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({LeagueDatesModel datesModel});
+
+  @override
+  $LeagueDatesModelCopyWith<$Res> get datesModel;
 }
 
 /// @nodoc
@@ -215,61 +298,89 @@ class __$$NoGamesAvailableStateImplCopyWithImpl<$Res>
   __$$NoGamesAvailableStateImplCopyWithImpl(_$NoGamesAvailableStateImpl _value,
       $Res Function(_$NoGamesAvailableStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? datesModel = null,
+  }) {
+    return _then(_$NoGamesAvailableStateImpl(
+      null == datesModel
+          ? _value.datesModel
+          : datesModel // ignore: cast_nullable_to_non_nullable
+              as LeagueDatesModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$NoGamesAvailableStateImpl implements NoGamesAvailableState {
-  const _$NoGamesAvailableStateImpl();
+  const _$NoGamesAvailableStateImpl(this.datesModel);
+
+  @override
+  final LeagueDatesModel datesModel;
 
   @override
   String toString() {
-    return 'LeagueGamesState.noGamesAvailable()';
+    return 'LeagueGamesState.noGamesAvailable(datesModel: $datesModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NoGamesAvailableStateImpl);
+            other is _$NoGamesAvailableStateImpl &&
+            (identical(other.datesModel, datesModel) ||
+                other.datesModel == datesModel));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, datesModel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NoGamesAvailableStateImplCopyWith<_$NoGamesAvailableStateImpl>
+      get copyWith => __$$NoGamesAvailableStateImplCopyWithImpl<
+          _$NoGamesAvailableStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() noGamesAvailable,
-    required TResult Function() error,
-    required TResult Function(List<GameItem> games) displayData,
+    required TResult Function(LeagueDatesModel datesModel) loading,
+    required TResult Function(LeagueDatesModel datesModel) noGamesAvailable,
+    required TResult Function(LeagueDatesModel datesModel) error,
+    required TResult Function(List<GameItem> games, LeagueDatesModel datesModel)
+        displayData,
   }) {
-    return noGamesAvailable();
+    return noGamesAvailable(datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function()? noGamesAvailable,
-    TResult? Function()? error,
-    TResult? Function(List<GameItem> games)? displayData,
+    TResult? Function(LeagueDatesModel datesModel)? loading,
+    TResult? Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult? Function(LeagueDatesModel datesModel)? error,
+    TResult? Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
   }) {
-    return noGamesAvailable?.call();
+    return noGamesAvailable?.call(datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? noGamesAvailable,
-    TResult Function()? error,
-    TResult Function(List<GameItem> games)? displayData,
+    TResult Function(LeagueDatesModel datesModel)? loading,
+    TResult Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult Function(LeagueDatesModel datesModel)? error,
+    TResult Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
     required TResult orElse(),
   }) {
     if (noGamesAvailable != null) {
-      return noGamesAvailable();
+      return noGamesAvailable(datesModel);
     }
     return orElse();
   }
@@ -313,14 +424,29 @@ class _$NoGamesAvailableStateImpl implements NoGamesAvailableState {
 }
 
 abstract class NoGamesAvailableState implements LeagueGamesState {
-  const factory NoGamesAvailableState() = _$NoGamesAvailableStateImpl;
+  const factory NoGamesAvailableState(final LeagueDatesModel datesModel) =
+      _$NoGamesAvailableStateImpl;
+
+  @override
+  LeagueDatesModel get datesModel;
+  @override
+  @JsonKey(ignore: true)
+  _$$NoGamesAvailableStateImplCopyWith<_$NoGamesAvailableStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorStateImplCopyWith<$Res> {
+abstract class _$$ErrorStateImplCopyWith<$Res>
+    implements $LeagueGamesStateCopyWith<$Res> {
   factory _$$ErrorStateImplCopyWith(
           _$ErrorStateImpl value, $Res Function(_$ErrorStateImpl) then) =
       __$$ErrorStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({LeagueDatesModel datesModel});
+
+  @override
+  $LeagueDatesModelCopyWith<$Res> get datesModel;
 }
 
 /// @nodoc
@@ -330,60 +456,88 @@ class __$$ErrorStateImplCopyWithImpl<$Res>
   __$$ErrorStateImplCopyWithImpl(
       _$ErrorStateImpl _value, $Res Function(_$ErrorStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? datesModel = null,
+  }) {
+    return _then(_$ErrorStateImpl(
+      null == datesModel
+          ? _value.datesModel
+          : datesModel // ignore: cast_nullable_to_non_nullable
+              as LeagueDatesModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ErrorStateImpl implements ErrorState {
-  const _$ErrorStateImpl();
+  const _$ErrorStateImpl(this.datesModel);
+
+  @override
+  final LeagueDatesModel datesModel;
 
   @override
   String toString() {
-    return 'LeagueGamesState.error()';
+    return 'LeagueGamesState.error(datesModel: $datesModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ErrorStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorStateImpl &&
+            (identical(other.datesModel, datesModel) ||
+                other.datesModel == datesModel));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, datesModel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
+      __$$ErrorStateImplCopyWithImpl<_$ErrorStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() noGamesAvailable,
-    required TResult Function() error,
-    required TResult Function(List<GameItem> games) displayData,
+    required TResult Function(LeagueDatesModel datesModel) loading,
+    required TResult Function(LeagueDatesModel datesModel) noGamesAvailable,
+    required TResult Function(LeagueDatesModel datesModel) error,
+    required TResult Function(List<GameItem> games, LeagueDatesModel datesModel)
+        displayData,
   }) {
-    return error();
+    return error(datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function()? noGamesAvailable,
-    TResult? Function()? error,
-    TResult? Function(List<GameItem> games)? displayData,
+    TResult? Function(LeagueDatesModel datesModel)? loading,
+    TResult? Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult? Function(LeagueDatesModel datesModel)? error,
+    TResult? Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
   }) {
-    return error?.call();
+    return error?.call(datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? noGamesAvailable,
-    TResult Function()? error,
-    TResult Function(List<GameItem> games)? displayData,
+    TResult Function(LeagueDatesModel datesModel)? loading,
+    TResult Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult Function(LeagueDatesModel datesModel)? error,
+    TResult Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(datesModel);
     }
     return orElse();
   }
@@ -427,16 +581,29 @@ class _$ErrorStateImpl implements ErrorState {
 }
 
 abstract class ErrorState implements LeagueGamesState {
-  const factory ErrorState() = _$ErrorStateImpl;
+  const factory ErrorState(final LeagueDatesModel datesModel) =
+      _$ErrorStateImpl;
+
+  @override
+  LeagueDatesModel get datesModel;
+  @override
+  @JsonKey(ignore: true)
+  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DisplayDataStateImplCopyWith<$Res> {
+abstract class _$$DisplayDataStateImplCopyWith<$Res>
+    implements $LeagueGamesStateCopyWith<$Res> {
   factory _$$DisplayDataStateImplCopyWith(_$DisplayDataStateImpl value,
           $Res Function(_$DisplayDataStateImpl) then) =
       __$$DisplayDataStateImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({List<GameItem> games});
+  $Res call({List<GameItem> games, LeagueDatesModel datesModel});
+
+  @override
+  $LeagueDatesModelCopyWith<$Res> get datesModel;
 }
 
 /// @nodoc
@@ -451,12 +618,17 @@ class __$$DisplayDataStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? games = null,
+    Object? datesModel = null,
   }) {
     return _then(_$DisplayDataStateImpl(
       null == games
           ? _value._games
           : games // ignore: cast_nullable_to_non_nullable
               as List<GameItem>,
+      null == datesModel
+          ? _value.datesModel
+          : datesModel // ignore: cast_nullable_to_non_nullable
+              as LeagueDatesModel,
     ));
   }
 }
@@ -464,7 +636,8 @@ class __$$DisplayDataStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DisplayDataStateImpl implements DisplayDataState {
-  const _$DisplayDataStateImpl(final List<GameItem> games) : _games = games;
+  const _$DisplayDataStateImpl(final List<GameItem> games, this.datesModel)
+      : _games = games;
 
   final List<GameItem> _games;
   @override
@@ -475,8 +648,11 @@ class _$DisplayDataStateImpl implements DisplayDataState {
   }
 
   @override
+  final LeagueDatesModel datesModel;
+
+  @override
   String toString() {
-    return 'LeagueGamesState.displayData(games: $games)';
+    return 'LeagueGamesState.displayData(games: $games, datesModel: $datesModel)';
   }
 
   @override
@@ -484,12 +660,14 @@ class _$DisplayDataStateImpl implements DisplayDataState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DisplayDataStateImpl &&
-            const DeepCollectionEquality().equals(other._games, _games));
+            const DeepCollectionEquality().equals(other._games, _games) &&
+            (identical(other.datesModel, datesModel) ||
+                other.datesModel == datesModel));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_games));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_games), datesModel);
 
   @JsonKey(ignore: true)
   @override
@@ -501,36 +679,39 @@ class _$DisplayDataStateImpl implements DisplayDataState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() noGamesAvailable,
-    required TResult Function() error,
-    required TResult Function(List<GameItem> games) displayData,
+    required TResult Function(LeagueDatesModel datesModel) loading,
+    required TResult Function(LeagueDatesModel datesModel) noGamesAvailable,
+    required TResult Function(LeagueDatesModel datesModel) error,
+    required TResult Function(List<GameItem> games, LeagueDatesModel datesModel)
+        displayData,
   }) {
-    return displayData(games);
+    return displayData(games, datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function()? noGamesAvailable,
-    TResult? Function()? error,
-    TResult? Function(List<GameItem> games)? displayData,
+    TResult? Function(LeagueDatesModel datesModel)? loading,
+    TResult? Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult? Function(LeagueDatesModel datesModel)? error,
+    TResult? Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
   }) {
-    return displayData?.call(games);
+    return displayData?.call(games, datesModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? noGamesAvailable,
-    TResult Function()? error,
-    TResult Function(List<GameItem> games)? displayData,
+    TResult Function(LeagueDatesModel datesModel)? loading,
+    TResult Function(LeagueDatesModel datesModel)? noGamesAvailable,
+    TResult Function(LeagueDatesModel datesModel)? error,
+    TResult Function(List<GameItem> games, LeagueDatesModel datesModel)?
+        displayData,
     required TResult orElse(),
   }) {
     if (displayData != null) {
-      return displayData(games);
+      return displayData(games, datesModel);
     }
     return orElse();
   }
@@ -574,10 +755,14 @@ class _$DisplayDataStateImpl implements DisplayDataState {
 }
 
 abstract class DisplayDataState implements LeagueGamesState {
-  const factory DisplayDataState(final List<GameItem> games) =
+  const factory DisplayDataState(
+          final List<GameItem> games, final LeagueDatesModel datesModel) =
       _$DisplayDataStateImpl;
 
   List<GameItem> get games;
+  @override
+  LeagueDatesModel get datesModel;
+  @override
   @JsonKey(ignore: true)
   _$$DisplayDataStateImplCopyWith<_$DisplayDataStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

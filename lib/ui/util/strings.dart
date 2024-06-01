@@ -30,7 +30,9 @@ class UiStrings {
   static const String settingFavoriteTeam = "My team";
   static const String favoriteTeamError = "Error";
   static const String noFavoriteTeamValue = "-";
+  static const String today = "Today";
   static const String yesterday = "Yesterday";
+  static const String tomorrow = "Tomorrow";
   static const String filterStandingsConference = "Conference";
   static const String filterStandingsDivision = "Division";
   static const String standingsLoadError =
@@ -54,9 +56,9 @@ class UiStrings {
 
   static String teamRecordFormat(int wins, int losses) => "$wins - $losses";
 
-  static String todayFormat(String time) => "Today, $time";
+  static String todayTimeFormat(String time) => "Today, $time";
 
-  static String tomorrowFormat(String time) => "Tomorrow, $time";
+  static String tomorrowTimeFormat(String time) => "Tomorrow, $time";
 
   static String conferencePositionCaption(int rank, String conferenceName) =>
       "${toOrdinal(rank)} in the ${conferenceName.capitalize()}";

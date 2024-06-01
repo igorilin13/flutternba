@@ -2,7 +2,7 @@ import 'package:flutternba/common/util/date_ext.dart';
 import 'package:flutternba/ui/util/strings.dart';
 import 'package:intl/intl.dart';
 
-class FormatGameDateUseCase {
+class FormatGameTimeUseCase {
   final hourOnlyFormat = DateFormat("h a");
   final hourMinutesFormat = DateFormat("h:mm a");
   final dateFormat = DateFormat("EEE, MMM d");
@@ -21,9 +21,9 @@ class FormatGameDateUseCase {
     } else if (gameDay.isBefore(today)) {
       return dateFormat.format(gameTime);
     } else if (gameDay.isSameDayAs(today)) {
-      return UiStrings.todayFormat(timeFormatter.format(gameTime));
+      return UiStrings.todayTimeFormat(timeFormatter.format(gameTime));
     } else if (gameDay.isTomorrow) {
-      return UiStrings.tomorrowFormat(timeFormatter.format(gameTime));
+      return UiStrings.tomorrowTimeFormat(timeFormatter.format(gameTime));
     } else {
       return "${dateFormat.format(gameTime)}, ${timeFormatter.format(gameTime)}";
     }
