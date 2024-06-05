@@ -59,6 +59,7 @@ class GameCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Stack(
+              alignment: Alignment.topCenter,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

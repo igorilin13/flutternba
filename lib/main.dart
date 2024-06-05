@@ -1,16 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/firebase_options.dart';
 import 'package:flutternba/ui/favorite/onboarding/onboarding_screen.dart';
 import 'package:flutternba/ui/home/home_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
 import 'package:flutternba/ui/util/colors.dart';
 
-import 'common/di/locator.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initLocator();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final onboardingComplete =
       locator<SettingsRepository>().isOnboardingComplete();
 
