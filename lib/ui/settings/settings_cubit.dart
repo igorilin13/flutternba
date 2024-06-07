@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutternba/common/util/async_ext.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/ui/settings/settings_state.dart';
@@ -38,12 +39,19 @@ class SettingsCubit extends BaseCubit<SettingsState> {
 
   Stream<FavoriteTeamSettingState> buildFavoriteTeamState(int? teamId) {
     if (teamId != null) {
-      return _teamsRepository.getTeam(teamId).map((result) {
-        return result.fold(
-          onSuccess: (team) => FavoriteTeamSettingState.hasFavorite(team),
-          onFailure: (_) => const FavoriteTeamSettingState.error(),
-        );
-      });
+      return _teamsRepository
+          .getTeam(teamId)
+          .asNullableStream()
+          .startWith(null)
+          .map(
+            (result) =>
+                result?.fold(
+                  onSuccess: (team) =>
+                      FavoriteTeamSettingState.hasFavorite(team),
+                  onFailure: (_) => const FavoriteTeamSettingState.error(),
+                ) ??
+                const FavoriteTeamSettingState.loading(),
+          );
     } else {
       return Stream.value(const FavoriteTeamSettingState.noFavorite());
     }
