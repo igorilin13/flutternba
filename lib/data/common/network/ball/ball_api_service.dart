@@ -3,20 +3,11 @@ import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/common/network/ball/ball_api_response.dart';
 import 'package:flutternba/data/common/network/dio_ext.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
-import 'package:flutternba/data/teams/remote/team_response.dart';
 
 class BallApiService {
   final Dio _dio;
 
   const BallApiService(this._dio);
-
-  Future<Result<BallApiResponse<List<TeamResponse>>>> getTeams() async {
-    return performGet(
-      "teams?per_page=100",
-      (json) =>
-          (json as List).map((item) => TeamResponse.fromJson(item)).toList(),
-    );
-  }
 
   Future<Result<BallApiResponse<List<GameResponse>>>> getTeamGames(
     List<int> teamIds,

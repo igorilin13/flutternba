@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutternba/common/app_config.dart';
+import 'package:flutternba/data/common/firestore/firebase_db.dart';
 import 'package:flutternba/data/common/network/ball/ball_api_service.dart';
 import 'package:flutternba/data/common/network/ball/ball_auth_interceptor.dart';
 import 'package:flutternba/data/common/network/sportsio/sportsio_api_service.dart';
@@ -11,7 +13,6 @@ import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/data/standings/remote/standings_remote_source.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
-import 'package:flutternba/data/teams/remote/teams_remote_source.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/domain/date/game_time_formatter.dart';
 import 'package:flutternba/domain/date/get_league_dates.dart';
@@ -50,7 +51,8 @@ Future<void> initLocator() async {
   locator.registerLazySingleton(() => SettingsLocalDataSource(locator()));
   locator.registerLazySingleton(() => SettingsRepository(locator()));
 
-  locator.registerFactory(() => TeamsRemoteDataSource(locator()));
+  locator.registerLazySingleton(() => FirebaseFirestore.instance);
+  locator.registerFactory(() => AppFirebaseDb(locator()));
   locator.registerLazySingleton(() => TeamsRepository(locator()));
 
   locator.registerFactory(() => GamesRemoteDataSource(locator()));

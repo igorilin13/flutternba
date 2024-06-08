@@ -1,23 +1,24 @@
-import 'package:flutternba/common/util/collections_ext.dart';
-import 'package:flutternba/data/teams/remote/teams_remote_source.dart';
+import 'package:flutternba/data/common/firestore/firebase_db.dart';
+import 'package:flutternba/data/common/firestore/firestore_ext.dart';
+import 'package:flutternba/data/teams/remote/team_response.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 
 import '../../common/util/result.dart';
 
 class TeamsRepository {
-  final TeamsRemoteDataSource _remoteDataSource;
+  final AppFirebaseDb _db;
 
-  bool hasRefreshed = false;
+  TeamsRepository(this._db);
 
-  TeamsRepository(this._remoteDataSource);
-
-  Future<Result<List<Team>>> getTeams() async {
-    return (await _remoteDataSource.getTeams())
-        .map((teams) => teams.mapList(Team.fromResponse));
+  Future<Result<List<Team>>> getTeams() {
+    return _db.getTeamsCollection().orderBy("id").getResult(
+          (doc) => Team.fromResponse(TeamResponse.fromJson(doc.data())),
+        );
   }
 
   Future<Result<Team>> getTeam(int teamId) async {
-    return (await getTeams())
-        .map((teams) => teams.firstWhere((element) => element.id == teamId));
+    return _db.getTeamDoc(teamId).getResult(
+          (doc) => Team.fromResponse(TeamResponse.fromJson(doc.data()!)),
+        );
   }
 }
