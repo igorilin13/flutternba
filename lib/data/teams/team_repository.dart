@@ -11,7 +11,7 @@ class TeamsRepository {
   TeamsRepository(this._db);
 
   Future<Result<List<Team>>> getTeams() {
-    return _db.getTeamsCollection().orderBy("id").getResult(
+    return _db.getTeamsCollection().getResult(
           (doc) => Team.fromResponse(TeamResponse.fromJson(doc.data())),
         );
   }

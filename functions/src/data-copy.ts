@@ -42,7 +42,11 @@ async function loadTeamInfos() {
     const batch = db.batch();
     activeTeams.forEach((team) => {
       const docRef = db.collection("teams").doc(team.id.toString());
-      batch.set(docRef, team);
+      batch.set(docRef, {
+        id: team.id,
+        name: team.name,
+        fullName: team.full_name,
+      });
     });
     await batch.commit();
 

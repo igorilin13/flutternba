@@ -5,19 +5,11 @@ part 'team_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class TeamResponse {
   final int id;
-  final String abbreviation;
-  final String city;
-  final String conference;
-  final String division;
-  final String fullName;
   final String name;
+  final String fullName;
 
   const TeamResponse({
     required this.id,
-    required this.abbreviation,
-    required this.city,
-    required this.conference,
-    required this.division,
     required this.fullName,
     required this.name,
   });

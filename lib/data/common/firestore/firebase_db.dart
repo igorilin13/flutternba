@@ -5,8 +5,8 @@ class AppFirebaseDb {
 
   AppFirebaseDb(this._firestore);
 
-  CollectionReference<Map<String, dynamic>> getTeamsCollection() =>
-      _firestore.collection("teams");
+  Query<Map<String, dynamic>> getTeamsCollection() =>
+      _firestore.collection("teams").orderBy("id");
 
   DocumentReference<Map<String, dynamic>> getTeamDoc(int teamId) =>
       _firestore.doc("teams/$teamId");
