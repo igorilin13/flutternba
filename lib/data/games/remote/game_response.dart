@@ -4,13 +4,12 @@ import '../../teams/remote/team_response.dart';
 
 part 'game_response.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class GameResponse {
   final int id;
   final String date;
   final TeamResponse homeTeam;
   final int homeTeamScore;
-  final int period;
   final bool postseason;
   final String status;
   final String? time;
@@ -22,7 +21,6 @@ class GameResponse {
     required this.date,
     required this.homeTeam,
     required this.homeTeamScore,
-    required this.period,
     required this.postseason,
     required this.status,
     required this.time,

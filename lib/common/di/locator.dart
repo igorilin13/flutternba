@@ -2,13 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/common/firestore/firebase_db.dart';
-import 'package:flutternba/data/common/network/ball/ball_api_service.dart';
-import 'package:flutternba/data/common/network/ball/ball_auth_interceptor.dart';
 import 'package:flutternba/data/common/network/sportsio/sportsio_api_service.dart';
 import 'package:flutternba/data/common/network/sportsio/sportsio_auth_interceptor.dart';
 import 'package:flutternba/data/common/network/team_mapping.dart';
 import 'package:flutternba/data/games/games_repository.dart';
-import 'package:flutternba/data/games/remote/games_remote_source.dart';
 import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/data/standings/remote/standings_remote_source.dart';
@@ -28,20 +25,10 @@ final locator = GetIt.instance;
 Future<void> initLocator() async {
   locator.registerLazySingleton(
     () => _createDio(
-      AppConfig.ballApiUrl,
-      BallAuthInterceptor(AppConfig.ballApiKey),
-    ),
-    instanceName: "ballApi",
-  );
-  locator.registerLazySingleton(
-    () => _createDio(
       AppConfig.sportsIoApiUrl,
       SportsIoAuthInterceptor(AppConfig.sportsIoApiKey),
     ),
     instanceName: "sportsIoApi",
-  );
-  locator.registerLazySingleton(
-    () => BallApiService(locator.get(instanceName: "ballApi")),
   );
   locator.registerLazySingleton(
     () => SportsIoApiService(locator.get(instanceName: "sportsIoApi")),
@@ -55,7 +42,6 @@ Future<void> initLocator() async {
   locator.registerFactory(() => AppFirebaseDb(locator()));
   locator.registerLazySingleton(() => TeamsRepository(locator()));
 
-  locator.registerFactory(() => GamesRemoteDataSource(locator()));
   locator.registerFactory(() => GamesRepository(locator()));
 
   locator.registerFactory(() => FormatGameTimeUseCase());

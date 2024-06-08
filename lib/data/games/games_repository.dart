@@ -1,24 +1,26 @@
-import 'package:flutternba/common/util/async_ext.dart';
-import 'package:flutternba/common/util/collections_ext.dart';
-import 'package:flutternba/data/games/remote/games_remote_source.dart';
+import 'package:flutternba/data/common/firestore/firebase_db.dart';
+import 'package:flutternba/data/common/firestore/firestore_ext.dart';
+import 'package:flutternba/data/games/remote/game_response.dart';
 
 import '../../common/util/result.dart';
 import 'game_model.dart';
 
 class GamesRepository {
-  final GamesRemoteDataSource _remoteSource;
+  final AppFirebaseDb _db;
 
-  GamesRepository(this._remoteSource);
+  GamesRepository(this._db);
 
   Future<Result<List<Game>>> getTeamGames(int teamId) {
-    return _remoteSource.getTeamGames(teamId).mapResult(
-          (games) => games.mapList(Game.fromResponse),
+    return _db.getTeamGames(teamId).getResult(
+          (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
+          throwIfEmpty: false,
         );
   }
 
   Future<Result<List<Game>>> getLeagueGames(DateTime date) {
-    return _remoteSource.getLeagueGames(date).mapResult(
-          (games) => games.mapList(Game.fromResponse),
+    return _db.getLeagueGames(date).getResult(
+          (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
+          throwIfEmpty: false,
         );
   }
 }

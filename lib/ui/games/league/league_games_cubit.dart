@@ -49,7 +49,7 @@ class LeagueGamesCubit extends BaseCubit<LeagueGamesState> {
           return LeagueGamesState.noGamesAvailable(datesModel);
         }
       },
-      onFailure: (_) => LeagueGamesState.error(datesModel),
+      onFailure: (e) => LeagueGamesState.error(datesModel),
     );
   }
 

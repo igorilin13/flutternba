@@ -46,7 +46,7 @@ class TeamGamesView<T extends BaseTeamGamesCubit> extends StatelessWidget {
         return const Center(
           child: ErrorDisplay(
             message: UiStrings.noGamesMessage,
-            icon: Icons.event_busy,
+            icon: Icons.calendar_today,
           ),
         );
       case DisplayDataState():
