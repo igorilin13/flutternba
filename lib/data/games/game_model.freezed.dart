@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Game {
   int get id => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get leagueDate => throw _privateConstructorUsedError;
+  DateTime? get scheduledDateTime => throw _privateConstructorUsedError;
   Team get homeTeam => throw _privateConstructorUsedError;
   int get homeTeamScore => throw _privateConstructorUsedError;
   bool get postseason => throw _privateConstructorUsedError;
@@ -37,7 +38,8 @@ abstract class $GameCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      DateTime date,
+      DateTime leagueDate,
+      DateTime? scheduledDateTime,
       Team homeTeam,
       int homeTeamScore,
       bool postseason,
@@ -64,7 +66,8 @@ class _$GameCopyWithImpl<$Res, $Val extends Game>
   @override
   $Res call({
     Object? id = null,
-    Object? date = null,
+    Object? leagueDate = null,
+    Object? scheduledDateTime = freezed,
     Object? homeTeam = null,
     Object? homeTeamScore = null,
     Object? postseason = null,
@@ -78,10 +81,14 @@ class _$GameCopyWithImpl<$Res, $Val extends Game>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
+      leagueDate: null == leagueDate
+          ? _value.leagueDate
+          : leagueDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      scheduledDateTime: freezed == scheduledDateTime
+          ? _value.scheduledDateTime
+          : scheduledDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       homeTeam: null == homeTeam
           ? _value.homeTeam
           : homeTeam // ignore: cast_nullable_to_non_nullable
@@ -139,7 +146,8 @@ abstract class _$$GameImplCopyWith<$Res> implements $GameCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      DateTime date,
+      DateTime leagueDate,
+      DateTime? scheduledDateTime,
       Team homeTeam,
       int homeTeamScore,
       bool postseason,
@@ -165,7 +173,8 @@ class __$$GameImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? date = null,
+    Object? leagueDate = null,
+    Object? scheduledDateTime = freezed,
     Object? homeTeam = null,
     Object? homeTeamScore = null,
     Object? postseason = null,
@@ -179,10 +188,14 @@ class __$$GameImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
+      leagueDate: null == leagueDate
+          ? _value.leagueDate
+          : leagueDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      scheduledDateTime: freezed == scheduledDateTime
+          ? _value.scheduledDateTime
+          : scheduledDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       homeTeam: null == homeTeam
           ? _value.homeTeam
           : homeTeam // ignore: cast_nullable_to_non_nullable
@@ -220,7 +233,8 @@ class __$$GameImplCopyWithImpl<$Res>
 class _$GameImpl extends _Game {
   const _$GameImpl(
       {required this.id,
-      required this.date,
+      required this.leagueDate,
+      required this.scheduledDateTime,
       required this.homeTeam,
       required this.homeTeamScore,
       required this.postseason,
@@ -233,7 +247,9 @@ class _$GameImpl extends _Game {
   @override
   final int id;
   @override
-  final DateTime date;
+  final DateTime leagueDate;
+  @override
+  final DateTime? scheduledDateTime;
   @override
   final Team homeTeam;
   @override
@@ -251,7 +267,7 @@ class _$GameImpl extends _Game {
 
   @override
   String toString() {
-    return 'Game(id: $id, date: $date, homeTeam: $homeTeam, homeTeamScore: $homeTeamScore, postseason: $postseason, time: $time, visitorTeamScore: $visitorTeamScore, visitorTeam: $visitorTeam, gameStatus: $gameStatus)';
+    return 'Game(id: $id, leagueDate: $leagueDate, scheduledDateTime: $scheduledDateTime, homeTeam: $homeTeam, homeTeamScore: $homeTeamScore, postseason: $postseason, time: $time, visitorTeamScore: $visitorTeamScore, visitorTeam: $visitorTeam, gameStatus: $gameStatus)';
   }
 
   @override
@@ -260,7 +276,10 @@ class _$GameImpl extends _Game {
         (other.runtimeType == runtimeType &&
             other is _$GameImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.date, date) || other.date == date) &&
+            (identical(other.leagueDate, leagueDate) ||
+                other.leagueDate == leagueDate) &&
+            (identical(other.scheduledDateTime, scheduledDateTime) ||
+                other.scheduledDateTime == scheduledDateTime) &&
             (identical(other.homeTeam, homeTeam) ||
                 other.homeTeam == homeTeam) &&
             (identical(other.homeTeamScore, homeTeamScore) ||
@@ -280,7 +299,8 @@ class _$GameImpl extends _Game {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      date,
+      leagueDate,
+      scheduledDateTime,
       homeTeam,
       homeTeamScore,
       postseason,
@@ -299,7 +319,8 @@ class _$GameImpl extends _Game {
 abstract class _Game extends Game {
   const factory _Game(
       {required final int id,
-      required final DateTime date,
+      required final DateTime leagueDate,
+      required final DateTime? scheduledDateTime,
       required final Team homeTeam,
       required final int homeTeamScore,
       required final bool postseason,
@@ -312,7 +333,9 @@ abstract class _Game extends Game {
   @override
   int get id;
   @override
-  DateTime get date;
+  DateTime get leagueDate;
+  @override
+  DateTime? get scheduledDateTime;
   @override
   Team get homeTeam;
   @override

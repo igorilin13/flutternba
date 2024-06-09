@@ -73,7 +73,7 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
     final pastGames = games.filterList(
       (element) => element.game.gameStatus == GameStatus.finished,
     );
-    pastGames.sortByDescending((item) => item.game.date);
+    pastGames.sortByDescending((item) => item.game.leagueDate);
 
     final upcomingGames = games.filterList(
       (element) => element.game.gameStatus != GameStatus.finished,

@@ -17,7 +17,7 @@ class AppFirebaseDb {
         "${date.day.toString().padLeft(2, "0")}";
     return _firestore
         .collection("games")
-        .where("date", isEqualTo: formattedDate);
+        .where("leagueDate", isEqualTo: formattedDate);
   }
 
   Query<Map<String, dynamic>> getTeamGames(int teamId) {

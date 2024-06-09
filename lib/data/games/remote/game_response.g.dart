@@ -8,26 +8,28 @@ part of 'game_response.dart';
 
 GameResponse _$GameResponseFromJson(Map<String, dynamic> json) => GameResponse(
       id: json['id'] as int,
-      date: json['date'] as String,
+      leagueDate: json['leagueDate'] as String,
       homeTeam: TeamResponse.fromJson(json['homeTeam'] as Map<String, dynamic>),
       homeTeamScore: json['homeTeamScore'] as int,
       postseason: json['postseason'] as bool,
-      status: json['status'] as String,
-      time: json['time'] as String?,
+      status: json['status'] as int,
+      inGameTime: json['inGameTime'] as String?,
       visitorTeamScore: json['visitorTeamScore'] as int,
       visitorTeam:
           TeamResponse.fromJson(json['visitorTeam'] as Map<String, dynamic>),
+      scheduled: json['scheduled'] as String?,
     );
 
 Map<String, dynamic> _$GameResponseToJson(GameResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'date': instance.date,
+      'leagueDate': instance.leagueDate,
       'homeTeam': instance.homeTeam,
       'homeTeamScore': instance.homeTeamScore,
       'postseason': instance.postseason,
       'status': instance.status,
-      'time': instance.time,
+      'inGameTime': instance.inGameTime,
       'visitorTeamScore': instance.visitorTeamScore,
       'visitorTeam': instance.visitorTeam,
+      'scheduled': instance.scheduled,
     };

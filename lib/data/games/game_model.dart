@@ -5,7 +5,15 @@ import '../teams/team_model.dart';
 
 part 'game_model.freezed.dart';
 
-enum GameStatus { scheduled, live, finished }
+enum GameStatus {
+  scheduled(0),
+  live(1),
+  finished(2);
+
+  final int id;
+
+  const GameStatus(this.id);
+}
 
 enum TeamOutcome { win, loss }
 
@@ -13,7 +21,8 @@ enum TeamOutcome { win, loss }
 class Game with _$Game {
   const factory Game({
     required int id,
-    required DateTime date,
+    required DateTime leagueDate,
+    required DateTime? scheduledDateTime,
     required Team homeTeam,
     required int homeTeamScore,
     required bool postseason,
@@ -40,35 +49,19 @@ class Game with _$Game {
   }
 
   factory Game.fromResponse(GameResponse response) {
-    final GameStatus gameStatus;
-    if (response.time == null) {
-      gameStatus = GameStatus.scheduled;
-    } else if (response.status.toLowerCase().contains("final")) {
-      gameStatus = GameStatus.finished;
-    } else {
-      gameStatus = GameStatus.live;
-    }
-
-    DateTime parsedDate;
-    if (gameStatus == GameStatus.scheduled) {
-      try {
-        // At the time of writing this, the date field is always incorrect (usually off by a day)
-        // For upcoming games, the status field contains the correct date
-        parsedDate = DateTime.parse(response.status);
-      } catch (e) {
-        parsedDate = DateTime.parse(response.date);
-      }
-    } else {
-      parsedDate = DateTime.parse(response.date);
-    }
+    final GameStatus gameStatus = GameStatus.values
+        .firstWhere((element) => element.id == response.status);
 
     return Game(
       id: response.id,
-      date: parsedDate,
+      leagueDate: DateTime.parse(response.leagueDate),
+      scheduledDateTime: response.scheduled != null
+          ? DateTime.parse(response.scheduled!)
+          : null,
       homeTeam: Team.fromResponse(response.homeTeam),
       homeTeamScore: response.homeTeamScore,
       postseason: response.postseason,
-      time: response.time,
+      time: response.inGameTime,
       visitorTeamScore: response.visitorTeamScore,
       visitorTeam: Team.fromResponse(response.visitorTeam),
       gameStatus: gameStatus,
