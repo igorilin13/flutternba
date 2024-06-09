@@ -22,5 +22,11 @@ export interface GameResponse {
   visitor_team_score: number;
   postseason: boolean;
   status: string;
-  time: string;
+  time: string | null;
+}
+
+export enum GameState {
+  Scheduled,
+  Live,
+  Finished,
 }

@@ -1,7 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { SecretParam } from "firebase-functions/lib/params/types";
 import { defineString } from "firebase-functions/params";
-import { ApiResponse, GameResponse, TeamResponse } from "./ball-io-responses";
+import {
+  ApiResponse,
+  GameResponse,
+  GameState,
+  TeamResponse,
+} from "./ball-io-responses";
 
 const apiUrl = defineString("BALLIO_API_URL");
 
@@ -50,4 +55,14 @@ function calculateCurrentApiSeason(): number {
   const now = new Date();
   const august = 7;
   return now.getMonth() >= august ? now.getFullYear() : now.getFullYear() - 1;
+}
+
+export function calculateGameState(game: GameResponse): GameState {
+  if (game.time === null) {
+    return GameState.Scheduled;
+  } else if (game.status.toLowerCase().includes("final")) {
+    return GameState.Finished;
+  } else {
+    return GameState.Live;
+  }
 }

@@ -1,5 +1,6 @@
 import { getFirestore } from "firebase-admin/firestore";
-import { GameResponse, TeamResponse } from "./ball-io-responses";
+import { GameResponse, GameState, TeamResponse } from "./ball-io-responses";
+import { calculateGameState } from "./ball-io-api";
 
 const db = getFirestore();
 
@@ -41,15 +42,17 @@ function withBatch(action: (batch: FirebaseFirestore.WriteBatch) => void) {
 }
 
 function buildGameDocContent(game: GameResponse) {
+  const gameState = calculateGameState(game);
   return {
     id: game.id,
-    date: game.date,
+    leagueDate: game.date,
     homeTeamId: game.home_team.id,
     homeTeam: buildTeamInfoDocContent(game.home_team),
     homeTeamScore: game.home_team_score,
     postseason: game.postseason,
-    status: game.status,
-    time: game.time,
+    status: gameState as number,
+    scheduled: gameState == GameState.Scheduled ? game.status : null,
+    inGameTime: game.time,
     visitorTeamId: game.visitor_team.id,
     visitorTeam: buildTeamInfoDocContent(game.visitor_team),
     visitorTeamScore: game.visitor_team_score,
