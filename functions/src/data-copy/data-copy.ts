@@ -7,7 +7,7 @@ import {
   getTodayLeagueGames,
 } from "./ball-io-api";
 import { ApiResponse, GameResponse, TeamResponse } from "./ball-io-responses";
-import { saveGames, saveTeamInfos } from "./firestore-service";
+import { clearAllGames, saveGames, saveTeamInfos } from "./firestore-service";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 
@@ -18,7 +18,7 @@ export const updateTeamInfos = onSchedule(
 
 export const updateAllGames = onSchedule(
   { secrets: [apiKey], schedule: "0 6 1 10 *" },
-  async () => await loadAllGames(),
+  async () => await loadAndReplaceAllGames(),
 );
 
 export const updateTodayGames = onSchedule(
@@ -46,8 +46,11 @@ async function loadTeamInfos() {
   }
 }
 
-async function loadAllGames() {
+async function loadAndReplaceAllGames() {
   try {
+    await clearAllGames();
+    logger.info("All games cleared");
+
     const result: GameResponse[] = [];
     let currentCursor: number | null = null;
     let loadedAllPages = false;

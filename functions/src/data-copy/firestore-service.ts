@@ -3,7 +3,9 @@ import { GameResponse, TeamResponse } from "./ball-io-responses";
 
 const db = getFirestore();
 
-export function saveTeamInfos(teams: TeamResponse[]) {
+export function saveTeamInfos(
+  teams: TeamResponse[],
+): Promise<FirebaseFirestore.WriteResult[]> {
   return withBatch((batch) => {
     teams.forEach((team) => {
       const docRef = db.collection("teams").doc(team.id.toString());
@@ -12,7 +14,18 @@ export function saveTeamInfos(teams: TeamResponse[]) {
   });
 }
 
-export function saveGames(games: GameResponse[]) {
+export async function clearAllGames() {
+  const docs = await db.collection("games").listDocuments();
+  return withBatch((batch) => {
+    docs.forEach((doc) => {
+      batch.delete(doc);
+    });
+  });
+}
+
+export function saveGames(
+  games: GameResponse[],
+): Promise<FirebaseFirestore.WriteResult[]> {
   return withBatch((batch) => {
     games.forEach((game) => {
       const docRef = db.collection("games").doc(game.id.toString());
