@@ -7,10 +7,10 @@ class UiStrings {
   static const String actionConfirm = "Confirm";
   static const String actionChooseTeam = "Choose team";
   static String actionShowAll = "Show all";
-  static const String teamListLoadError =
-      "Oops, couldn't fetch teams;\ntap to retry";
-  static const String gameListLoadError =
-      "Oops, couldn't load games;\ntap to retry";
+  static const String teamListLoadError = "Couldn't load teams;\ntap to retry";
+  static const String gameListLoadError = "Couldn't load games;\ntap to retry";
+  static const String upcomingGamesLoadError = "Error loading upcoming games";
+  static const String previousGamesLoadError = "Error loading previous games";
   static const String noGamesMessage =
       "Looks like it's a quiet day – no games on the schedule";
   static const String noFavoriteTeamMessage =

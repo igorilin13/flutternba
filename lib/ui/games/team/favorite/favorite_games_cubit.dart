@@ -1,5 +1,5 @@
-import 'package:flutternba/domain/games/team/favorite/favorite_team_games.dart';
-import 'package:flutternba/domain/games/team/favorite/get_favorite_games.dart';
+import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/domain/games/team/team_games_use_case.dart';
 import 'package:flutternba/domain/standings/get_standings.dart';
 import 'package:flutternba/ui/games/team/base/base_team_games_cubit.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_state.dart';
@@ -7,24 +7,27 @@ import 'package:rxdart/rxdart.dart';
 
 class FavoriteTeamGamesCubit
     extends BaseTeamGamesCubit<FavoriteTeamGamesState> {
-  final GetFavoriteTeamGamesUseCase _getFavoriteTeamGamesUseCase;
+  final SettingsRepository _settingsRepository;
 
   FavoriteTeamGamesCubit(
-    this._getFavoriteTeamGamesUseCase,
+    this._settingsRepository,
+    TeamGamesUseCase getTeamGamesUseCase,
     GetStandingsUseCase getStandingsUseCase,
-  ) : super(const FavoriteTeamGamesState.loading(), getStandingsUseCase);
+  ) : super(
+          const FavoriteTeamGamesState.loading(),
+          getTeamGamesUseCase,
+          getStandingsUseCase,
+        );
 
   @override
   Stream<FavoriteTeamGamesState> buildStateStream() {
-    return _getFavoriteTeamGamesUseCase().switchMap((loadResult) {
-      return switch (loadResult) {
-        NoFavoriteTeam() =>
-          Stream.value(const FavoriteTeamGamesState.noFavorite()),
-        HasFavoriteTeam() => buildTeamGamesStateStream(
-            teamId: loadResult.teamId,
-            gamesStream: Stream.value(loadResult.games),
-          ).map((event) => FavoriteTeamGamesState.hasFavorite(event)),
-      };
+    return _settingsRepository.getFavoriteTeamId().switchMap((favoriteId) {
+      if (favoriteId != null) {
+        return buildTeamGamesStateStream(favoriteId)
+            .map((event) => FavoriteTeamGamesState.hasFavorite(event));
+      } else {
+        return Stream.value(const FavoriteTeamGamesState.noFavorite());
+      }
     });
   }
 }

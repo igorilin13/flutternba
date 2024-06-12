@@ -55,10 +55,17 @@ sealed class Result<T> {
     return this;
   }
 
-  T? getOrNull() {
+  T? get valueOrNull {
     return fold(
       onSuccess: (value) => value,
       onFailure: (_) => null,
+    );
+  }
+
+  Object? get errorOrNull {
+    return fold(
+      onSuccess: (_) => null,
+      onFailure: (error) => error,
     );
   }
 }

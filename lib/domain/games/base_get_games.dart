@@ -16,7 +16,7 @@ abstract class BaseGetGamesUseCase {
   BaseGetGamesUseCase(this._formatGameDateUseCase, this._getStandingsUseCase);
 
   @protected
-  Stream<Result<List<GameItem>>> createResult({
+  Stream<Result<List<GameItem>>> createDomainResult({
     required Stream<Result<List<Game>>> loadGames,
   }) {
     return CombineLatestStream.combine2(
@@ -25,7 +25,7 @@ abstract class BaseGetGamesUseCase {
       (gamesResult, standings) {
         return gamesResult.map((games) {
           final standingsByTeamId = Map<int, TeamStandings>.fromIterable(
-            standings.getOrNull() ?? [],
+            standings.valueOrNull ?? [],
             key: (team) => team.teamId,
           );
 

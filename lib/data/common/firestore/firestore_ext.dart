@@ -1,21 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/common/util/result.dart';
+import 'package:flutternba/data/common/paged_data.dart';
 
 extension FirestoreQueryExtensions on Query<Map<String, dynamic>> {
   Future<Result<List<T>>> getResult<T>(
     T Function(QueryDocumentSnapshot<Map<String, dynamic>> doc) converter, {
-    bool throwIfEmpty = true,
+    bool throwIfEmpty = false,
   }) {
+    return _getResult(
+      (snapshot) => snapshot.docs.mapList(converter),
+      throwIfEmpty,
+    );
+  }
+
+  Future<Result<PagedData<T, QueryDocumentSnapshot>>> getPagedResult<T>(
+    T Function(QueryDocumentSnapshot<Map<String, dynamic>> doc) converter, {
+    bool throwIfEmpty = false,
+  }) {
+    return _getResult(
+      (snapshot) => PagedData(
+        items: snapshot.docs.mapList(converter),
+        nextKey: snapshot.docs.lastOrNull,
+      ),
+      throwIfEmpty,
+    );
+  }
+
+  Future<Result<T>> _getResult<T>(
+    T Function(QuerySnapshot<Map<String, dynamic>> snapshot) converter,
+    bool throwIfEmpty,
+  ) {
     return get().then((snapshot) {
       return runCatching(() {
         if (snapshot.docs.isNotEmpty || !throwIfEmpty) {
-          return snapshot.docs.mapList(converter);
+          return converter(snapshot);
         } else {
           throw Exception("No documents found");
         }
       });
-    }).catchError((e) => Result<List<T>>.failure(e));
+    }).catchError((e) => Result<T>.failure(e));
   }
 }
 

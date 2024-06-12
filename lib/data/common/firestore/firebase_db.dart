@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutternba/data/games/game_model.dart';
 
 class AppFirebaseDb {
   final FirebaseFirestore _firestore;
@@ -20,12 +21,54 @@ class AppFirebaseDb {
         .where("leagueDate", isEqualTo: formattedDate);
   }
 
-  Query<Map<String, dynamic>> getTeamGames(int teamId) {
-    return _firestore.collection("games").where(
-          Filter.or(
-            Filter("homeTeamId", isEqualTo: teamId),
-            Filter("visitorTeamId", isEqualTo: teamId),
+  Query<Map<String, dynamic>> getLiveOrScheduledTeamGames(
+    int teamId,
+    int? limit,
+  ) {
+    return _getTeamGames(
+      teamId: teamId,
+      statusFilter: Filter.or(
+        Filter("status", isEqualTo: GameStatus.live.apiId),
+        Filter("status", isEqualTo: GameStatus.scheduled.apiId),
+      ),
+      limit: limit,
+    );
+  }
+
+  Query<Map<String, dynamic>> getFinishedTeamGames(
+    int teamId,
+    int? limit,
+    GamesPageKey? pageKey,
+  ) {
+    final query = _getTeamGames(
+      teamId: teamId,
+      statusFilter: Filter("status", isEqualTo: GameStatus.finished.apiId),
+      limit: limit,
+      dateDescending: true,
+    );
+
+    return pageKey != null ? query.startAfterDocument(pageKey) : query;
+  }
+
+  Query<Map<String, dynamic>> _getTeamGames({
+    required int teamId,
+    required Filter statusFilter,
+    int? limit,
+    bool dateDescending = false,
+  }) {
+    final query = _firestore
+        .collection("games")
+        .where(
+          Filter.and(
+            statusFilter,
+            Filter.or(
+              Filter("homeTeamId", isEqualTo: teamId),
+              Filter("visitorTeamId", isEqualTo: teamId),
+            ),
           ),
-        );
+        )
+        .orderBy("leagueDate", descending: dateDescending);
+
+    return limit != null ? query.limit(limit) : query;
   }
 }

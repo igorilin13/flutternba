@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -5,14 +6,16 @@ import '../teams/team_model.dart';
 
 part 'game_model.freezed.dart';
 
+typedef GamesPageKey = QueryDocumentSnapshot;
+
 enum GameStatus {
   scheduled(0),
   live(1),
   finished(2);
 
-  final int id;
+  final int apiId;
 
-  const GameStatus(this.id);
+  const GameStatus(this.apiId);
 }
 
 enum TeamOutcome { win, loss }
@@ -50,7 +53,7 @@ class Game with _$Game {
 
   factory Game.fromResponse(GameResponse response) {
     final GameStatus gameStatus = GameStatus.values
-        .firstWhere((element) => element.id == response.status);
+        .firstWhere((element) => element.apiId == response.status);
 
     return Game(
       id: response.id,

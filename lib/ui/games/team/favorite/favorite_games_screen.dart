@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
+import 'package:flutternba/ui/games/team/base/widgets/team_games_mixin.dart';
 import 'package:flutternba/ui/games/team/base/widgets/team_games_view.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_cubit.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_state.dart';
@@ -18,21 +19,30 @@ class FavoriteTeamGamesScreen extends StatefulWidget {
 }
 
 class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, FinishedGamesControllerMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
     return BlocProvider(
-      create: (context) => FavoriteTeamGamesCubit(locator(), locator()),
-      child: BlocBuilder<FavoriteTeamGamesCubit, FavoriteTeamGamesState>(
+        create: (context) => FavoriteTeamGamesCubit(
+              locator(),
+              locator(),
+              locator(),
+            ),
+        child: BlocConsumer<FavoriteTeamGamesCubit, FavoriteTeamGamesState>(
           builder: (context, state) {
-        final hideScores = context.select<SettingsCubit, bool>(
-          (cubit) => cubit.state.shouldHideScores ?? false,
-        );
-        return _buildBody(context, state, hideScores);
-      }),
-    );
+            final hideScores = context.select<SettingsCubit, bool>(
+              (cubit) => cubit.state.shouldHideScores ?? false,
+            );
+            return _buildBody(context, state, hideScores);
+          },
+          listener: (context, state) {
+            if (state is HasFavoriteTeamState) {
+              bindFinishedGames(state.gamesState);
+            }
+          },
+        ));
   }
 
   Widget _buildBody(
@@ -52,6 +62,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
         return TeamGamesView<FavoriteTeamGamesCubit>(
           restorationId: 'favoriteTeamGames',
           gamesState: state.gamesState,
+          finishedGamesController: finishedGamesController,
         );
     }
   }

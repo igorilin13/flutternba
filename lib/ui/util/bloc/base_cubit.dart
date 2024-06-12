@@ -31,7 +31,7 @@ abstract class BaseCubit<State> extends Cubit<State> {
   }
 
   void retryLoading() {
-    retrySubject.value = retrySubject.value + 1;
+    retrySubject.value++;
   }
 
   @override

@@ -14,7 +14,7 @@ class GetLeagueGamesUseCase extends BaseGetGamesUseCase {
   );
 
   Stream<Result<List<GameItem>>> call(DateTime date) {
-    return createResult(
+    return createDomainResult(
       loadGames: _gamesRepository.getLeagueGames(date).asStream(),
     );
   }

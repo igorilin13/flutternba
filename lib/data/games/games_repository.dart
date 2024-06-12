@@ -1,5 +1,6 @@
 import 'package:flutternba/data/common/firestore/firebase_db.dart';
 import 'package:flutternba/data/common/firestore/firestore_ext.dart';
+import 'package:flutternba/data/common/paged_data.dart';
 import 'package:flutternba/data/games/remote/game_response.dart';
 
 import '../../common/util/result.dart';
@@ -10,17 +11,28 @@ class GamesRepository {
 
   GamesRepository(this._db);
 
-  Future<Result<List<Game>>> getTeamGames(int teamId) {
-    return _db.getTeamGames(teamId).getResult(
+  Future<Result<List<Game>>> getLiveOrScheduledTeamGames(
+    int teamId,
+    int? limit,
+  ) {
+    return _db.getLiveOrScheduledTeamGames(teamId, limit).getResult(
           (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
-          throwIfEmpty: false,
+        );
+  }
+
+  Future<Result<PagedData<Game, GamesPageKey>>> getFinishedTeamGames(
+    int teamId,
+    int? limit,
+    GamesPageKey? pageKey,
+  ) {
+    return _db.getFinishedTeamGames(teamId, limit, pageKey).getPagedResult(
+          (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
         );
   }
 
   Future<Result<List<Game>>> getLeagueGames(DateTime date) {
     return _db.getLeagueGames(date).getResult(
           (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
-          throwIfEmpty: false,
         );
   }
 }
