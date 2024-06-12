@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'team_response.dart';
+part of 'team_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TeamResponse _$TeamResponseFromJson(Map<String, dynamic> json) => TeamResponse(
+_$TeamImpl _$$TeamImplFromJson(Map<String, dynamic> json) => _$TeamImpl(
       id: json['id'] as int,
-      fullName: json['fullName'] as String,
       name: json['name'] as String,
+      fullName: json['fullName'] as String,
     );
 
-Map<String, dynamic> _$TeamResponseToJson(TeamResponse instance) =>
+Map<String, dynamic> _$$TeamImplToJson(_$TeamImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

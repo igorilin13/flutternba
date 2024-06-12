@@ -14,12 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+Team _$TeamFromJson(Map<String, dynamic> json) {
+  return _Team.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Team {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TeamCopyWith<Team> get copyWith => throw _privateConstructorUsedError;
 }
@@ -108,10 +113,13 @@ class __$$TeamImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$TeamImpl implements _Team {
   const _$TeamImpl(
       {required this.id, required this.name, required this.fullName});
+
+  factory _$TeamImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TeamImplFromJson(json);
 
   @override
   final int id;
@@ -136,6 +144,7 @@ class _$TeamImpl implements _Team {
                 other.fullName == fullName));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, fullName);
 
@@ -144,6 +153,13 @@ class _$TeamImpl implements _Team {
   @pragma('vm:prefer-inline')
   _$$TeamImplCopyWith<_$TeamImpl> get copyWith =>
       __$$TeamImplCopyWithImpl<_$TeamImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TeamImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Team implements Team {
@@ -151,6 +167,8 @@ abstract class _Team implements Team {
       {required final int id,
       required final String name,
       required final String fullName}) = _$TeamImpl;
+
+  factory _Team.fromJson(Map<String, dynamic> json) = _$TeamImpl.fromJson;
 
   @override
   int get id;

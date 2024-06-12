@@ -1,6 +1,5 @@
 import 'package:flutternba/data/common/firestore/firebase_db.dart';
 import 'package:flutternba/data/common/firestore/firestore_ext.dart';
-import 'package:flutternba/data/teams/remote/team_response.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 
 import '../../common/util/result.dart';
@@ -12,14 +11,14 @@ class TeamsRepository {
 
   Future<Result<List<Team>>> getTeams() {
     return _db.getTeamsCollection().getResult(
-          (doc) => Team.fromResponse(TeamResponse.fromJson(doc.data())),
+          (doc) => Team.fromJson(doc.data()),
           throwIfEmpty: true,
         );
   }
 
   Future<Result<Team>> getTeam(int teamId) async {
-    return _db.getTeamDoc(teamId).getResult(
-          (doc) => Team.fromResponse(TeamResponse.fromJson(doc.data()!)),
-        );
+    return _db
+        .getTeamDoc(teamId)
+        .getResult((doc) => Team.fromJson(doc.data()!));
   }
 }

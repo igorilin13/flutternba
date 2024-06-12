@@ -1,6 +1,5 @@
+import 'package:flutternba/data/teams/team_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../teams/remote/team_response.dart';
 
 part 'game_response.g.dart';
 
@@ -8,13 +7,13 @@ part 'game_response.g.dart';
 class GameResponse {
   final int id;
   final String leagueDate;
-  final TeamResponse homeTeam;
+  final Team homeTeam;
   final int homeTeamScore;
   final bool postseason;
   final int status;
   final String? inGameTime;
   final int visitorTeamScore;
-  final TeamResponse visitorTeam;
+  final Team visitorTeam;
   final String? scheduled;
 
   GameResponse({

@@ -9,14 +9,13 @@ part of 'game_response.dart';
 GameResponse _$GameResponseFromJson(Map<String, dynamic> json) => GameResponse(
       id: json['id'] as int,
       leagueDate: json['leagueDate'] as String,
-      homeTeam: TeamResponse.fromJson(json['homeTeam'] as Map<String, dynamic>),
+      homeTeam: Team.fromJson(json['homeTeam'] as Map<String, dynamic>),
       homeTeamScore: json['homeTeamScore'] as int,
       postseason: json['postseason'] as bool,
       status: json['status'] as int,
       inGameTime: json['inGameTime'] as String?,
       visitorTeamScore: json['visitorTeamScore'] as int,
-      visitorTeam:
-          TeamResponse.fromJson(json['visitorTeam'] as Map<String, dynamic>),
+      visitorTeam: Team.fromJson(json['visitorTeam'] as Map<String, dynamic>),
       scheduled: json['scheduled'] as String?,
     );
 

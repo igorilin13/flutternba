@@ -1,7 +1,7 @@
-import 'package:flutternba/data/teams/remote/team_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'team_model.freezed.dart';
+part 'team_model.g.dart';
 
 @freezed
 class Team with _$Team {
@@ -11,11 +11,5 @@ class Team with _$Team {
     required String fullName,
   }) = _Team;
 
-  factory Team.fromResponse(TeamResponse response) {
-    return Team(
-      id: response.id,
-      name: response.name,
-      fullName: response.fullName,
-    );
-  }
+  factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 }

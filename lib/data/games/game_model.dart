@@ -61,12 +61,12 @@ class Game with _$Game {
       scheduledDateTime: response.scheduled != null
           ? DateTime.parse(response.scheduled!)
           : null,
-      homeTeam: Team.fromResponse(response.homeTeam),
+      homeTeam: response.homeTeam,
       homeTeamScore: response.homeTeamScore,
       postseason: response.postseason,
       time: response.inGameTime,
       visitorTeamScore: response.visitorTeamScore,
-      visitorTeam: Team.fromResponse(response.visitorTeam),
+      visitorTeam: response.visitorTeam,
       gameStatus: gameStatus,
     );
   }
