@@ -36,9 +36,10 @@ class TeamGamesUseCase extends BaseGetGamesUseCase {
         .asStream()
         .switchMap(
           (loadedPage) => createDomainResult(
-            loadGames: Stream.value(loadedPage.map((value) => value.items)),
+            loadGames:
+                Stream.value(loadedPage.mapValue((value) => value.items)),
           ).map(
-            (domainResult) => domainResult.map(
+            (domainResult) => domainResult.mapValue(
               (games) => PagedData(
                 items: games,
                 nextKey: loadedPage.valueOrNull?.nextKey,

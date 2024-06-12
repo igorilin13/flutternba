@@ -23,7 +23,7 @@ abstract class BaseGetGamesUseCase {
       loadGames,
       _getStandingsUseCase.getTeams().asStream(),
       (gamesResult, standings) {
-        return gamesResult.map((games) {
+        return gamesResult.mapValue((games) {
           final standingsByTeamId = Map<int, TeamStandings>.fromIterable(
             standings.valueOrNull ?? [],
             key: (team) => team.teamId,

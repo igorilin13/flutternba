@@ -420,6 +420,7 @@ abstract class _$$DisplayDataStateImplCopyWith<$Res> {
   $GameItemCopyWith<$Res>? get previousGame;
   $PagedDataCopyWith<GameItem, QueryDocumentSnapshot<Object?>, $Res>?
       get previousGames;
+  $ResultCopyWith<TeamStandings, $Res>? get standings;
 }
 
 /// @nodoc
@@ -521,6 +522,18 @@ class __$$DisplayDataStateImplCopyWithImpl<$Res>
     return $PagedDataCopyWith<GameItem, QueryDocumentSnapshot<Object?>, $Res>(
         _value.previousGames!, (value) {
       return _then(_value.copyWith(previousGames: value));
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ResultCopyWith<TeamStandings, $Res>? get standings {
+    if (_value.standings == null) {
+      return null;
+    }
+
+    return $ResultCopyWith<TeamStandings, $Res>(_value.standings!, (value) {
+      return _then(_value.copyWith(standings: value));
     });
   }
 }

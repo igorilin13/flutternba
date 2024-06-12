@@ -14,7 +14,7 @@ class StandingsRepository {
       return Future.value(Result.success(_cached!));
     } else {
       return (await _remoteSource.getStandings())
-          .map((response) => response.mapList(TeamStandings.fromResponse))
+          .mapValue((response) => response.mapList(TeamStandings.fromResponse))
           .onSuccess((value) => _cached = value);
     }
   }

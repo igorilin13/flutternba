@@ -1,18 +1,19 @@
-sealed class Result<T> {
-  const Result();
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'result.freezed.dart';
+
+@freezed
+sealed class Result<T> with _$Result<T> {
+  const Result._();
 
   bool get isSuccess => this is Success;
   bool get isFailure => this is Failure;
 
-  factory Result.success(T value) {
-    return Success(value);
-  }
+  const factory Result.success(T value) = Success;
 
-  factory Result.failure(Object error) {
-    return Failure(error);
-  }
+  const factory Result.failure(Object error) = Failure;
 
-  Result<R> map<R>(R Function(T value) transform) {
+  Result<R> mapValue<R>(R Function(T value) transform) {
     switch (this) {
       case Success<T> success:
         return runCatching(() => transform(success.value));
@@ -68,18 +69,6 @@ sealed class Result<T> {
       onFailure: (error) => error,
     );
   }
-}
-
-final class Success<T> extends Result<T> {
-  final T value;
-
-  const Success(this.value);
-}
-
-final class Failure<T> extends Result<T> {
-  final Object error;
-
-  const Failure(this.error);
 }
 
 Future<Result<T>> runCatchingAsync<T>(Future<T> Function() block) async {
