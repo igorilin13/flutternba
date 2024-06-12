@@ -3,8 +3,8 @@ import 'package:flutternba/common/util/bool_ext.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
-import 'package:flutternba/domain/standings/get_standings.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
+import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:flutternba/ui/util/bloc/base_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,7 +14,7 @@ part 'standings_state.dart';
 
 class StandingsCubit extends BaseCubit<StandingsState> {
   final SettingsRepository _settingsRepository;
-  final GetStandingsUseCase _standingsUseCase;
+  final StandingsUseCase _standingsUseCase;
   final BehaviorSubject<StandingsType> _standingsType =
       BehaviorSubject.seeded(StandingsType.conference);
   final BehaviorSubject<bool> _overrideHideScores =

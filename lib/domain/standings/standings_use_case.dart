@@ -7,10 +7,10 @@ import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
 
-class GetStandingsUseCase {
+class StandingsUseCase {
   final StandingsRepository _standingsRepository;
 
-  GetStandingsUseCase(this._standingsRepository);
+  StandingsUseCase(this._standingsRepository);
 
   Future<Result<List<TeamStandings>>> getTeams() {
     return getStandings(StandingsType.conference).mapResult(
@@ -47,7 +47,7 @@ class GetStandingsUseCase {
                 .mapList(
                   (entry) => StandingsGroup(
                     title: entry.key.capitalize(),
-                    teams: makeDivisionStandings(entry.value),
+                    teams: _makeDivisionStandings(entry.value),
                   ),
                 );
 
@@ -71,7 +71,7 @@ class GetStandingsUseCase {
     );
   }
 
-  List<TeamStandings> makeDivisionStandings(
+  List<TeamStandings> _makeDivisionStandings(
     List<TeamStandings> teams,
   ) {
     return _calculateGamesBehind(

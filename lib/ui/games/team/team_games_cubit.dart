@@ -1,5 +1,5 @@
 import 'package:flutternba/domain/games/team/team_games_use_case.dart';
-import 'package:flutternba/domain/standings/get_standings.dart';
+import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:flutternba/ui/games/team/base/base_team_games_cubit.dart';
 
 import 'base/team_games_state.dart';
@@ -10,7 +10,7 @@ class TeamGamesCubit extends BaseTeamGamesCubit<TeamGamesState> {
   TeamGamesCubit(
     this._teamId,
     TeamGamesUseCase getTeamGamesUseCase,
-    GetStandingsUseCase getStandingsUseCase,
+    StandingsUseCase getStandingsUseCase,
   ) : super(
           const TeamGamesState.initialLoading(),
           getTeamGamesUseCase,

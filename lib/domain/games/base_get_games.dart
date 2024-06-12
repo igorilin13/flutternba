@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
-import 'package:flutternba/domain/standings/get_standings.dart';
+import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../common/util/result.dart';
@@ -11,7 +11,7 @@ import 'game_item.dart';
 
 abstract class BaseGetGamesUseCase {
   final FormatGameTimeUseCase _formatGameDateUseCase;
-  final GetStandingsUseCase _getStandingsUseCase;
+  final StandingsUseCase _getStandingsUseCase;
 
   BaseGetGamesUseCase(this._formatGameDateUseCase, this._getStandingsUseCase);
 
