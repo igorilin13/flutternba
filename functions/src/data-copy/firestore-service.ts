@@ -1,6 +1,7 @@
 import { getFirestore } from "firebase-admin/firestore";
 import { GameResponse, GameState, TeamResponse } from "./ball-io-responses";
 import { calculateGameState } from "./ball-io-api";
+import { TeamStandings } from "./espn-standings-api";
 
 const db = getFirestore();
 
@@ -31,6 +32,17 @@ export function saveGames(
     games.forEach((game) => {
       const docRef = db.collection("games").doc(game.id.toString());
       batch.set(docRef, buildGameDocContent(game));
+    });
+  });
+}
+
+export async function saveTeamStandings(
+  teams: TeamStandings[],
+): Promise<FirebaseFirestore.WriteResult[]> {
+  return withBatch((batch) => {
+    teams.forEach((team) => {
+      const docRef = db.collection("standings").doc(team.id.toString());
+      batch.set(docRef, JSON.parse(JSON.stringify(team)));
     });
   });
 }

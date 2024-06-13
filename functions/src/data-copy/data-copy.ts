@@ -7,7 +7,13 @@ import {
   getTodayLeagueGames,
 } from "./ball-io-api";
 import { ApiResponse, GameResponse, TeamResponse } from "./ball-io-responses";
-import { clearAllGames, saveGames, saveTeamInfos } from "./firestore-service";
+import {
+  clearAllGames,
+  saveGames,
+  saveTeamInfos,
+  saveTeamStandings,
+} from "./firestore-service";
+import { getStandings } from "./espn-standings-api";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 
@@ -29,6 +35,11 @@ export const updateTodayGames = onSchedule(
 export const updateTodayGamesNight = onSchedule(
   { secrets: [apiKey], schedule: "0 0-4 * * *" },
   async () => await loadTodayGames(),
+);
+
+export const updateStandings = onSchedule(
+  { schedule: "0 * * * *" },
+  async () => await loadStandings(),
 );
 
 async function loadTeamInfos() {
@@ -83,5 +94,15 @@ async function loadTodayGames() {
     logger.info("Today's games loaded successfully");
   } catch (error) {
     logger.error("Error loading today games", error);
+  }
+}
+
+async function loadStandings() {
+  try {
+    const teams = await getStandings();
+    await saveTeamStandings(teams);
+    logger.info("Standings loaded successfully");
+  } catch (error) {
+    logger.error("Error loading standings", error);
   }
 }
