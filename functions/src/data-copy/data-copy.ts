@@ -17,30 +17,18 @@ import { getStandings } from "./espn-standings-api";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 
-export const updateTeamInfos = onSchedule(
-  { secrets: [apiKey], schedule: "0 6 * * 2" },
-  async () => await loadTeamInfos(),
-);
-
-export const updateAllGames = onSchedule(
+export const startOfSeasonUpdate = onSchedule(
   { secrets: [apiKey], schedule: "0 6 1 10 *" },
-  async () => await loadAndReplaceAllGames(),
+  async () => {
+    await loadTeamInfos();
+    await loadAndReplaceAllGames();
+  },
 );
 
-export const updateTodayGames = onSchedule(
-  { secrets: [apiKey], schedule: "0 13-23 * * *" },
-  async () => await loadTodayGames(),
-);
-
-export const updateTodayGamesNight = onSchedule(
-  { secrets: [apiKey], schedule: "0 0-4 * * *" },
-  async () => await loadTodayGames(),
-);
-
-export const updateStandings = onSchedule(
-  { schedule: "0 * * * *" },
-  async () => await loadStandings(),
-);
+export const hourlyUpdate = onSchedule({ schedule: "0 * * * *" }, async () => {
+  await loadTodayGames();
+  await loadStandings();
+});
 
 async function loadTeamInfos() {
   try {
