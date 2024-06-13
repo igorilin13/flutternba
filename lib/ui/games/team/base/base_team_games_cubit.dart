@@ -157,7 +157,7 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
         ? upcomingGames ?? []
         : upcomingGames?.takeList(_displayedUpcomingGames) ?? [];
     final teamStandings = leagueStandings?.mapValue(
-      (value) => value.firstWhere((item) => item.teamId == teamId),
+      (value) => value.firstWhere((item) => item.id == teamId),
     );
 
     final finishedGamesData = finishedGames != null

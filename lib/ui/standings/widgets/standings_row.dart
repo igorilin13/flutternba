@@ -37,7 +37,7 @@ class StandingsRow extends StatelessWidget {
               ),
             ),
             Image.asset(
-              AssetPaths.teamLogo(team.teamId),
+              AssetPaths.teamLogo(team.id),
               height: 24,
               width: 24,
               cacheHeight: 24.toPx(context),
@@ -54,11 +54,10 @@ class StandingsRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            StandingsValueCell(text: team.overallRecord.wins.toString()),
-            StandingsValueCell(text: team.overallRecord.losses.toString()),
+            StandingsValueCell(text: team.overall.win.toString()),
+            StandingsValueCell(text: team.overall.loss.toString()),
             StandingsValueCell(
-              text:
-                  team.overallRecord.percentage.toStringAsFixed(3).substring(1),
+              text: team.overall.percentage.toStringAsFixed(3).substring(1),
             ),
             StandingsValueCell(text: rank.gamesBehind ?? "-"),
           ],

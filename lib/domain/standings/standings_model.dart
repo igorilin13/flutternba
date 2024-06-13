@@ -34,5 +34,5 @@ class StandingsGroup with _$StandingsGroup {
 
   const StandingsGroup._();
 
-  Set<int> get teamIds => teams.map((e) => e.teamId).toSet();
+  Set<int> get teamIds => teams.map((team) => team.id).toSet();
 }

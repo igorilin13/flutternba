@@ -26,7 +26,7 @@ abstract class BaseGetGamesUseCase {
         return gamesResult.mapValue((games) {
           final standingsByTeamId = Map<int, TeamStandings>.fromIterable(
             standings.valueOrNull ?? [],
-            key: (team) => team.teamId,
+            key: (team) => team.id,
           );
 
           return games.mapList((game) => _toGameItem(game, standingsByTeamId));

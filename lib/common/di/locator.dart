@@ -1,14 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
-import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/common/firestore/firebase_db.dart';
-import 'package:flutternba/data/common/network/sportsio/sportsio_api_service.dart';
-import 'package:flutternba/data/common/network/sportsio/sportsio_auth_interceptor.dart';
-import 'package:flutternba/data/common/network/team_mapping.dart';
 import 'package:flutternba/data/games/games_repository.dart';
 import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
-import 'package:flutternba/data/standings/remote/standings_remote_source.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/domain/date/game_time_formatter.dart';
@@ -22,17 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 final locator = GetIt.instance;
 
 Future<void> initLocator() async {
-  locator.registerLazySingleton(
-    () => _createDio(
-      AppConfig.sportsIoApiUrl,
-      SportsIoAuthInterceptor(AppConfig.sportsIoApiKey),
-    ),
-    instanceName: "sportsIoApi",
-  );
-  locator.registerLazySingleton(
-    () => SportsIoApiService(locator.get(instanceName: "sportsIoApi")),
-  );
-
   locator.registerSingletonAsync(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => SettingsLocalDataSource(locator()));
   locator.registerLazySingleton(() => SettingsRepository(locator()));
@@ -53,19 +36,7 @@ Future<void> initLocator() async {
   );
 
   locator.registerFactory(() => StandingsUseCase(locator()));
-  locator.registerFactory(() => TeamIdMapping());
-  locator.registerFactory(() => StandingsRemoteSource(locator(), locator()));
   locator.registerLazySingleton(() => StandingsRepository(locator()));
 
   await locator.allReady();
-}
-
-Dio _createDio(String url, Interceptor authInterceptor) {
-  return Dio(BaseOptions(baseUrl: url))
-    ..interceptors.add(LogInterceptor(
-      request: false,
-      requestHeader: false,
-      responseHeader: true,
-    ))
-    ..interceptors.add(authInterceptor);
 }

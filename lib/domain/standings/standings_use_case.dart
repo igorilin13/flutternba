@@ -25,7 +25,7 @@ class StandingsUseCase {
     StandingsType type,
   ) {
     return _standingsRepository.getStandings().mapResult((teams) {
-      final byConference = teams.groupListsBy((team) => team.conferenceName);
+      final byConference = teams.groupListsBy((team) => team.conference.name);
 
       switch (type) {
         case StandingsType.conference:
@@ -34,7 +34,8 @@ class StandingsUseCase {
               groups: byConference.entries.mapList(
                 (entry) => StandingsGroup(
                   title: entry.key.capitalize(),
-                  teams: _makeConferenceStandings(entry.value),
+                  teams: entry.value
+                      .sortedBy<num>((element) => element.conference.rank),
                 ),
               ),
             )
@@ -42,12 +43,13 @@ class StandingsUseCase {
         case StandingsType.division:
           return byConference.entries.mapList((entry) {
             final divisions = entry.value
-                .groupListsBy((team) => team.divisionName)
+                .groupListsBy((team) => team.division.name)
                 .entries
                 .mapList(
                   (entry) => StandingsGroup(
                     title: entry.key.capitalize(),
-                    teams: _makeDivisionStandings(entry.value),
+                    teams: entry.value
+                        .sortedBy<num>((element) => element.division.rank),
                   ),
                 );
 
@@ -57,52 +59,6 @@ class StandingsUseCase {
             );
           });
       }
-    });
-  }
-
-  List<TeamStandings> _makeConferenceStandings(
-    List<TeamStandings> teams,
-  ) {
-    return _calculateGamesBehind(
-      teams.sortedBy<num>((element) => element.conferenceRank.rank),
-      (team, gamesBehind) => team.copyWith(
-        conferenceRank: team.conferenceRank.copyWith(gamesBehind: gamesBehind),
-      ),
-    );
-  }
-
-  List<TeamStandings> _makeDivisionStandings(
-    List<TeamStandings> teams,
-  ) {
-    return _calculateGamesBehind(
-      teams.sortedBy<num>((element) => element.divisionRank.rank),
-      (team, gamesBehind) => team.copyWith(
-        divisionRank: team.divisionRank.copyWith(gamesBehind: gamesBehind),
-      ),
-    );
-  }
-
-  // gamesBehind is calculated incorrectly in sports.io, so recalculating it here
-  List<TeamStandings> _calculateGamesBehind(
-    List<TeamStandings> teams,
-    TeamStandings Function(TeamStandings, String?) mapper,
-  ) {
-    final leader = teams.firstOrNull;
-    if (leader == null) {
-      return teams;
-    }
-
-    return teams.mapList((team) {
-      final winsDiff = leader.overallRecord.wins - team.overallRecord.wins;
-      final lossesDiff =
-          team.overallRecord.losses - leader.overallRecord.losses;
-
-      final gamesBehind = (winsDiff + lossesDiff) / 2;
-      String? gamesBehindString;
-      if (gamesBehind > 0) {
-        gamesBehindString = gamesBehind.toStringAsFixed(1);
-      }
-      return mapper(team, gamesBehindString);
     });
   }
 }

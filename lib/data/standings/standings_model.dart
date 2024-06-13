@@ -1,69 +1,39 @@
-import 'package:flutternba/data/standings/remote/standings_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'standings_model.freezed.dart';
+part 'standings_model.g.dart';
 
 @freezed
 class TeamStandings with _$TeamStandings {
   const factory TeamStandings({
-    required int teamId,
+    required int id,
     required String teamName,
     required String fullTeamName,
-    required String conferenceName,
-    required TeamRank conferenceRank,
-    required String divisionName,
-    required TeamRank divisionRank,
-    required WinLossRecord overallRecord,
-    required WinLossRecord homeRecord,
-    required WinLossRecord awayRecord,
-    required WinLossRecord lastTenRecord,
+    required TeamRank conference,
+    required TeamRank division,
+    required WinLossRecord overall,
+    required WinLossRecord home,
+    required WinLossRecord away,
+    required WinLossRecord lastTen,
     required int streak,
-    required bool winStreak,
+    required bool isWinStreak,
   }) = _TeamStandings;
 
-  factory TeamStandings.fromResponse(StandingsResponse response) {
-    return TeamStandings(
-      teamId: response.team.id,
-      teamName: response.team.nickname,
-      fullTeamName: response.team.name,
-      conferenceName: response.conference.conferenceName,
-      conferenceRank: TeamRank(
-        rank: response.conference.rank,
-        gamesBehind: response.gamesBehind,
-      ),
-      divisionName: response.division.divisionName,
-      divisionRank: TeamRank(
-        rank: response.division.rank,
-        gamesBehind: response.division.gamesBehind,
-      ),
-      overallRecord: WinLossRecord(
-        wins: response.win.total,
-        losses: response.loss.total,
-      ),
-      homeRecord: WinLossRecord(
-        wins: response.win.home,
-        losses: response.loss.home,
-      ),
-      awayRecord: WinLossRecord(
-        wins: response.win.away,
-        losses: response.loss.away,
-      ),
-      lastTenRecord: WinLossRecord(
-        wins: response.win.lastTen,
-        losses: response.loss.lastTen,
-      ),
-      streak: response.streak,
-      winStreak: response.winStreak,
-    );
-  }
+  factory TeamStandings.fromJson(Map<String, dynamic> json) =>
+      _$TeamStandingsFromJson(json);
 }
 
 @freezed
 class TeamRank with _$TeamRank {
   const factory TeamRank({
+    required int id,
+    required String name,
     required int rank,
     required String? gamesBehind,
   }) = _TeamRank;
+
+  factory TeamRank.fromJson(Map<String, dynamic> json) =>
+      _$TeamRankFromJson(json);
 }
 
 @freezed
@@ -71,15 +41,18 @@ class WinLossRecord with _$WinLossRecord {
   const WinLossRecord._();
 
   const factory WinLossRecord({
-    required int wins,
-    required int losses,
+    required int win,
+    required int loss,
   }) = _WinLossRecord;
 
+  factory WinLossRecord.fromJson(Map<String, dynamic> json) =>
+      _$WinLossRecordFromJson(json);
+
   double get percentage {
-    final total = wins + losses;
+    final total = win + loss;
     if (total == 0) {
       return 0;
     }
-    return wins / total;
+    return win / total;
   }
 }

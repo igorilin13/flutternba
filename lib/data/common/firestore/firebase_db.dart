@@ -71,4 +71,8 @@ class AppFirebaseDb {
 
     return limit != null ? query.limit(limit) : query;
   }
+
+  Query<Map<String, dynamic>> getStandings() {
+    return _firestore.collection("standings");
+  }
 }

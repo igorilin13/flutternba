@@ -199,7 +199,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
       Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: TeamPageHeader(
-          teamId: standings.teamId,
+          teamId: standings.id,
           teamName: standings.fullTeamName,
         ),
       ),
@@ -210,32 +210,32 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
             children: [
               TeamTidbitCard(
                 contentValue: UiStrings.teamRecordFormat(
-                  standings.overallRecord.wins,
-                  standings.overallRecord.losses,
+                  standings.overall.win,
+                  standings.overall.loss,
                 ),
                 caption: UiStrings.conferencePositionCaption(
-                  standings.conferenceRank.rank,
-                  standings.conferenceName,
+                  standings.conference.rank,
+                  standings.conference.name,
                 ),
               ),
               TeamTidbitCard(
                 caption: UiStrings.captionLastTen,
                 contentValue: UiStrings.teamRecordFormat(
-                  standings.lastTenRecord.wins,
-                  standings.lastTenRecord.losses,
+                  standings.lastTen.win,
+                  standings.lastTen.loss,
                 ),
               ),
               TeamTidbitCard(
                 caption: UiStrings.captionStreak,
                 contentStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: standings.winStreak
+                      color: standings.isWinStreak
                           ? Theme.of(context).colorScheme.win
                           : Theme.of(context).colorScheme.loss,
                       fontWeight: FontWeight.w600,
                     ),
                 contentValue: UiStrings.teamStreak(
                   standings.streak,
-                  standings.winStreak,
+                  standings.isWinStreak,
                 ),
               ),
             ],

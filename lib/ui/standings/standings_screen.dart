@@ -111,11 +111,11 @@ class _StandingsScreenState extends State<StandingsScreen>
             StandingsRow(
               team: team,
               rank: state.type == StandingsType.conference
-                  ? team.conferenceRank
-                  : team.divisionRank,
+                  ? team.conference
+                  : team.division,
               decoration: rowDecoration,
-              isHighlighted: team.teamId == state.favoriteTeamId,
-              onTap: () => TeamGamesScreen.navigate(context, team.teamId),
+              isHighlighted: team.id == state.favoriteTeamId,
+              onTap: () => TeamGamesScreen.navigate(context, team.id),
             ),
           ],
         ],

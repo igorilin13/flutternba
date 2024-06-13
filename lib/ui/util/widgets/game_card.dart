@@ -117,8 +117,8 @@ class GameCard extends StatelessWidget {
         if (standings != null && !hideScores)
           Text(
             UiStrings.teamRecordCaptionFormat(
-              standings.overallRecord.wins,
-              standings.overallRecord.losses,
+              standings.overall.win,
+              standings.overall.loss,
             ),
             style:
                 Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),
