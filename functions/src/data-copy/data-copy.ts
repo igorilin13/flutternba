@@ -9,28 +9,36 @@ import {
 import { ApiResponse, GameResponse, TeamResponse } from "./ball-io-responses";
 import {
   clearAllGames,
+  clearPlayoffData,
+  getPlayoffGames,
   saveGames,
+  savePlayoffRounds,
   saveTeamInfos,
   saveTeamStandings,
 } from "./firestore-service";
-import { getStandings } from "./espn-standings-api";
+import { getStandings, TeamStandings } from "./espn-standings-api";
+import { calculatePlayoffRounds } from "./playoffs";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 
 export const startOfSeasonUpdate = onSchedule(
   { secrets: [apiKey], schedule: "0 6 1 10 *" },
   async () => {
-    await loadTeamInfos();
-    await loadAndReplaceAllGames();
+    await updateTeamInfos();
+    await updateAllGames();
+    await clearPlayoffData();
   },
 );
 
 export const hourlyUpdate = onSchedule({ schedule: "0 * * * *" }, async () => {
-  await loadTodayGames();
-  await loadStandings();
+  await updateTodayGames();
+  const teamStandings = await updateStandings();
+  if (teamStandings) {
+    updatePlayoffData(teamStandings);
+  }
 });
 
-async function loadTeamInfos() {
+async function updateTeamInfos() {
   try {
     const response = (await getTeams(apiKey)).data;
 
@@ -45,7 +53,7 @@ async function loadTeamInfos() {
   }
 }
 
-async function loadAndReplaceAllGames() {
+async function updateAllGames() {
   try {
     await clearAllGames();
     logger.info("All games cleared");
@@ -75,7 +83,7 @@ async function loadAndReplaceAllGames() {
   }
 }
 
-async function loadTodayGames() {
+async function updateTodayGames() {
   try {
     const response = (await getTodayLeagueGames(apiKey)).data;
     await saveGames(response.data);
@@ -85,12 +93,26 @@ async function loadTodayGames() {
   }
 }
 
-async function loadStandings() {
+async function updateStandings(): Promise<TeamStandings[] | null> {
   try {
     const teams = await getStandings();
     await saveTeamStandings(teams);
     logger.info("Standings loaded successfully");
+    return teams;
   } catch (error) {
     logger.error("Error loading standings", error);
+    return null;
+  }
+}
+
+async function updatePlayoffData(teamStandings: TeamStandings[]) {
+  const playoffGames = await getPlayoffGames();
+  const rounds = calculatePlayoffRounds(playoffGames, teamStandings);
+  if (rounds.length > 0) {
+    await savePlayoffRounds(rounds);
+    logger.info("Playoff data saved successfully");
+  } else {
+    await clearPlayoffData();
+    logger.info("No playoff data available, cleared existing collection");
   }
 }

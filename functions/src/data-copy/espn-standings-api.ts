@@ -8,10 +8,10 @@ export class TeamStandings {
     public fullTeamName: string,
     public conference: TeamRank,
     public division: TeamRank,
-    public overall: Record,
-    public home: Record,
-    public away: Record,
-    public lastTen: Record,
+    public overall: WinLossRecord,
+    public home: WinLossRecord,
+    public away: WinLossRecord,
+    public lastTen: WinLossRecord,
     public streak: number,
     public isWinStreak: boolean,
   ) {}
@@ -73,7 +73,7 @@ function parseEspnTeamResponse(
     formatGamesBehind(team.stats[5].value),
   );
 
-  const overall = new Record(team.stats[12].value, team.stats[7].value);
+  const overall = new WinLossRecord(team.stats[12].value, team.stats[7].value);
   const home = parseRecord(team.stats[14].displayValue);
   const away = parseRecord(team.stats[15].displayValue);
   const lastTen = parseRecord(team.stats[18].displayValue);
@@ -94,12 +94,12 @@ function parseEspnTeamResponse(
   );
 }
 
-function parseRecord(record: string): Record {
+function parseRecord(record: string): WinLossRecord {
   const [win, loss] = record.split("-");
-  return new Record(parseInt(win, 10), parseInt(loss, 10));
+  return new WinLossRecord(parseInt(win, 10), parseInt(loss, 10));
 }
 
-class TeamRank {
+export class TeamRank {
   constructor(
     public id: number,
     public name: string,
@@ -108,7 +108,7 @@ class TeamRank {
   ) {}
 }
 
-class Record {
+class WinLossRecord {
   constructor(
     public win: number,
     public loss: number,

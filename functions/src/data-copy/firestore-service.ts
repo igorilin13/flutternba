@@ -2,6 +2,7 @@ import { getFirestore } from "firebase-admin/firestore";
 import { GameResponse, GameState, TeamResponse } from "./ball-io-responses";
 import { calculateGameState } from "./ball-io-api";
 import { TeamStandings } from "./espn-standings-api";
+import { PlayoffRound } from "./playoffs";
 
 const db = getFirestore();
 
@@ -43,6 +44,37 @@ export async function saveTeamStandings(
     teams.forEach((team) => {
       const docRef = db.collection("standings").doc(team.id.toString());
       batch.set(docRef, JSON.parse(JSON.stringify(team)));
+    });
+  });
+}
+
+export async function getPlayoffGames(): Promise<
+  FirebaseFirestore.DocumentData[]
+> {
+  return (
+    await getFirestore()
+      .collection("games")
+      .where("postseason", "==", true)
+      .get()
+  ).docs.map((doc) => doc.data());
+}
+
+export async function savePlayoffRounds(
+  rounds: PlayoffRound[],
+): Promise<FirebaseFirestore.WriteResult[]> {
+  return withBatch((batch) => {
+    rounds.forEach((round) => {
+      const docRef = db.collection("playoffs").doc(round.id.toString());
+      batch.set(docRef, JSON.parse(JSON.stringify(round)));
+    });
+  });
+}
+
+export async function clearPlayoffData() {
+  const docs = await db.collection("playoffs").listDocuments();
+  return withBatch((batch) => {
+    docs.forEach((doc) => {
+      batch.delete(doc);
     });
   });
 }
