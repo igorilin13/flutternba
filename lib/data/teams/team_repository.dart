@@ -10,7 +10,7 @@ class TeamsRepository {
   TeamsRepository(this._db);
 
   Future<Result<List<Team>>> getTeams() {
-    return _db.getTeamsCollection().getResult(
+    return _db.getAllTeamInfos().getResult(
           (doc) => Team.fromJson(doc.data()),
           throwIfEmpty: true,
         );
@@ -18,7 +18,7 @@ class TeamsRepository {
 
   Future<Result<Team>> getTeam(int teamId) async {
     return _db
-        .getTeamDoc(teamId)
+        .getTeamInfo(teamId)
         .getResult((doc) => Team.fromJson(doc.data()!));
   }
 }

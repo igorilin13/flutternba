@@ -4,6 +4,7 @@ import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
 import 'package:flutternba/ui/games/team/team_games_screen.dart';
 import 'package:flutternba/ui/standings/standings_cubit.dart';
+import 'package:flutternba/ui/standings/widgets/playoff_series_card.dart';
 import 'package:flutternba/ui/standings/widgets/standings_header_row.dart';
 import 'package:flutternba/ui/standings/widgets/standings_row.dart';
 import 'package:flutternba/ui/standings/widgets/standings_type_control.dart';
@@ -25,7 +26,12 @@ class _StandingsScreenState extends State<StandingsScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider(
-      create: (context) => StandingsCubit(locator(), locator()),
+      create: (context) => StandingsCubit(
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+      ),
       child: BlocBuilder<StandingsCubit, StandingsState>(builder: _buildBody),
     );
   }
@@ -33,15 +39,9 @@ class _StandingsScreenState extends State<StandingsScreen>
   Widget _buildBody(BuildContext context, StandingsState state) {
     switch (state) {
       case LoadingState():
-        return _buildNonDisplayState(
-          context: context,
-          state: state,
-          child: const CircularProgressIndicator(),
-        );
+        return const Center(child: CircularProgressIndicator());
       case HideScoresOnState():
-        return _buildNonDisplayState(
-          context: context,
-          state: state,
+        return Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ActionMessageDisplay(
@@ -53,36 +53,24 @@ class _StandingsScreenState extends State<StandingsScreen>
           ),
         );
       case ErrorState():
-        return _buildNonDisplayState(
-          context: context,
-          state: state,
+        return Center(
           child: ErrorDisplay(
             message: UiStrings.standingsLoadError,
             onTap: context.read<StandingsCubit>().retryLoading,
           ),
         );
-      case DisplayState():
-        return _buildStandingsList(context, state);
+
+      case DisplayRegSeasonState():
+        return _buildRegSeasonStandings(context, state);
+      case DisplayPlayoffsState():
+        return _buildPlayoffsList(context, state);
     }
   }
 
-  Widget _buildNonDisplayState({
-    required BuildContext context,
-    required StandingsState state,
-    required Widget child,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          StandingsTypeControl(selected: state.type),
-          Expanded(child: Center(child: child)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStandingsList(BuildContext context, DisplayState state) {
+  Widget _buildRegSeasonStandings(
+    BuildContext context,
+    DisplayRegSeasonState state,
+  ) {
     final rowDecoration = BoxDecoration(
       border: Border(
         bottom: BorderSide(
@@ -93,7 +81,12 @@ class _StandingsScreenState extends State<StandingsScreen>
     );
 
     final items = <Widget>[
-      Center(child: StandingsTypeControl(selected: state.type)),
+      Center(
+        child: StandingsTypeControl(
+          availableTypes: state.availableStandingTypes,
+          selected: state.selectedType,
+        ),
+      ),
       for (var collection in state.collections) ...[
         if (collection.title != null)
           HeaderItem(
@@ -110,7 +103,7 @@ class _StandingsScreenState extends State<StandingsScreen>
           for (var team in group.teams) ...[
             StandingsRow(
               team: team,
-              rank: state.type == StandingsType.conference
+              rank: state.selectedType == StandingsType.conference
                   ? team.conference
                   : team.division,
               decoration: rowDecoration,
@@ -122,11 +115,45 @@ class _StandingsScreenState extends State<StandingsScreen>
       ],
     ];
 
-    return ListView.builder(
+    return ListView(
       restorationId: "standings",
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-      itemCount: items.length,
-      itemBuilder: (context, index) => items[index],
+      children: items,
+    );
+  }
+
+  Widget _buildPlayoffsList(
+    BuildContext context,
+    DisplayPlayoffsState state,
+  ) {
+    final items = [
+      Center(
+        child: StandingsTypeControl(
+          availableTypes: state.availableStandingTypes,
+          selected: state.selectedType,
+        ),
+      ),
+      for (var round in state.rounds) ...[
+        HeaderItem(
+          text: UiStrings.playoffRoundName(round.id),
+          padding: const EdgeInsets.only(top: 16, bottom: 8),
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+        for (var series in round.series)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: PlayoffSeriesCard(
+              series: series,
+              favoriteTeamId: state.favoriteTeamId,
+            ),
+          ),
+      ],
+    ];
+
+    return ListView(
+      restorationId: "playoffs",
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      children: items,
     );
   }
 

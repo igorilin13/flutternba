@@ -1,8 +1,10 @@
 import 'package:flutternba/common/util/async_ext.dart';
-import 'package:flutternba/common/util/bool_ext.dart';
-import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/data/standings/playoffs/playoff_models.dart';
+import 'package:flutternba/data/standings/playoffs/playoffs_repository.dart';
+import 'package:flutternba/data/standings/standings_model.dart';
+import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
 import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:flutternba/ui/util/bloc/base_cubit.dart';
@@ -14,7 +16,10 @@ part 'standings_state.dart';
 
 class StandingsCubit extends BaseCubit<StandingsState> {
   final SettingsRepository _settingsRepository;
-  final StandingsUseCase _standingsUseCase;
+  final MakeStandingsUseCase _makeStandingsUseCase;
+  final StandingsRepository _standingsRepository;
+  final PlayoffsRepository _playoffsRepository;
+
   final BehaviorSubject<StandingsType> _standingsType =
       BehaviorSubject.seeded(StandingsType.conference);
   final BehaviorSubject<bool> _overrideHideScores =
@@ -22,28 +27,24 @@ class StandingsCubit extends BaseCubit<StandingsState> {
 
   StandingsCubit(
     this._settingsRepository,
-    this._standingsUseCase,
-  ) : super(const StandingsState.loading(type: StandingsType.conference)) {
+    this._standingsRepository,
+    this._makeStandingsUseCase,
+    this._playoffsRepository,
+  ) : super(const StandingsState.loading()) {
     disposeControllersOnClose([_standingsType, _overrideHideScores]);
   }
 
   @override
   Stream<StandingsState> buildStateStream() {
-    final loadStandings = _standingsType.switchMap(
-      (type) => _standingsUseCase
-          .getStandings(type)
-          .asNullableStream()
-          .startWith(null),
-    );
-
     final isHideScoresOn = CombineLatestStream.combine2(
       _settingsRepository.shouldHideScores(),
       _overrideHideScores,
       (setting, override) => setting && !override,
     );
 
-    return CombineLatestStream.combine4(
-      loadStandings,
+    return CombineLatestStream.combine5(
+      _standingsRepository.getAllTeams().asNullableStream().startWith(null),
+      _playoffsRepository.getPlayoffRounds().asNullableStream().startWith(null),
       _standingsType,
       isHideScoresOn,
       _settingsRepository.getFavoriteTeamId(),
@@ -52,39 +53,51 @@ class StandingsCubit extends BaseCubit<StandingsState> {
   }
 
   StandingsState _mapToState(
-    Result<List<StandingsCollection>>? loadResult,
+    Result<List<TeamStandings>>? standingsResult,
+    Result<List<PlayoffRound>>? playoffsResult,
     StandingsType type,
     bool hideScores,
     int? favoriteTeamId,
   ) {
-    if (loadResult == null) {
-      return StandingsState.loading(type: type);
+    if (standingsResult == null) {
+      return const StandingsState.loading();
     }
-    return loadResult.fold(
-      onSuccess: (collections) {
+
+    return standingsResult.fold(
+      onSuccess: (teams) {
         if (hideScores) {
-          return StandingsState.hideScoresOn(type: type);
+          return const StandingsState.hideScoresOn();
         }
 
-        final sortedWithFavoriteFirst = collections
-            .mapList(
-              (item) => item.copyWith(
-                groups: item.groups.sortedByDescending(
-                  (item) => item.teamIds.contains(favoriteTeamId).asInt,
-                ),
-              ),
-            )
-            .sortedByDescending(
-              (item) => item.teamIds.contains(favoriteTeamId).asInt,
-            );
+        final hasPlayoffs = playoffsResult?.valueOrNull?.isNotEmpty == true;
+        final availableStandingTypes = [
+          if (hasPlayoffs) StandingsType.playoffs,
+          StandingsType.conference,
+          StandingsType.division,
+        ];
 
-        return StandingsState.display(
-          type: type,
-          collections: sortedWithFavoriteFirst,
-          favoriteTeamId: favoriteTeamId,
-        );
+        switch (type) {
+          case StandingsType.playoffs when hasPlayoffs:
+            return StandingsState.displayPlayoffs(
+              selectedType: type,
+              availableStandingTypes: availableStandingTypes,
+              rounds: playoffsResult?.valueOrNull?.reversed.toList() ?? [],
+              favoriteTeamId: favoriteTeamId,
+            );
+          default:
+            return StandingsState.displayRegSeason(
+              selectedType: type,
+              availableStandingTypes: availableStandingTypes,
+              collections: _makeStandingsUseCase(
+                teams,
+                type,
+                favoriteTeamId,
+              ),
+              favoriteTeamId: favoriteTeamId,
+            );
+        }
       },
-      onFailure: (error) => StandingsState.error(type: type),
+      onFailure: (error) => const StandingsState.error(),
     );
   }
 

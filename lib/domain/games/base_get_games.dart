@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
-import 'package:flutternba/domain/standings/standings_use_case.dart';
+import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../common/util/result.dart';
@@ -11,9 +11,9 @@ import 'game_item.dart';
 
 abstract class BaseGetGamesUseCase {
   final FormatGameTimeUseCase _formatGameDateUseCase;
-  final StandingsUseCase _getStandingsUseCase;
+  final StandingsRepository _standingsRepository;
 
-  BaseGetGamesUseCase(this._formatGameDateUseCase, this._getStandingsUseCase);
+  BaseGetGamesUseCase(this._formatGameDateUseCase, this._standingsRepository);
 
   @protected
   Stream<Result<List<GameItem>>> createDomainResult({
@@ -21,7 +21,7 @@ abstract class BaseGetGamesUseCase {
   }) {
     return CombineLatestStream.combine2(
       loadGames,
-      _getStandingsUseCase.getTeams().asStream(),
+      _standingsRepository.getAllTeams().asStream(),
       (gamesResult, standings) {
         return gamesResult.mapValue((games) {
           final standingsByTeamId = Map<int, TeamStandings>.fromIterable(

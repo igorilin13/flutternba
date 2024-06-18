@@ -6,10 +6,10 @@ class AppFirebaseDb {
 
   AppFirebaseDb(this._firestore);
 
-  Query<Map<String, dynamic>> getTeamsCollection() =>
+  Query<Map<String, dynamic>> getAllTeamInfos() =>
       _firestore.collection("teams").orderBy("id");
 
-  DocumentReference<Map<String, dynamic>> getTeamDoc(int teamId) =>
+  DocumentReference<Map<String, dynamic>> getTeamInfo(int teamId) =>
       _firestore.doc("teams/$teamId");
 
   Query<Map<String, dynamic>> getLeagueGames(DateTime date) {
@@ -72,7 +72,15 @@ class AppFirebaseDb {
     return limit != null ? query.limit(limit) : query;
   }
 
-  Query<Map<String, dynamic>> getStandings() {
+  Query<Map<String, dynamic>> getAllTeamStandings() {
     return _firestore.collection("standings");
+  }
+
+  DocumentReference<Map<String, dynamic>> getTeamStandings(int teamId) {
+    return _firestore.collection("standings").doc(teamId.toString());
+  }
+
+  Query<Map<String, dynamic>> getPlayoffRounds() {
+    return _firestore.collection("playoffs");
   }
 }

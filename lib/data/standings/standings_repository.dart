@@ -8,10 +8,16 @@ class StandingsRepository {
 
   StandingsRepository(this._db);
 
-  Future<Result<List<TeamStandings>>> getStandings() async {
-    return _db.getStandings().getResult(
+  Future<Result<List<TeamStandings>>> getAllTeams() {
+    return _db.getAllTeamStandings().getResult(
           (doc) => TeamStandings.fromJson(doc.data()),
           throwIfEmpty: true,
+        );
+  }
+
+  Future<Result<TeamStandings>> getTeam(int teamId) {
+    return _db.getTeamStandings(teamId).getResult(
+          (doc) => TeamStandings.fromJson(doc.data()!),
         );
   }
 }

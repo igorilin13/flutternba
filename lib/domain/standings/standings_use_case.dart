@@ -1,64 +1,70 @@
 import 'package:collection/collection.dart';
-import 'package:flutter_native_splash/cli_commands.dart';
-import 'package:flutternba/common/util/async_ext.dart';
+import 'package:flutternba/common/util/bool_ext.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
-import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
-import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
 
-class StandingsUseCase {
-  final StandingsRepository _standingsRepository;
-
-  StandingsUseCase(this._standingsRepository);
-
-  Future<Result<List<TeamStandings>>> getTeams() {
-    return getStandings(StandingsType.conference).mapResult(
-      (standings) => standings
-          .expand((element) => element.groups)
-          .expand((element) => element.teams)
-          .toList(growable: false),
+class MakeStandingsUseCase {
+  List<StandingsCollection> call(
+    List<TeamStandings> teams,
+    StandingsType type,
+    int? favoriteTeamId,
+  ) {
+    final conferenceTeams = groupTeamsListBy(
+      teams,
+      favoriteTeamId,
+      (team) => team.conference.id,
     );
+
+    switch (type) {
+      case StandingsType.conference:
+        return [
+          StandingsCollection(
+            groups: _makeStandingsGroups(
+              conferenceTeams,
+              (team) => team.conference,
+            ),
+          ),
+        ];
+      case StandingsType.division:
+        return conferenceTeams.mapList((teams) {
+          final divisionTeams = groupTeamsListBy(
+            teams,
+            favoriteTeamId,
+            (team) => team.division.id,
+          );
+
+          return StandingsCollection(
+            title: teams[0].conference.name,
+            groups: _makeStandingsGroups(
+              divisionTeams,
+              (team) => team.division,
+            ),
+          );
+        });
+      case StandingsType.playoffs:
+        throw Exception("Not supported");
+    }
   }
 
-  Future<Result<List<StandingsCollection>>> getStandings(
-    StandingsType type,
+  List<List<TeamStandings>> groupTeamsListBy(
+    List<TeamStandings> teams,
+    int? favoriteTeamId,
+    int Function(TeamStandings) keySelector,
   ) {
-    return _standingsRepository.getStandings().mapResult((teams) {
-      final byConference = teams.groupListsBy((team) => team.conference.name);
-
-      switch (type) {
-        case StandingsType.conference:
-          return [
-            StandingsCollection(
-              groups: byConference.entries.mapList(
-                (entry) => StandingsGroup(
-                  title: entry.key.capitalize(),
-                  teams: entry.value
-                      .sortedBy<num>((element) => element.conference.rank),
-                ),
-              ),
-            )
-          ];
-        case StandingsType.division:
-          return byConference.entries.mapList((entry) {
-            final divisions = entry.value
-                .groupListsBy((team) => team.division.name)
-                .entries
-                .mapList(
-                  (entry) => StandingsGroup(
-                    title: entry.key.capitalize(),
-                    teams: entry.value
-                        .sortedBy<num>((element) => element.division.rank),
-                  ),
-                );
-
-            return StandingsCollection(
-              title: entry.key.capitalize(),
-              groups: divisions,
-            );
-          });
-      }
+    return teams.groupListsBy(keySelector).values.sortedByDescending((teams) {
+      return teams.any((team) => team.id == favoriteTeamId).asInt;
     });
+  }
+
+  List<StandingsGroup> _makeStandingsGroups(
+    List<List<TeamStandings>> conferences,
+    TeamRank Function(TeamStandings) teamRankSelector,
+  ) {
+    return conferences.mapList((teams) => StandingsGroup(
+          title: teamRankSelector(teams[0]).name,
+          teams:
+              teams.sortedBy<num>((element) => teamRankSelector(element).rank),
+        ));
   }
 }

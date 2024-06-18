@@ -1,4 +1,4 @@
-import 'package:flutter_native_splash/cli_commands.dart';
+import 'package:flutternba/common/util/string_ext.dart';
 
 class UiStrings {
   static const String titleSelectTeam = "Select your team";
@@ -35,6 +35,7 @@ class UiStrings {
   static const String tomorrow = "Tomorrow";
   static const String filterStandingsConference = "Conference";
   static const String filterStandingsDivision = "Division";
+  static const String filterStandingsPlayoffs = "Playoffs";
   static const String standingsLoadError =
       "Oops, couldn't load standings;\ntap to retry";
   static const String standingsHideScoresMessage =
@@ -87,5 +88,20 @@ class UiStrings {
   static String teamStreak(int streak, bool isWin) {
     final streakType = isWin ? "W" : "L";
     return "$streakType$streak";
+  }
+
+  static String playoffRoundName(int id) {
+    switch (id) {
+      case 0:
+        return "First Round";
+      case 1:
+        return "Conference Semifinals";
+      case 2:
+        return "Conference Finals";
+      case 3:
+        return "NBA Finals";
+      default:
+        throw ArgumentError.value(id, "id", "Invalid playoff round id");
+    }
   }
 }

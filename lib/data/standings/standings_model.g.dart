@@ -8,7 +8,7 @@ part of 'standings_model.dart';
 
 _$TeamStandingsImpl _$$TeamStandingsImplFromJson(Map<String, dynamic> json) =>
     _$TeamStandingsImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       teamName: json['teamName'] as String,
       fullTeamName: json['fullTeamName'] as String,
       conference: TeamRank.fromJson(json['conference'] as Map<String, dynamic>),
@@ -17,7 +17,7 @@ _$TeamStandingsImpl _$$TeamStandingsImplFromJson(Map<String, dynamic> json) =>
       home: WinLossRecord.fromJson(json['home'] as Map<String, dynamic>),
       away: WinLossRecord.fromJson(json['away'] as Map<String, dynamic>),
       lastTen: WinLossRecord.fromJson(json['lastTen'] as Map<String, dynamic>),
-      streak: json['streak'] as int,
+      streak: (json['streak'] as num).toInt(),
       isWinStreak: json['isWinStreak'] as bool,
     );
 
@@ -38,9 +38,9 @@ Map<String, dynamic> _$$TeamStandingsImplToJson(_$TeamStandingsImpl instance) =>
 
 _$TeamRankImpl _$$TeamRankImplFromJson(Map<String, dynamic> json) =>
     _$TeamRankImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      rank: json['rank'] as int,
+      rank: (json['rank'] as num).toInt(),
       gamesBehind: json['gamesBehind'] as String?,
     );
 
@@ -54,8 +54,8 @@ Map<String, dynamic> _$$TeamRankImplToJson(_$TeamRankImpl instance) =>
 
 _$WinLossRecordImpl _$$WinLossRecordImplFromJson(Map<String, dynamic> json) =>
     _$WinLossRecordImpl(
-      win: json['win'] as int,
-      loss: json['loss'] as int,
+      win: (json['win'] as num).toInt(),
+      loss: (json['loss'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$WinLossRecordImplToJson(_$WinLossRecordImpl instance) =>

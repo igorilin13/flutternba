@@ -5,9 +5,9 @@ import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/common/paged_data.dart';
 import 'package:flutternba/data/games/game_model.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
+import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/games/game_item.dart';
 import 'package:flutternba/domain/games/team/team_games_use_case.dart';
-import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:flutternba/ui/games/team/base/team_games_state.dart';
 import 'package:flutternba/ui/util/bloc/base_cubit.dart';
 import 'package:rxdart/rxdart.dart';
@@ -17,7 +17,7 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
   static const int _finishedGamesPageSize = 10;
 
   final TeamGamesUseCase _getTeamGamesUseCase;
-  final StandingsUseCase _getStandingsUseCase;
+  final StandingsRepository _standingsRepository;
 
   final CompositeSubscription _perTeamSubscriptions = CompositeSubscription();
 
@@ -45,7 +45,7 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
   BaseTeamGamesCubit(
     super.initial,
     this._getTeamGamesUseCase,
-    this._getStandingsUseCase,
+    this._standingsRepository,
   ) {
     disposeControllersOnClose([
       expandUpcomingGames,
@@ -70,7 +70,7 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
       expandUpcomingGames,
       _finishedGames,
       _finishedGamesPageError,
-      _getStandingsUseCase.getTeams().asNullableStream().startWith(null),
+      _standingsRepository.getTeam(teamId).asNullableStream().startWith(null),
       mapToState,
     );
   }
@@ -137,11 +137,11 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
     bool expandUpcoming,
     PagedData<GameItem, GamesPageKey>? finishedGames,
     Object? finishedGamesPageError,
-    Result<List<TeamStandings>>? leagueStandings,
+    Result<TeamStandings>? teamStandings,
   ) {
     if (upcomingGamesResult == null &&
         finishedGames == null &&
-        leagueStandings == null) {
+        teamStandings == null) {
       return const TeamGamesState.initialLoading();
     }
 
@@ -156,9 +156,6 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
     final displayedUpcomingGames = expandUpcoming
         ? upcomingGames ?? []
         : upcomingGames?.takeList(_displayedUpcomingGames) ?? [];
-    final teamStandings = leagueStandings?.mapValue(
-      (value) => value.firstWhere((item) => item.id == teamId),
-    );
 
     final finishedGamesData = finishedGames != null
         ? PagedData(

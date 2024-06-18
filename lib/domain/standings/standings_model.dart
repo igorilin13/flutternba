@@ -6,7 +6,8 @@ part 'standings_model.freezed.dart';
 
 enum StandingsType {
   conference(UiStrings.filterStandingsConference),
-  division(UiStrings.filterStandingsDivision);
+  division(UiStrings.filterStandingsDivision),
+  playoffs(UiStrings.filterStandingsPlayoffs);
 
   const StandingsType(this.displayName);
 

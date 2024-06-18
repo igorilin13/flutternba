@@ -3,6 +3,7 @@ import 'package:flutternba/data/common/firestore/firebase_db.dart';
 import 'package:flutternba/data/games/games_repository.dart';
 import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/data/standings/playoffs/playoffs_repository.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/domain/date/game_time_formatter.dart';
@@ -22,7 +23,7 @@ Future<void> initLocator() async {
 
   locator.registerLazySingleton(() => FirebaseFirestore.instance);
   locator.registerFactory(() => AppFirebaseDb(locator()));
-  locator.registerLazySingleton(() => TeamsRepository(locator()));
+  locator.registerFactory(() => TeamsRepository(locator()));
 
   locator.registerFactory(() => GamesRepository(locator()));
 
@@ -35,8 +36,10 @@ Future<void> initLocator() async {
     () => TeamGamesUseCase(locator(), locator(), locator()),
   );
 
-  locator.registerFactory(() => StandingsUseCase(locator()));
-  locator.registerLazySingleton(() => StandingsRepository(locator()));
+  locator.registerFactory(() => MakeStandingsUseCase());
+  locator.registerFactory(() => StandingsRepository(locator()));
+
+  locator.registerFactory(() => PlayoffsRepository(locator()));
 
   await locator.allReady();
 }

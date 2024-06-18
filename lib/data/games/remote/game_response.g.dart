@@ -7,14 +7,14 @@ part of 'game_response.dart';
 // **************************************************************************
 
 GameResponse _$GameResponseFromJson(Map<String, dynamic> json) => GameResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       leagueDate: json['leagueDate'] as String,
       homeTeam: Team.fromJson(json['homeTeam'] as Map<String, dynamic>),
-      homeTeamScore: json['homeTeamScore'] as int,
+      homeTeamScore: (json['homeTeamScore'] as num).toInt(),
       postseason: json['postseason'] as bool,
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       inGameTime: json['inGameTime'] as String?,
-      visitorTeamScore: json['visitorTeamScore'] as int,
+      visitorTeamScore: (json['visitorTeamScore'] as num).toInt(),
       visitorTeam: Team.fromJson(json['visitorTeam'] as Map<String, dynamic>),
       scheduled: json['scheduled'] as String?,
     );
