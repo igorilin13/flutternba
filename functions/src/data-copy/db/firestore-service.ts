@@ -1,8 +1,8 @@
 import { getFirestore } from "firebase-admin/firestore";
-import { GameResponse, GameState, TeamResponse } from "./ball-io-responses";
-import { calculateGameState } from "./ball-io-api";
-import { TeamStandings } from "./espn-standings-api";
-import { PlayoffRound } from "./playoffs";
+import { GameResponse, TeamResponse } from "../ball-io/ball-io-responses";
+import { GameInfoModel, toGameInfoModel, toTeamInfoModel } from "./db-models";
+import { TeamStandings } from "../standings/standings-models";
+import { PlayoffRound } from "../playoffs/playoffs-models";
 
 const db = getFirestore();
 
@@ -12,7 +12,7 @@ export function saveTeamInfos(
   return withBatch((batch) => {
     teams.forEach((team) => {
       const docRef = db.collection("teams").doc(team.id.toString());
-      batch.set(docRef, buildTeamInfoDocContent(team));
+      batch.set(docRef, toFirestoreSaveableObject(toTeamInfoModel(team)));
     });
   });
 }
@@ -32,9 +32,17 @@ export function saveGames(
   return withBatch((batch) => {
     games.forEach((game) => {
       const docRef = db.collection("games").doc(game.id.toString());
-      batch.set(docRef, buildGameDocContent(game));
+      batch.set(docRef, toFirestoreSaveableObject(toGameInfoModel(game)));
     });
   });
+}
+
+export async function getGame(id: number): Promise<GameInfoModel | null> {
+  const doc = await db.collection("games").doc(id.toString()).get();
+  if (!doc.exists) {
+    return null;
+  }
+  return doc.data() as GameInfoModel;
 }
 
 export async function saveTeamStandings(
@@ -43,9 +51,19 @@ export async function saveTeamStandings(
   return withBatch((batch) => {
     teams.forEach((team) => {
       const docRef = db.collection("standings").doc(team.id.toString());
-      batch.set(docRef, JSON.parse(JSON.stringify(team)));
+      batch.set(docRef, toFirestoreSaveableObject(team));
     });
   });
+}
+
+export async function getTeamStandings(
+  teamId: number,
+): Promise<TeamStandings | null> {
+  const doc = await db.collection("standings").doc(teamId.toString()).get();
+  if (!doc.exists) {
+    return null;
+  }
+  return doc.data() as TeamStandings;
 }
 
 export async function getPlayoffGames(): Promise<
@@ -85,28 +103,6 @@ function withBatch(action: (batch: FirebaseFirestore.WriteBatch) => void) {
   return batch.commit();
 }
 
-function buildGameDocContent(game: GameResponse) {
-  const gameState = calculateGameState(game);
-  return {
-    id: game.id,
-    leagueDate: game.date,
-    homeTeamId: game.home_team.id,
-    homeTeam: buildTeamInfoDocContent(game.home_team),
-    homeTeamScore: game.home_team_score,
-    postseason: game.postseason,
-    status: gameState as number,
-    scheduled: gameState == GameState.Scheduled ? game.status : null,
-    inGameTime: game.time,
-    visitorTeamId: game.visitor_team.id,
-    visitorTeam: buildTeamInfoDocContent(game.visitor_team),
-    visitorTeamScore: game.visitor_team_score,
-  };
-}
-
-function buildTeamInfoDocContent(team: TeamResponse) {
-  return {
-    id: team.id,
-    name: team.name,
-    fullName: team.full_name,
-  };
+function toFirestoreSaveableObject(obj: unknown) {
+  return JSON.parse(JSON.stringify(obj));
 }

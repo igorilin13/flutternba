@@ -1,21 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-
-export class TeamStandings {
-  constructor(
-    public id: number,
-    public teamName: string,
-    public fullTeamName: string,
-    public conference: TeamRank,
-    public division: TeamRank,
-    public overall: WinLossRecord,
-    public home: WinLossRecord,
-    public away: WinLossRecord,
-    public lastTen: WinLossRecord,
-    public streak: number,
-    public isWinStreak: boolean,
-  ) {}
-}
+import { TeamRank, TeamStandings, WinLossRecord } from "./standings-models";
 
 export async function getStandings(): Promise<TeamStandings[]> {
   const response = await axios.get(
@@ -97,27 +82,6 @@ function parseEspnTeamResponse(
 function parseRecord(record: string): WinLossRecord {
   const [win, loss] = record.split("-");
   return new WinLossRecord(parseInt(win, 10), parseInt(loss, 10));
-}
-
-export class TeamRank {
-  constructor(
-    public id: number,
-    public name: string,
-    public rank: number,
-    public gamesBehind: string,
-  ) {}
-}
-
-class WinLossRecord {
-  constructor(
-    public win: number,
-    public loss: number,
-  ) {}
-
-  get winPct(): number {
-    const totalGames = this.win + this.loss;
-    return totalGames == 0 ? 0 : this.win / totalGames;
-  }
 }
 
 const teamIdMapping: { [key: number]: number } = {

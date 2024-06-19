@@ -5,8 +5,12 @@ import {
   getSeasonLeagueGames,
   getTeams,
   getTodayLeagueGames,
-} from "./ball-io-api";
-import { ApiResponse, GameResponse, TeamResponse } from "./ball-io-responses";
+} from "./ball-io/ball-io-api";
+import {
+  ApiResponse,
+  GameResponse,
+  TeamResponse,
+} from "./ball-io/ball-io-responses";
 import {
   clearAllGames,
   clearPlayoffData,
@@ -15,9 +19,10 @@ import {
   savePlayoffRounds,
   saveTeamInfos,
   saveTeamStandings,
-} from "./firestore-service";
-import { getStandings, TeamStandings } from "./espn-standings-api";
-import { calculatePlayoffRounds } from "./playoffs";
+} from "./db/firestore-service";
+import { getStandings } from "./standings/espn-standings-api";
+import { calculatePlayoffRounds } from "./playoffs/playoffs";
+import { TeamStandings } from "./standings/standings-models";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 

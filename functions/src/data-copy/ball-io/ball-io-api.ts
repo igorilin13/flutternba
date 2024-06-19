@@ -3,8 +3,10 @@ import { SecretParam } from "firebase-functions/lib/params/types";
 import { defineString } from "firebase-functions/params";
 import {
   ApiResponse,
+  BaseGameResponse,
   GameResponse,
   GameState,
+  PlayerGameStatsResponse,
   TeamResponse,
 } from "./ball-io-responses";
 
@@ -39,6 +41,13 @@ export function getSeasonLeagueGames(
   );
 }
 
+export function getGameStats(
+  apiKey: SecretParam,
+  gameId: number,
+): Promise<AxiosResponse<ApiResponse<Array<PlayerGameStatsResponse>>>> {
+  return performGetRequest(apiKey, `stats?game_ids[]=${gameId}&per_page=100`);
+}
+
 function performGetRequest<T>(
   apiKey: SecretParam,
   path: string,
@@ -57,7 +66,7 @@ function calculateCurrentApiSeason(): number {
   return now.getMonth() >= august ? now.getFullYear() : now.getFullYear() - 1;
 }
 
-export function calculateGameState(game: GameResponse): GameState {
+export function calculateGameState(game: BaseGameResponse): GameState {
   if (game.time === null) {
     return GameState.Scheduled;
   } else if (game.status.toLowerCase().includes("final")) {

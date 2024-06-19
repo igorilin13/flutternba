@@ -1,5 +1,6 @@
-import { GameState } from "./ball-io-responses";
-import { TeamRank, TeamStandings } from "./espn-standings-api";
+import { GameState } from "../ball-io/ball-io-responses";
+import { TeamRank, TeamStandings } from "../standings/standings-models";
+import { PlayoffRound, PlayoffSeries } from "./playoffs-models";
 
 const playoffRoundIndices = [
   [0, 7],
@@ -7,27 +8,6 @@ const playoffRoundIndices = [
   [12, 13],
   [14, 14],
 ];
-
-export class PlayoffRound {
-  constructor(
-    public id: number,
-    public series: PlayoffSeries[],
-  ) {}
-}
-
-export class PlayoffSeries {
-  constructor(
-    public conferenceId: number,
-    public homeTeamRank: number,
-    public homeTeamId: number,
-    public homeTeamName: string,
-    public homeTeamWins: number,
-    public awayTeamRank: number,
-    public awayTeamId: number,
-    public awayTeamName: string,
-    public awayTeamWins: number,
-  ) {}
-}
 
 export function calculatePlayoffRounds(
   gameDocs: FirebaseFirestore.DocumentData[],
