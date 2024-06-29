@@ -49,6 +49,26 @@ class UiStrings {
   static const String shortLabelLoss = "L";
   static const String captionLastTen = "Last Ten";
   static const String captionStreak = "Streak";
+  static const String boxScoreLoadError =
+      "Couldn't load the game.\nTap to retry";
+  static const String boxScoreGameNotStarted =
+      "Come back for stats after the game starts";
+  static const String titleTeamStats = "Team stats";
+  static const String statFieldGoals = "FG";
+  static const String statThreePointers = "3PT";
+  static const String statFreeThrows = "FT";
+  static const String statRebounds = "OReb + DReb";
+  static const String statSteals = "Steals";
+  static const String statBlocks = "Blocks";
+  static const String statTurnovers = "Turnovers";
+  static const String statAbbrMinutes = "Min";
+  static const String statAbbrPoints = "Pts";
+  static const String statAbbrFieldGoals = "FG";
+  static const String statAbbrThreePointers = "3PT";
+  static const String statAbbrRebounds = "Reb";
+  static const String boxScoreHideScoreOnMessage =
+      "You're in 'Hide scores' mode.\nContinue anyway?";
+  static const String actionRevealBoxScore = "Show box score";
 
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
 

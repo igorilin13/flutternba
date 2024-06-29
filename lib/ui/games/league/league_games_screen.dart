@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/games/league/widgets/games_date_control.dart';
+import 'package:flutternba/ui/scores/box_score_screen.dart';
 
 import '../../../common/di/locator.dart';
 import '../../settings/settings_cubit.dart';
@@ -97,11 +98,24 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
       restorationId: "leagueGames",
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 16),
       itemCount: items.length + 1,
-      itemBuilder: (context, index) => Padding(
+      itemBuilder: (context, index) {
+        final Widget content;
+        if (index > 0) {
+          final item = items[index - 1];
+          content = GameCard(
+            item: item,
+            hideScores: hideScores,
+            onTap: () => GameBoxScoreScreen.navigate(context, item.game.id),
+          );
+        } else {
+          content = _buildDateControl(context, state);
+        }
+
+        return Padding(
           padding: EdgeInsets.only(bottom: index > 0 ? 12 : 0),
-          child: index > 0
-              ? GameCard(item: items[index - 1], hideScores: hideScores)
-              : _buildDateControl(context, state)),
+          child: content,
+        );
+      },
     );
   }
 

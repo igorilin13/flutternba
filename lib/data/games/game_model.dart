@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutternba/data/games/remote/game_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../teams/team_model.dart';
 
 part 'game_model.freezed.dart';
+part 'game_model.g.dart';
 
 typedef GamesPageKey = QueryDocumentSnapshot;
 
+@JsonEnum(valueField: 'apiId')
 enum GameStatus {
   scheduled(0),
   live(1),
@@ -25,20 +26,22 @@ class Game with _$Game {
   const factory Game({
     required int id,
     required DateTime leagueDate,
-    required DateTime? scheduledDateTime,
+    required DateTime? scheduled,
     required Team homeTeam,
     required int homeTeamScore,
     required bool postseason,
-    required String? time,
+    required String? inGameTime,
     required int visitorTeamScore,
     required Team visitorTeam,
-    required GameStatus gameStatus,
+    required GameStatus status,
   }) = _Game;
 
   const Game._();
 
+  DateTime get displayDate => scheduled ?? leagueDate;
+
   TeamOutcome? getTeamOutcome(int teamId) {
-    if (gameStatus != GameStatus.finished) {
+    if (status != GameStatus.finished) {
       return null;
     } else if (homeTeam.id == teamId) {
       return homeTeamScore > visitorTeamScore
@@ -51,23 +54,5 @@ class Game with _$Game {
     }
   }
 
-  factory Game.fromResponse(GameResponse response) {
-    final GameStatus gameStatus = GameStatus.values
-        .firstWhere((element) => element.apiId == response.status);
-
-    return Game(
-      id: response.id,
-      leagueDate: DateTime.parse(response.leagueDate),
-      scheduledDateTime: response.scheduled != null
-          ? DateTime.parse(response.scheduled!)
-          : null,
-      homeTeam: response.homeTeam,
-      homeTeamScore: response.homeTeamScore,
-      postseason: response.postseason,
-      time: response.inGameTime,
-      visitorTeamScore: response.visitorTeamScore,
-      visitorTeam: response.visitorTeam,
-      gameStatus: gameStatus,
-    );
-  }
+  factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
 }

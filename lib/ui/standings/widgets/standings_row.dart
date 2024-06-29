@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/ui/standings/widgets/standings_value_cell.dart';
-import 'package:flutternba/ui/util/asset_paths.dart';
-import 'package:flutternba/ui/util/extensions.dart';
+import 'package:flutternba/ui/util/widgets/team_logo.dart';
 
 class StandingsRow extends StatelessWidget {
   final TeamStandings team;
@@ -36,13 +35,7 @@ class StandingsRow extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
-            Image.asset(
-              AssetPaths.teamLogo(team.id),
-              height: 24,
-              width: 24,
-              cacheHeight: 24.toPx(context),
-              fit: BoxFit.contain,
-            ),
+            TeamLogo(teamId: team.id, height: 24, width: 24),
             const SizedBox(width: 8),
             Expanded(
               child: Text(

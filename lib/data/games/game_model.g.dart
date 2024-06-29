@@ -1,34 +1,42 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'game_response.dart';
+part of 'game_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GameResponse _$GameResponseFromJson(Map<String, dynamic> json) => GameResponse(
+_$GameImpl _$$GameImplFromJson(Map<String, dynamic> json) => _$GameImpl(
       id: (json['id'] as num).toInt(),
-      leagueDate: json['leagueDate'] as String,
+      leagueDate: DateTime.parse(json['leagueDate'] as String),
+      scheduled: json['scheduled'] == null
+          ? null
+          : DateTime.parse(json['scheduled'] as String),
       homeTeam: Team.fromJson(json['homeTeam'] as Map<String, dynamic>),
       homeTeamScore: (json['homeTeamScore'] as num).toInt(),
       postseason: json['postseason'] as bool,
-      status: (json['status'] as num).toInt(),
       inGameTime: json['inGameTime'] as String?,
       visitorTeamScore: (json['visitorTeamScore'] as num).toInt(),
       visitorTeam: Team.fromJson(json['visitorTeam'] as Map<String, dynamic>),
-      scheduled: json['scheduled'] as String?,
+      status: $enumDecode(_$GameStatusEnumMap, json['status']),
     );
 
-Map<String, dynamic> _$GameResponseToJson(GameResponse instance) =>
+Map<String, dynamic> _$$GameImplToJson(_$GameImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'leagueDate': instance.leagueDate,
+      'leagueDate': instance.leagueDate.toIso8601String(),
+      'scheduled': instance.scheduled?.toIso8601String(),
       'homeTeam': instance.homeTeam,
       'homeTeamScore': instance.homeTeamScore,
       'postseason': instance.postseason,
-      'status': instance.status,
       'inGameTime': instance.inGameTime,
       'visitorTeamScore': instance.visitorTeamScore,
       'visitorTeam': instance.visitorTeam,
-      'scheduled': instance.scheduled,
+      'status': _$GameStatusEnumMap[instance.status]!,
     };
+
+const _$GameStatusEnumMap = {
+  GameStatus.scheduled: 0,
+  GameStatus.live: 1,
+  GameStatus.finished: 2,
+};

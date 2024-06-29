@@ -8,13 +8,14 @@ import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
 import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:flutternba/ui/util/bloc/base_cubit.dart';
+import 'package:flutternba/ui/util/bloc/hideable_score_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'standings_cubit.freezed.dart';
 part 'standings_state.dart';
 
-class StandingsCubit extends BaseCubit<StandingsState> {
+class StandingsCubit extends BaseCubit<StandingsState> with HideableScoreCubit {
   final SettingsRepository _settingsRepository;
   final MakeStandingsUseCase _makeStandingsUseCase;
   final StandingsRepository _standingsRepository;
@@ -22,8 +23,6 @@ class StandingsCubit extends BaseCubit<StandingsState> {
 
   final BehaviorSubject<StandingsType> _standingsType =
       BehaviorSubject.seeded(StandingsType.conference);
-  final BehaviorSubject<bool> _overrideHideScores =
-      BehaviorSubject.seeded(false);
 
   StandingsCubit(
     this._settingsRepository,
@@ -31,22 +30,16 @@ class StandingsCubit extends BaseCubit<StandingsState> {
     this._makeStandingsUseCase,
     this._playoffsRepository,
   ) : super(const StandingsState.loading()) {
-    disposeControllersOnClose([_standingsType, _overrideHideScores]);
+    disposeControllersOnClose([_standingsType, shouldOverrideHideScores]);
   }
 
   @override
   Stream<StandingsState> buildStateStream() {
-    final isHideScoresOn = CombineLatestStream.combine2(
-      _settingsRepository.shouldHideScores(),
-      _overrideHideScores,
-      (setting, override) => setting && !override,
-    );
-
     return CombineLatestStream.combine5(
       _standingsRepository.getAllTeams().asNullableStream().startWith(null),
       _playoffsRepository.getPlayoffRounds().asNullableStream().startWith(null),
       _standingsType,
-      isHideScoresOn,
+      shouldHideScores(_settingsRepository.shouldHideScores()),
       _settingsRepository.getFavoriteTeamId(),
       _mapToState,
     );
@@ -103,9 +96,5 @@ class StandingsCubit extends BaseCubit<StandingsState> {
 
   void changeType(StandingsType type) {
     _standingsType.value = type;
-  }
-
-  void overrideHideScores() {
-    _overrideHideScores.value = true;
   }
 }

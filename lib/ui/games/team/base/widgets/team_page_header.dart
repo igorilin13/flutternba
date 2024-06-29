@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/util/asset_paths.dart';
-import 'package:flutternba/ui/util/extensions.dart';
 import 'package:flutternba/ui/util/widgets/header_item.dart';
+import 'package:flutternba/ui/util/widgets/team_logo.dart';
 
 class TeamPageHeader extends StatelessWidget {
   final int teamId;
@@ -17,13 +16,7 @@ class TeamPageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(
-          AssetPaths.teamLogo(teamId),
-          height: 32,
-          width: 32,
-          cacheHeight: 32.toPx(context),
-          fit: BoxFit.contain,
-        ),
+        TeamLogo(teamId: teamId, height: 32, width: 32),
         const SizedBox(width: 8),
         HeaderItem(
           text: teamName,

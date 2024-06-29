@@ -38,10 +38,9 @@ abstract class BaseGetGamesUseCase {
   GameItem _toGameItem(Game game, Map<int, TeamStandings> standingsByTeamId) {
     return GameItem(
       game: game,
-      formattedDate:
-          _formatGameDateUseCase(game.scheduledDateTime ?? game.leagueDate),
-      homeTeamStandings: standingsByTeamId[game.homeTeam.id],
-      visitorTeamStandings: standingsByTeamId[game.visitorTeam.id],
+      formattedDate: _formatGameDateUseCase(game.displayDate),
+      homeTeamRecord: standingsByTeamId[game.homeTeam.id]?.overall,
+      visitorTeamRecord: standingsByTeamId[game.visitorTeam.id]?.overall,
     );
   }
 }

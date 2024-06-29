@@ -7,6 +7,7 @@ import 'package:flutternba/ui/games/team/base/base_team_games_cubit.dart';
 import 'package:flutternba/ui/games/team/base/team_games_state.dart';
 import 'package:flutternba/ui/games/team/base/widgets/expand_upcoming.dart';
 import 'package:flutternba/ui/games/team/base/widgets/team_tidbit_card.dart';
+import 'package:flutternba/ui/scores/box_score_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
 import 'package:flutternba/ui/util/colors.dart';
 import 'package:flutternba/ui/util/strings.dart';
@@ -186,6 +187,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
         item: game,
         hideScores: hideScores,
         teamOutcomeId: teamId,
+        onTap: () => GameBoxScoreScreen.navigate(context, game.game.id),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutternba/data/common/firestore/firebase_db.dart';
 import 'package:flutternba/data/common/firestore/firestore_ext.dart';
 import 'package:flutternba/data/common/paged_data.dart';
-import 'package:flutternba/data/games/remote/game_response.dart';
 
 import '../../common/util/result.dart';
 import 'game_model.dart';
@@ -15,9 +14,9 @@ class GamesRepository {
     int teamId,
     int? limit,
   ) {
-    return _db.getLiveOrScheduledTeamGames(teamId, limit).getResult(
-          (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
-        );
+    return _db
+        .getLiveOrScheduledTeamGames(teamId, limit)
+        .getResult((doc) => Game.fromJson(doc.data()));
   }
 
   Future<Result<PagedData<Game, GamesPageKey>>> getFinishedTeamGames(
@@ -25,14 +24,14 @@ class GamesRepository {
     int? limit,
     GamesPageKey? pageKey,
   ) {
-    return _db.getFinishedTeamGames(teamId, limit, pageKey).getPagedResult(
-          (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
-        );
+    return _db
+        .getFinishedTeamGames(teamId, limit, pageKey)
+        .getPagedResult((doc) => Game.fromJson(doc.data()));
   }
 
   Future<Result<List<Game>>> getLeagueGames(DateTime date) {
-    return _db.getLeagueGames(date).getResult(
-          (doc) => Game.fromResponse(GameResponse.fromJson(doc.data())),
-        );
+    return _db
+        .getLeagueGames(date)
+        .getResult((doc) => Game.fromJson(doc.data()));
   }
 }

@@ -9,7 +9,7 @@ class GameItem with _$GameItem {
   const factory GameItem({
     required Game game,
     required String formattedDate,
-    required TeamStandings? homeTeamStandings,
-    required TeamStandings? visitorTeamStandings,
+    required WinLossRecord? homeTeamRecord,
+    required WinLossRecord? visitorTeamRecord,
   }) = _GameItem;
 }

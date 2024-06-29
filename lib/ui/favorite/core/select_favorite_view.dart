@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/favorite/core/base_select_favorite_cubit.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
-import 'package:flutternba/ui/util/asset_paths.dart';
-import 'package:flutternba/ui/util/extensions.dart';
+import 'package:flutternba/ui/util/widgets/team_logo.dart';
 
 import '../../../data/teams/team_model.dart';
 import '../../util/strings.dart';
@@ -170,12 +169,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                AssetPaths.teamLogo(team.id),
-                height: 128,
-                cacheHeight: 128.toPx(context),
-                fit: BoxFit.contain,
-              ),
+              TeamLogo(teamId: team.id, height: 128),
               const SizedBox(height: 16),
               Row(
                 mainAxisSize: MainAxisSize.min,
