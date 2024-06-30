@@ -55,9 +55,6 @@ export const getBoxScore = onCall({ secrets: [apiKey] }, async (request) => {
       Array.from(playersByTeamId.keys()),
     );
     playersByTeamId.forEach((players, teamId) => {
-      players.slice(0, 5).forEach((player, index) => {
-        player.startPosition = getStartPosition(index);
-      });
       const record = standingsByTeamId.get(teamId)?.overall ?? null;
       teamBoxScores.push(toTeamBoxScoreModel(teamId, record, players));
     });
@@ -93,7 +90,6 @@ function toPlayerStatsModel(response: PlayerGameStatsResponse): PlayerStats {
     response.player.id,
     response.player.first_name,
     response.player.last_name,
-    null,
     response.player.jersey_number,
     parseInt(response.min),
     response.pts,
@@ -109,6 +105,7 @@ function toPlayerStatsModel(response: PlayerGameStatsResponse): PlayerStats {
     response.blk,
     response.stl,
     response.turnover,
+    response.ast,
   );
 }
 
@@ -117,35 +114,45 @@ function toTeamBoxScoreModel(
   record: WinLossRecord | null,
   players: PlayerStats[],
 ): TeamBoxScore {
-  const teamStats = new TeamStats(teamId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  const teamStats = new TeamStats(
+    teamId,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  );
   players.forEach((player) => {
-    teamStats.fgm += player.fgm;
-    teamStats.fga += player.fga;
-    teamStats.fg3pm += player.fg3pm;
-    teamStats.fg3pa += player.fg3pa;
-    teamStats.ftm += player.ftm;
-    teamStats.fta += player.fta;
-    teamStats.reb += player.reb;
-    teamStats.oreb += player.oreb;
-    teamStats.dreb += player.dreb;
-    teamStats.blk += player.blk;
-    teamStats.stl += player.stl;
-    teamStats.to += player.to;
+    teamStats.fgMade += player.fgMade;
+    teamStats.fgAttempts += player.fgAttempts;
+    teamStats.threePtMade += player.threePtMade;
+    teamStats.threePtAttempts += player.threePtAttempts;
+    teamStats.ftMade += player.ftMade;
+    teamStats.ftAttempts += player.ftAttempts;
+    teamStats.rebounds += player.rebounds;
+    teamStats.offRebounds += player.offRebounds;
+    teamStats.defRebounds += player.defRebounds;
+    teamStats.blocks += player.blocks;
+    teamStats.steals += player.steals;
+    teamStats.turnovers += player.turnovers;
+    teamStats.assists += player.assists;
   });
-  return new TeamBoxScore(teamStats, record, players);
-}
-
-function getStartPosition(index: number): string | null {
-  switch (index) {
-    case 0:
-    case 1:
-      return "F";
-    case 2:
-      return "C";
-    case 3:
-    case 4:
-      return "G";
-    default:
-      return null;
-  }
+  const displayedPlayers = players
+    .filter((player) => player.minutes > 0)
+    .sort((a, b) => {
+      if (b.points !== a.points) {
+        return b.points - a.points;
+      } else {
+        return b.minutes - a.minutes;
+      }
+    });
+  return new TeamBoxScore(teamStats, record, displayedPlayers);
 }
