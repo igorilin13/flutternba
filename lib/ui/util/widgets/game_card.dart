@@ -29,7 +29,6 @@ class GameCard extends StatelessWidget {
         teamOutcomeId != null ? item.game.getTeamOutcome(teamOutcomeId!) : null;
 
     return Card(
-      elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       child: InkWell(
         onTap: onTap,

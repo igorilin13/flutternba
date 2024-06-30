@@ -160,7 +160,6 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
     required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 0,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),

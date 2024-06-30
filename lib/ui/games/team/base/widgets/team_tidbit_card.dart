@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/util/colors.dart';
 
 class TeamTidbitCard extends StatelessWidget {
   final String contentValue;
@@ -20,8 +19,7 @@ class TeamTidbitCard extends StatelessWidget {
       width: 100,
       height: 100,
       child: Card(
-        elevation: 0,
-        color: theme.colorScheme.surfaceSecondary,
+        color: theme.colorScheme.surfaceVariant,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
