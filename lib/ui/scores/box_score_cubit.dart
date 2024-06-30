@@ -1,5 +1,4 @@
 import 'package:flutternba/common/util/async_ext.dart';
-import 'package:flutternba/common/util/collections_ext.dart';
 import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/data/scores/box_score_models.dart';
 import 'package:flutternba/data/scores/box_score_repository.dart';
@@ -65,8 +64,8 @@ class GameBoxScoreCubit extends BaseCubit<GameBoxScoreState>
           }
           return GameBoxScoreState.hasScore(
             gameItem,
-            _sortAndFilterTeamPlayers(boxScore.home!),
-            _sortAndFilterTeamPlayers(boxScore.away!),
+            boxScore.home!,
+            boxScore.away!,
           );
         } else {
           return GameBoxScoreState.scheduled(gameItem);
@@ -74,22 +73,5 @@ class GameBoxScoreCubit extends BaseCubit<GameBoxScoreState>
       },
       onFailure: (_) => const GameBoxScoreState.error(),
     );
-  }
-
-  TeamBoxScore _sortAndFilterTeamPlayers(TeamBoxScore team) {
-    final players = team.players.filterList((player) => player.min > 0)
-      ..sort((a, b) {
-        if (a.startPosition != null && b.startPosition == null) {
-          return -1;
-        } else if (a.startPosition == null && b.startPosition != null) {
-          return 1;
-        } else if (a.startPosition != null && b.startPosition != null) {
-          return a.startPosition!.compareTo(b.startPosition!);
-        } else {
-          return b.min.compareTo(a.min);
-        }
-      });
-
-    return team.copyWith(players: players);
   }
 }

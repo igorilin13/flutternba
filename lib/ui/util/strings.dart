@@ -61,11 +61,13 @@ class UiStrings {
   static const String statSteals = "Steals";
   static const String statBlocks = "Blocks";
   static const String statTurnovers = "Turnovers";
+  static const String statAssists = "Assists";
   static const String statAbbrMinutes = "Min";
   static const String statAbbrPoints = "Pts";
   static const String statAbbrFieldGoals = "FG";
   static const String statAbbrThreePointers = "3PT";
   static const String statAbbrRebounds = "Reb";
+  static const String statAbbrAssists = "Ast";
   static const String boxScoreHideScoreOnMessage =
       "You're in 'Hide scores' mode.\nContinue anyway?";
   static const String actionRevealBoxScore = "Show box score";

@@ -73,21 +73,10 @@ class GamePlayerStats extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    "${player.firstName.first()}. ${player.lastName}",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                if (player.startPosition != null)
-                  Text(
-                    " - ${player.startPosition}",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-              ],
+            child: Text(
+              "${player.firstName.first()}. ${player.lastName}",
+              style: Theme.of(context).textTheme.bodyMedium,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           const SizedBox(width: 8),
@@ -108,11 +97,12 @@ class GamePlayerStats extends StatelessWidget {
 }
 
 enum _StatType {
-  minutes(UiStrings.statAbbrMinutes, 32),
-  points(UiStrings.statAbbrPoints, 32),
-  fieldGoals(UiStrings.statAbbrFieldGoals, 40),
-  threePointers(UiStrings.statAbbrThreePointers, 40),
-  rebounds(UiStrings.statAbbrRebounds, 32);
+  minutes(UiStrings.statAbbrMinutes, 28),
+  points(UiStrings.statAbbrPoints, 28),
+  fieldGoals(UiStrings.statAbbrFieldGoals, 36),
+  threePointers(UiStrings.statAbbrThreePointers, 36),
+  rebounds(UiStrings.statAbbrRebounds, 28),
+  assists(UiStrings.statAbbrAssists, 28);
 
   final String title;
   final double columnWidth;
@@ -122,15 +112,17 @@ enum _StatType {
   String buildValue(PlayerStats player) {
     switch (this) {
       case _StatType.minutes:
-        return player.min.toString();
+        return player.minutes.toString();
       case _StatType.points:
-        return player.pts.toString();
+        return player.points.toString();
       case _StatType.fieldGoals:
-        return "${player.fgm}-${player.fga}";
+        return "${player.fgMade}-${player.fgAttempts}";
       case _StatType.threePointers:
-        return "${player.fg3pm}-${player.fg3pa}";
+        return "${player.threePtMade}-${player.threePtAttempts}";
       case _StatType.rebounds:
-        return player.reb.toString();
+        return player.rebounds.toString();
+      case _StatType.assists:
+        return player.assists.toString();
     }
   }
 }

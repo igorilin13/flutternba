@@ -33,25 +33,26 @@ class TeamBoxScore with _$TeamBoxScore {
 class TeamStats with _$TeamStats {
   factory TeamStats({
     required int id,
-    required int fgm,
-    required int fga,
-    required int fg3pm,
-    required int fg3pa,
-    required int ftm,
-    required int fta,
-    required int reb,
-    required int oreb,
-    required int dreb,
-    required int blk,
-    required int stl,
-    required int to,
+    required int fgMade,
+    required int fgAttempts,
+    required int threePtMade,
+    required int threePtAttempts,
+    required int ftMade,
+    required int ftAttempts,
+    required int rebounds,
+    required int offRebounds,
+    required int defRebounds,
+    required int blocks,
+    required int steals,
+    required int turnovers,
+    required int assists,
   }) = _TeamStats;
 
   TeamStats._();
 
-  int get fgPct => _calculatePercentage(fgm, fga);
-  int get fg3Pct => _calculatePercentage(fg3pm, fg3pa);
-  int get ftPct => _calculatePercentage(ftm, fta);
+  int get fgPct => _calculatePercentage(fgMade, fgAttempts);
+  int get threePtPct => _calculatePercentage(threePtMade, threePtAttempts);
+  int get ftPct => _calculatePercentage(ftMade, ftAttempts);
 
   int _calculatePercentage(int made, int attempts) =>
       attempts == 0 ? 0 : (100 * made / attempts).round();
@@ -66,22 +67,22 @@ class PlayerStats with _$PlayerStats {
     required int id,
     required String firstName,
     required String lastName,
-    String? startPosition,
     required String jersey,
-    required int min,
-    required int pts,
-    required int fgm,
-    required int fga,
-    required int fg3pm,
-    required int fg3pa,
-    required int ftm,
-    required int fta,
-    required int reb,
-    required int oreb,
-    required int dreb,
-    required int blk,
-    required int stl,
-    required int to,
+    required int minutes,
+    required int points,
+    required int fgMade,
+    required int fgAttempts,
+    required int threePtMade,
+    required int threePtAttempts,
+    required int ftMade,
+    required int ftAttempts,
+    required int rebounds,
+    required int offRebounds,
+    required int defRebounds,
+    required int blocks,
+    required int steals,
+    required int turnovers,
+    required int assists,
   }) = _PlayerStats;
 
   factory PlayerStats.fromJson(Map<String, dynamic> json) =>

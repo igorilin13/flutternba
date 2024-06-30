@@ -87,6 +87,7 @@ enum _StatType {
   threePointers(UiStrings.statThreePointers),
   freeThrows(UiStrings.statFreeThrows),
   rebounds(UiStrings.statRebounds),
+  assists(UiStrings.statAssists),
   steals(UiStrings.statSteals),
   blocks(UiStrings.statBlocks),
   turnovers(UiStrings.statTurnovers);
@@ -98,19 +99,23 @@ enum _StatType {
   String buildValue(TeamStats stats) {
     switch (this) {
       case _StatType.fieldGoals:
-        return "${stats.fgm}/${stats.fga} (${stats.fgPct}%)";
+        return "${stats.fgMade}/${stats.fgAttempts} (${stats.fgPct}%)";
       case _StatType.threePointers:
-        return "${stats.fg3pm}/${stats.fg3pa} (${stats.fg3Pct}%)";
+        return "${stats.threePtMade}/${stats.threePtAttempts}"
+            " (${stats.threePtPct}%)";
       case _StatType.freeThrows:
-        return "${stats.ftm}/${stats.fta} (${stats.ftPct}%)";
+        return "${stats.ftMade}/${stats.ftAttempts} (${stats.ftPct}%)";
       case _StatType.rebounds:
-        return "${stats.oreb} + ${stats.dreb} (${stats.reb})";
+        return "${stats.offRebounds} + ${stats.defRebounds}"
+            " (${stats.rebounds})";
+      case _StatType.assists:
+        return stats.assists.toString();
       case _StatType.steals:
-        return stats.stl.toString();
+        return stats.steals.toString();
       case _StatType.blocks:
-        return stats.blk.toString();
+        return stats.blocks.toString();
       case _StatType.turnovers:
-        return stats.to.toString();
+        return stats.turnovers.toString();
     }
   }
 }

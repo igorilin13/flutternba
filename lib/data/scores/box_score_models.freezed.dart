@@ -445,18 +445,19 @@ TeamStats _$TeamStatsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TeamStats {
   int get id => throw _privateConstructorUsedError;
-  int get fgm => throw _privateConstructorUsedError;
-  int get fga => throw _privateConstructorUsedError;
-  int get fg3pm => throw _privateConstructorUsedError;
-  int get fg3pa => throw _privateConstructorUsedError;
-  int get ftm => throw _privateConstructorUsedError;
-  int get fta => throw _privateConstructorUsedError;
-  int get reb => throw _privateConstructorUsedError;
-  int get oreb => throw _privateConstructorUsedError;
-  int get dreb => throw _privateConstructorUsedError;
-  int get blk => throw _privateConstructorUsedError;
-  int get stl => throw _privateConstructorUsedError;
-  int get to => throw _privateConstructorUsedError;
+  int get fgMade => throw _privateConstructorUsedError;
+  int get fgAttempts => throw _privateConstructorUsedError;
+  int get threePtMade => throw _privateConstructorUsedError;
+  int get threePtAttempts => throw _privateConstructorUsedError;
+  int get ftMade => throw _privateConstructorUsedError;
+  int get ftAttempts => throw _privateConstructorUsedError;
+  int get rebounds => throw _privateConstructorUsedError;
+  int get offRebounds => throw _privateConstructorUsedError;
+  int get defRebounds => throw _privateConstructorUsedError;
+  int get blocks => throw _privateConstructorUsedError;
+  int get steals => throw _privateConstructorUsedError;
+  int get turnovers => throw _privateConstructorUsedError;
+  int get assists => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -471,18 +472,19 @@ abstract class $TeamStatsCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int fgm,
-      int fga,
-      int fg3pm,
-      int fg3pa,
-      int ftm,
-      int fta,
-      int reb,
-      int oreb,
-      int dreb,
-      int blk,
-      int stl,
-      int to});
+      int fgMade,
+      int fgAttempts,
+      int threePtMade,
+      int threePtAttempts,
+      int ftMade,
+      int ftAttempts,
+      int rebounds,
+      int offRebounds,
+      int defRebounds,
+      int blocks,
+      int steals,
+      int turnovers,
+      int assists});
 }
 
 /// @nodoc
@@ -499,71 +501,76 @@ class _$TeamStatsCopyWithImpl<$Res, $Val extends TeamStats>
   @override
   $Res call({
     Object? id = null,
-    Object? fgm = null,
-    Object? fga = null,
-    Object? fg3pm = null,
-    Object? fg3pa = null,
-    Object? ftm = null,
-    Object? fta = null,
-    Object? reb = null,
-    Object? oreb = null,
-    Object? dreb = null,
-    Object? blk = null,
-    Object? stl = null,
-    Object? to = null,
+    Object? fgMade = null,
+    Object? fgAttempts = null,
+    Object? threePtMade = null,
+    Object? threePtAttempts = null,
+    Object? ftMade = null,
+    Object? ftAttempts = null,
+    Object? rebounds = null,
+    Object? offRebounds = null,
+    Object? defRebounds = null,
+    Object? blocks = null,
+    Object? steals = null,
+    Object? turnovers = null,
+    Object? assists = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      fgm: null == fgm
-          ? _value.fgm
-          : fgm // ignore: cast_nullable_to_non_nullable
+      fgMade: null == fgMade
+          ? _value.fgMade
+          : fgMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fga: null == fga
-          ? _value.fga
-          : fga // ignore: cast_nullable_to_non_nullable
+      fgAttempts: null == fgAttempts
+          ? _value.fgAttempts
+          : fgAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pm: null == fg3pm
-          ? _value.fg3pm
-          : fg3pm // ignore: cast_nullable_to_non_nullable
+      threePtMade: null == threePtMade
+          ? _value.threePtMade
+          : threePtMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pa: null == fg3pa
-          ? _value.fg3pa
-          : fg3pa // ignore: cast_nullable_to_non_nullable
+      threePtAttempts: null == threePtAttempts
+          ? _value.threePtAttempts
+          : threePtAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      ftm: null == ftm
-          ? _value.ftm
-          : ftm // ignore: cast_nullable_to_non_nullable
+      ftMade: null == ftMade
+          ? _value.ftMade
+          : ftMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fta: null == fta
-          ? _value.fta
-          : fta // ignore: cast_nullable_to_non_nullable
+      ftAttempts: null == ftAttempts
+          ? _value.ftAttempts
+          : ftAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      reb: null == reb
-          ? _value.reb
-          : reb // ignore: cast_nullable_to_non_nullable
+      rebounds: null == rebounds
+          ? _value.rebounds
+          : rebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      oreb: null == oreb
-          ? _value.oreb
-          : oreb // ignore: cast_nullable_to_non_nullable
+      offRebounds: null == offRebounds
+          ? _value.offRebounds
+          : offRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      dreb: null == dreb
-          ? _value.dreb
-          : dreb // ignore: cast_nullable_to_non_nullable
+      defRebounds: null == defRebounds
+          ? _value.defRebounds
+          : defRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      blk: null == blk
-          ? _value.blk
-          : blk // ignore: cast_nullable_to_non_nullable
+      blocks: null == blocks
+          ? _value.blocks
+          : blocks // ignore: cast_nullable_to_non_nullable
               as int,
-      stl: null == stl
-          ? _value.stl
-          : stl // ignore: cast_nullable_to_non_nullable
+      steals: null == steals
+          ? _value.steals
+          : steals // ignore: cast_nullable_to_non_nullable
               as int,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      turnovers: null == turnovers
+          ? _value.turnovers
+          : turnovers // ignore: cast_nullable_to_non_nullable
+              as int,
+      assists: null == assists
+          ? _value.assists
+          : assists // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -579,18 +586,19 @@ abstract class _$$TeamStatsImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int fgm,
-      int fga,
-      int fg3pm,
-      int fg3pa,
-      int ftm,
-      int fta,
-      int reb,
-      int oreb,
-      int dreb,
-      int blk,
-      int stl,
-      int to});
+      int fgMade,
+      int fgAttempts,
+      int threePtMade,
+      int threePtAttempts,
+      int ftMade,
+      int ftAttempts,
+      int rebounds,
+      int offRebounds,
+      int defRebounds,
+      int blocks,
+      int steals,
+      int turnovers,
+      int assists});
 }
 
 /// @nodoc
@@ -605,71 +613,76 @@ class __$$TeamStatsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? fgm = null,
-    Object? fga = null,
-    Object? fg3pm = null,
-    Object? fg3pa = null,
-    Object? ftm = null,
-    Object? fta = null,
-    Object? reb = null,
-    Object? oreb = null,
-    Object? dreb = null,
-    Object? blk = null,
-    Object? stl = null,
-    Object? to = null,
+    Object? fgMade = null,
+    Object? fgAttempts = null,
+    Object? threePtMade = null,
+    Object? threePtAttempts = null,
+    Object? ftMade = null,
+    Object? ftAttempts = null,
+    Object? rebounds = null,
+    Object? offRebounds = null,
+    Object? defRebounds = null,
+    Object? blocks = null,
+    Object? steals = null,
+    Object? turnovers = null,
+    Object? assists = null,
   }) {
     return _then(_$TeamStatsImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      fgm: null == fgm
-          ? _value.fgm
-          : fgm // ignore: cast_nullable_to_non_nullable
+      fgMade: null == fgMade
+          ? _value.fgMade
+          : fgMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fga: null == fga
-          ? _value.fga
-          : fga // ignore: cast_nullable_to_non_nullable
+      fgAttempts: null == fgAttempts
+          ? _value.fgAttempts
+          : fgAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pm: null == fg3pm
-          ? _value.fg3pm
-          : fg3pm // ignore: cast_nullable_to_non_nullable
+      threePtMade: null == threePtMade
+          ? _value.threePtMade
+          : threePtMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pa: null == fg3pa
-          ? _value.fg3pa
-          : fg3pa // ignore: cast_nullable_to_non_nullable
+      threePtAttempts: null == threePtAttempts
+          ? _value.threePtAttempts
+          : threePtAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      ftm: null == ftm
-          ? _value.ftm
-          : ftm // ignore: cast_nullable_to_non_nullable
+      ftMade: null == ftMade
+          ? _value.ftMade
+          : ftMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fta: null == fta
-          ? _value.fta
-          : fta // ignore: cast_nullable_to_non_nullable
+      ftAttempts: null == ftAttempts
+          ? _value.ftAttempts
+          : ftAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      reb: null == reb
-          ? _value.reb
-          : reb // ignore: cast_nullable_to_non_nullable
+      rebounds: null == rebounds
+          ? _value.rebounds
+          : rebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      oreb: null == oreb
-          ? _value.oreb
-          : oreb // ignore: cast_nullable_to_non_nullable
+      offRebounds: null == offRebounds
+          ? _value.offRebounds
+          : offRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      dreb: null == dreb
-          ? _value.dreb
-          : dreb // ignore: cast_nullable_to_non_nullable
+      defRebounds: null == defRebounds
+          ? _value.defRebounds
+          : defRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      blk: null == blk
-          ? _value.blk
-          : blk // ignore: cast_nullable_to_non_nullable
+      blocks: null == blocks
+          ? _value.blocks
+          : blocks // ignore: cast_nullable_to_non_nullable
               as int,
-      stl: null == stl
-          ? _value.stl
-          : stl // ignore: cast_nullable_to_non_nullable
+      steals: null == steals
+          ? _value.steals
+          : steals // ignore: cast_nullable_to_non_nullable
               as int,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      turnovers: null == turnovers
+          ? _value.turnovers
+          : turnovers // ignore: cast_nullable_to_non_nullable
+              as int,
+      assists: null == assists
+          ? _value.assists
+          : assists // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -680,18 +693,19 @@ class __$$TeamStatsImplCopyWithImpl<$Res>
 class _$TeamStatsImpl extends _TeamStats {
   _$TeamStatsImpl(
       {required this.id,
-      required this.fgm,
-      required this.fga,
-      required this.fg3pm,
-      required this.fg3pa,
-      required this.ftm,
-      required this.fta,
-      required this.reb,
-      required this.oreb,
-      required this.dreb,
-      required this.blk,
-      required this.stl,
-      required this.to})
+      required this.fgMade,
+      required this.fgAttempts,
+      required this.threePtMade,
+      required this.threePtAttempts,
+      required this.ftMade,
+      required this.ftAttempts,
+      required this.rebounds,
+      required this.offRebounds,
+      required this.defRebounds,
+      required this.blocks,
+      required this.steals,
+      required this.turnovers,
+      required this.assists})
       : super._();
 
   factory _$TeamStatsImpl.fromJson(Map<String, dynamic> json) =>
@@ -700,33 +714,35 @@ class _$TeamStatsImpl extends _TeamStats {
   @override
   final int id;
   @override
-  final int fgm;
+  final int fgMade;
   @override
-  final int fga;
+  final int fgAttempts;
   @override
-  final int fg3pm;
+  final int threePtMade;
   @override
-  final int fg3pa;
+  final int threePtAttempts;
   @override
-  final int ftm;
+  final int ftMade;
   @override
-  final int fta;
+  final int ftAttempts;
   @override
-  final int reb;
+  final int rebounds;
   @override
-  final int oreb;
+  final int offRebounds;
   @override
-  final int dreb;
+  final int defRebounds;
   @override
-  final int blk;
+  final int blocks;
   @override
-  final int stl;
+  final int steals;
   @override
-  final int to;
+  final int turnovers;
+  @override
+  final int assists;
 
   @override
   String toString() {
-    return 'TeamStats(id: $id, fgm: $fgm, fga: $fga, fg3pm: $fg3pm, fg3pa: $fg3pa, ftm: $ftm, fta: $fta, reb: $reb, oreb: $oreb, dreb: $dreb, blk: $blk, stl: $stl, to: $to)';
+    return 'TeamStats(id: $id, fgMade: $fgMade, fgAttempts: $fgAttempts, threePtMade: $threePtMade, threePtAttempts: $threePtAttempts, ftMade: $ftMade, ftAttempts: $ftAttempts, rebounds: $rebounds, offRebounds: $offRebounds, defRebounds: $defRebounds, blocks: $blocks, steals: $steals, turnovers: $turnovers, assists: $assists)';
   }
 
   @override
@@ -735,24 +751,47 @@ class _$TeamStatsImpl extends _TeamStats {
         (other.runtimeType == runtimeType &&
             other is _$TeamStatsImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.fgm, fgm) || other.fgm == fgm) &&
-            (identical(other.fga, fga) || other.fga == fga) &&
-            (identical(other.fg3pm, fg3pm) || other.fg3pm == fg3pm) &&
-            (identical(other.fg3pa, fg3pa) || other.fg3pa == fg3pa) &&
-            (identical(other.ftm, ftm) || other.ftm == ftm) &&
-            (identical(other.fta, fta) || other.fta == fta) &&
-            (identical(other.reb, reb) || other.reb == reb) &&
-            (identical(other.oreb, oreb) || other.oreb == oreb) &&
-            (identical(other.dreb, dreb) || other.dreb == dreb) &&
-            (identical(other.blk, blk) || other.blk == blk) &&
-            (identical(other.stl, stl) || other.stl == stl) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.fgMade, fgMade) || other.fgMade == fgMade) &&
+            (identical(other.fgAttempts, fgAttempts) ||
+                other.fgAttempts == fgAttempts) &&
+            (identical(other.threePtMade, threePtMade) ||
+                other.threePtMade == threePtMade) &&
+            (identical(other.threePtAttempts, threePtAttempts) ||
+                other.threePtAttempts == threePtAttempts) &&
+            (identical(other.ftMade, ftMade) || other.ftMade == ftMade) &&
+            (identical(other.ftAttempts, ftAttempts) ||
+                other.ftAttempts == ftAttempts) &&
+            (identical(other.rebounds, rebounds) ||
+                other.rebounds == rebounds) &&
+            (identical(other.offRebounds, offRebounds) ||
+                other.offRebounds == offRebounds) &&
+            (identical(other.defRebounds, defRebounds) ||
+                other.defRebounds == defRebounds) &&
+            (identical(other.blocks, blocks) || other.blocks == blocks) &&
+            (identical(other.steals, steals) || other.steals == steals) &&
+            (identical(other.turnovers, turnovers) ||
+                other.turnovers == turnovers) &&
+            (identical(other.assists, assists) || other.assists == assists));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, fgm, fga, fg3pm, fg3pa, ftm,
-      fta, reb, oreb, dreb, blk, stl, to);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      fgMade,
+      fgAttempts,
+      threePtMade,
+      threePtAttempts,
+      ftMade,
+      ftAttempts,
+      rebounds,
+      offRebounds,
+      defRebounds,
+      blocks,
+      steals,
+      turnovers,
+      assists);
 
   @JsonKey(ignore: true)
   @override
@@ -771,18 +810,19 @@ class _$TeamStatsImpl extends _TeamStats {
 abstract class _TeamStats extends TeamStats {
   factory _TeamStats(
       {required final int id,
-      required final int fgm,
-      required final int fga,
-      required final int fg3pm,
-      required final int fg3pa,
-      required final int ftm,
-      required final int fta,
-      required final int reb,
-      required final int oreb,
-      required final int dreb,
-      required final int blk,
-      required final int stl,
-      required final int to}) = _$TeamStatsImpl;
+      required final int fgMade,
+      required final int fgAttempts,
+      required final int threePtMade,
+      required final int threePtAttempts,
+      required final int ftMade,
+      required final int ftAttempts,
+      required final int rebounds,
+      required final int offRebounds,
+      required final int defRebounds,
+      required final int blocks,
+      required final int steals,
+      required final int turnovers,
+      required final int assists}) = _$TeamStatsImpl;
   _TeamStats._() : super._();
 
   factory _TeamStats.fromJson(Map<String, dynamic> json) =
@@ -791,29 +831,31 @@ abstract class _TeamStats extends TeamStats {
   @override
   int get id;
   @override
-  int get fgm;
+  int get fgMade;
   @override
-  int get fga;
+  int get fgAttempts;
   @override
-  int get fg3pm;
+  int get threePtMade;
   @override
-  int get fg3pa;
+  int get threePtAttempts;
   @override
-  int get ftm;
+  int get ftMade;
   @override
-  int get fta;
+  int get ftAttempts;
   @override
-  int get reb;
+  int get rebounds;
   @override
-  int get oreb;
+  int get offRebounds;
   @override
-  int get dreb;
+  int get defRebounds;
   @override
-  int get blk;
+  int get blocks;
   @override
-  int get stl;
+  int get steals;
   @override
-  int get to;
+  int get turnovers;
+  @override
+  int get assists;
   @override
   @JsonKey(ignore: true)
   _$$TeamStatsImplCopyWith<_$TeamStatsImpl> get copyWith =>
@@ -829,22 +871,22 @@ mixin _$PlayerStats {
   int get id => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  String? get startPosition => throw _privateConstructorUsedError;
   String get jersey => throw _privateConstructorUsedError;
-  int get min => throw _privateConstructorUsedError;
-  int get pts => throw _privateConstructorUsedError;
-  int get fgm => throw _privateConstructorUsedError;
-  int get fga => throw _privateConstructorUsedError;
-  int get fg3pm => throw _privateConstructorUsedError;
-  int get fg3pa => throw _privateConstructorUsedError;
-  int get ftm => throw _privateConstructorUsedError;
-  int get fta => throw _privateConstructorUsedError;
-  int get reb => throw _privateConstructorUsedError;
-  int get oreb => throw _privateConstructorUsedError;
-  int get dreb => throw _privateConstructorUsedError;
-  int get blk => throw _privateConstructorUsedError;
-  int get stl => throw _privateConstructorUsedError;
-  int get to => throw _privateConstructorUsedError;
+  int get minutes => throw _privateConstructorUsedError;
+  int get points => throw _privateConstructorUsedError;
+  int get fgMade => throw _privateConstructorUsedError;
+  int get fgAttempts => throw _privateConstructorUsedError;
+  int get threePtMade => throw _privateConstructorUsedError;
+  int get threePtAttempts => throw _privateConstructorUsedError;
+  int get ftMade => throw _privateConstructorUsedError;
+  int get ftAttempts => throw _privateConstructorUsedError;
+  int get rebounds => throw _privateConstructorUsedError;
+  int get offRebounds => throw _privateConstructorUsedError;
+  int get defRebounds => throw _privateConstructorUsedError;
+  int get blocks => throw _privateConstructorUsedError;
+  int get steals => throw _privateConstructorUsedError;
+  int get turnovers => throw _privateConstructorUsedError;
+  int get assists => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -862,22 +904,22 @@ abstract class $PlayerStatsCopyWith<$Res> {
       {int id,
       String firstName,
       String lastName,
-      String? startPosition,
       String jersey,
-      int min,
-      int pts,
-      int fgm,
-      int fga,
-      int fg3pm,
-      int fg3pa,
-      int ftm,
-      int fta,
-      int reb,
-      int oreb,
-      int dreb,
-      int blk,
-      int stl,
-      int to});
+      int minutes,
+      int points,
+      int fgMade,
+      int fgAttempts,
+      int threePtMade,
+      int threePtAttempts,
+      int ftMade,
+      int ftAttempts,
+      int rebounds,
+      int offRebounds,
+      int defRebounds,
+      int blocks,
+      int steals,
+      int turnovers,
+      int assists});
 }
 
 /// @nodoc
@@ -896,22 +938,22 @@ class _$PlayerStatsCopyWithImpl<$Res, $Val extends PlayerStats>
     Object? id = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? startPosition = freezed,
     Object? jersey = null,
-    Object? min = null,
-    Object? pts = null,
-    Object? fgm = null,
-    Object? fga = null,
-    Object? fg3pm = null,
-    Object? fg3pa = null,
-    Object? ftm = null,
-    Object? fta = null,
-    Object? reb = null,
-    Object? oreb = null,
-    Object? dreb = null,
-    Object? blk = null,
-    Object? stl = null,
-    Object? to = null,
+    Object? minutes = null,
+    Object? points = null,
+    Object? fgMade = null,
+    Object? fgAttempts = null,
+    Object? threePtMade = null,
+    Object? threePtAttempts = null,
+    Object? ftMade = null,
+    Object? ftAttempts = null,
+    Object? rebounds = null,
+    Object? offRebounds = null,
+    Object? defRebounds = null,
+    Object? blocks = null,
+    Object? steals = null,
+    Object? turnovers = null,
+    Object? assists = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -926,69 +968,69 @@ class _$PlayerStatsCopyWithImpl<$Res, $Val extends PlayerStats>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      startPosition: freezed == startPosition
-          ? _value.startPosition
-          : startPosition // ignore: cast_nullable_to_non_nullable
-              as String?,
       jersey: null == jersey
           ? _value.jersey
           : jersey // ignore: cast_nullable_to_non_nullable
               as String,
-      min: null == min
-          ? _value.min
-          : min // ignore: cast_nullable_to_non_nullable
+      minutes: null == minutes
+          ? _value.minutes
+          : minutes // ignore: cast_nullable_to_non_nullable
               as int,
-      pts: null == pts
-          ? _value.pts
-          : pts // ignore: cast_nullable_to_non_nullable
+      points: null == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
               as int,
-      fgm: null == fgm
-          ? _value.fgm
-          : fgm // ignore: cast_nullable_to_non_nullable
+      fgMade: null == fgMade
+          ? _value.fgMade
+          : fgMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fga: null == fga
-          ? _value.fga
-          : fga // ignore: cast_nullable_to_non_nullable
+      fgAttempts: null == fgAttempts
+          ? _value.fgAttempts
+          : fgAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pm: null == fg3pm
-          ? _value.fg3pm
-          : fg3pm // ignore: cast_nullable_to_non_nullable
+      threePtMade: null == threePtMade
+          ? _value.threePtMade
+          : threePtMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pa: null == fg3pa
-          ? _value.fg3pa
-          : fg3pa // ignore: cast_nullable_to_non_nullable
+      threePtAttempts: null == threePtAttempts
+          ? _value.threePtAttempts
+          : threePtAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      ftm: null == ftm
-          ? _value.ftm
-          : ftm // ignore: cast_nullable_to_non_nullable
+      ftMade: null == ftMade
+          ? _value.ftMade
+          : ftMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fta: null == fta
-          ? _value.fta
-          : fta // ignore: cast_nullable_to_non_nullable
+      ftAttempts: null == ftAttempts
+          ? _value.ftAttempts
+          : ftAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      reb: null == reb
-          ? _value.reb
-          : reb // ignore: cast_nullable_to_non_nullable
+      rebounds: null == rebounds
+          ? _value.rebounds
+          : rebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      oreb: null == oreb
-          ? _value.oreb
-          : oreb // ignore: cast_nullable_to_non_nullable
+      offRebounds: null == offRebounds
+          ? _value.offRebounds
+          : offRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      dreb: null == dreb
-          ? _value.dreb
-          : dreb // ignore: cast_nullable_to_non_nullable
+      defRebounds: null == defRebounds
+          ? _value.defRebounds
+          : defRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      blk: null == blk
-          ? _value.blk
-          : blk // ignore: cast_nullable_to_non_nullable
+      blocks: null == blocks
+          ? _value.blocks
+          : blocks // ignore: cast_nullable_to_non_nullable
               as int,
-      stl: null == stl
-          ? _value.stl
-          : stl // ignore: cast_nullable_to_non_nullable
+      steals: null == steals
+          ? _value.steals
+          : steals // ignore: cast_nullable_to_non_nullable
               as int,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      turnovers: null == turnovers
+          ? _value.turnovers
+          : turnovers // ignore: cast_nullable_to_non_nullable
+              as int,
+      assists: null == assists
+          ? _value.assists
+          : assists // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -1006,22 +1048,22 @@ abstract class _$$PlayerStatsImplCopyWith<$Res>
       {int id,
       String firstName,
       String lastName,
-      String? startPosition,
       String jersey,
-      int min,
-      int pts,
-      int fgm,
-      int fga,
-      int fg3pm,
-      int fg3pa,
-      int ftm,
-      int fta,
-      int reb,
-      int oreb,
-      int dreb,
-      int blk,
-      int stl,
-      int to});
+      int minutes,
+      int points,
+      int fgMade,
+      int fgAttempts,
+      int threePtMade,
+      int threePtAttempts,
+      int ftMade,
+      int ftAttempts,
+      int rebounds,
+      int offRebounds,
+      int defRebounds,
+      int blocks,
+      int steals,
+      int turnovers,
+      int assists});
 }
 
 /// @nodoc
@@ -1038,22 +1080,22 @@ class __$$PlayerStatsImplCopyWithImpl<$Res>
     Object? id = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? startPosition = freezed,
     Object? jersey = null,
-    Object? min = null,
-    Object? pts = null,
-    Object? fgm = null,
-    Object? fga = null,
-    Object? fg3pm = null,
-    Object? fg3pa = null,
-    Object? ftm = null,
-    Object? fta = null,
-    Object? reb = null,
-    Object? oreb = null,
-    Object? dreb = null,
-    Object? blk = null,
-    Object? stl = null,
-    Object? to = null,
+    Object? minutes = null,
+    Object? points = null,
+    Object? fgMade = null,
+    Object? fgAttempts = null,
+    Object? threePtMade = null,
+    Object? threePtAttempts = null,
+    Object? ftMade = null,
+    Object? ftAttempts = null,
+    Object? rebounds = null,
+    Object? offRebounds = null,
+    Object? defRebounds = null,
+    Object? blocks = null,
+    Object? steals = null,
+    Object? turnovers = null,
+    Object? assists = null,
   }) {
     return _then(_$PlayerStatsImpl(
       id: null == id
@@ -1068,69 +1110,69 @@ class __$$PlayerStatsImplCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      startPosition: freezed == startPosition
-          ? _value.startPosition
-          : startPosition // ignore: cast_nullable_to_non_nullable
-              as String?,
       jersey: null == jersey
           ? _value.jersey
           : jersey // ignore: cast_nullable_to_non_nullable
               as String,
-      min: null == min
-          ? _value.min
-          : min // ignore: cast_nullable_to_non_nullable
+      minutes: null == minutes
+          ? _value.minutes
+          : minutes // ignore: cast_nullable_to_non_nullable
               as int,
-      pts: null == pts
-          ? _value.pts
-          : pts // ignore: cast_nullable_to_non_nullable
+      points: null == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
               as int,
-      fgm: null == fgm
-          ? _value.fgm
-          : fgm // ignore: cast_nullable_to_non_nullable
+      fgMade: null == fgMade
+          ? _value.fgMade
+          : fgMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fga: null == fga
-          ? _value.fga
-          : fga // ignore: cast_nullable_to_non_nullable
+      fgAttempts: null == fgAttempts
+          ? _value.fgAttempts
+          : fgAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pm: null == fg3pm
-          ? _value.fg3pm
-          : fg3pm // ignore: cast_nullable_to_non_nullable
+      threePtMade: null == threePtMade
+          ? _value.threePtMade
+          : threePtMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fg3pa: null == fg3pa
-          ? _value.fg3pa
-          : fg3pa // ignore: cast_nullable_to_non_nullable
+      threePtAttempts: null == threePtAttempts
+          ? _value.threePtAttempts
+          : threePtAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      ftm: null == ftm
-          ? _value.ftm
-          : ftm // ignore: cast_nullable_to_non_nullable
+      ftMade: null == ftMade
+          ? _value.ftMade
+          : ftMade // ignore: cast_nullable_to_non_nullable
               as int,
-      fta: null == fta
-          ? _value.fta
-          : fta // ignore: cast_nullable_to_non_nullable
+      ftAttempts: null == ftAttempts
+          ? _value.ftAttempts
+          : ftAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      reb: null == reb
-          ? _value.reb
-          : reb // ignore: cast_nullable_to_non_nullable
+      rebounds: null == rebounds
+          ? _value.rebounds
+          : rebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      oreb: null == oreb
-          ? _value.oreb
-          : oreb // ignore: cast_nullable_to_non_nullable
+      offRebounds: null == offRebounds
+          ? _value.offRebounds
+          : offRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      dreb: null == dreb
-          ? _value.dreb
-          : dreb // ignore: cast_nullable_to_non_nullable
+      defRebounds: null == defRebounds
+          ? _value.defRebounds
+          : defRebounds // ignore: cast_nullable_to_non_nullable
               as int,
-      blk: null == blk
-          ? _value.blk
-          : blk // ignore: cast_nullable_to_non_nullable
+      blocks: null == blocks
+          ? _value.blocks
+          : blocks // ignore: cast_nullable_to_non_nullable
               as int,
-      stl: null == stl
-          ? _value.stl
-          : stl // ignore: cast_nullable_to_non_nullable
+      steals: null == steals
+          ? _value.steals
+          : steals // ignore: cast_nullable_to_non_nullable
               as int,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      turnovers: null == turnovers
+          ? _value.turnovers
+          : turnovers // ignore: cast_nullable_to_non_nullable
+              as int,
+      assists: null == assists
+          ? _value.assists
+          : assists // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1143,22 +1185,22 @@ class _$PlayerStatsImpl implements _PlayerStats {
       {required this.id,
       required this.firstName,
       required this.lastName,
-      this.startPosition,
       required this.jersey,
-      required this.min,
-      required this.pts,
-      required this.fgm,
-      required this.fga,
-      required this.fg3pm,
-      required this.fg3pa,
-      required this.ftm,
-      required this.fta,
-      required this.reb,
-      required this.oreb,
-      required this.dreb,
-      required this.blk,
-      required this.stl,
-      required this.to});
+      required this.minutes,
+      required this.points,
+      required this.fgMade,
+      required this.fgAttempts,
+      required this.threePtMade,
+      required this.threePtAttempts,
+      required this.ftMade,
+      required this.ftAttempts,
+      required this.rebounds,
+      required this.offRebounds,
+      required this.defRebounds,
+      required this.blocks,
+      required this.steals,
+      required this.turnovers,
+      required this.assists});
 
   factory _$PlayerStatsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlayerStatsImplFromJson(json);
@@ -1170,41 +1212,41 @@ class _$PlayerStatsImpl implements _PlayerStats {
   @override
   final String lastName;
   @override
-  final String? startPosition;
-  @override
   final String jersey;
   @override
-  final int min;
+  final int minutes;
   @override
-  final int pts;
+  final int points;
   @override
-  final int fgm;
+  final int fgMade;
   @override
-  final int fga;
+  final int fgAttempts;
   @override
-  final int fg3pm;
+  final int threePtMade;
   @override
-  final int fg3pa;
+  final int threePtAttempts;
   @override
-  final int ftm;
+  final int ftMade;
   @override
-  final int fta;
+  final int ftAttempts;
   @override
-  final int reb;
+  final int rebounds;
   @override
-  final int oreb;
+  final int offRebounds;
   @override
-  final int dreb;
+  final int defRebounds;
   @override
-  final int blk;
+  final int blocks;
   @override
-  final int stl;
+  final int steals;
   @override
-  final int to;
+  final int turnovers;
+  @override
+  final int assists;
 
   @override
   String toString() {
-    return 'PlayerStats(id: $id, firstName: $firstName, lastName: $lastName, startPosition: $startPosition, jersey: $jersey, min: $min, pts: $pts, fgm: $fgm, fga: $fga, fg3pm: $fg3pm, fg3pa: $fg3pa, ftm: $ftm, fta: $fta, reb: $reb, oreb: $oreb, dreb: $dreb, blk: $blk, stl: $stl, to: $to)';
+    return 'PlayerStats(id: $id, firstName: $firstName, lastName: $lastName, jersey: $jersey, minutes: $minutes, points: $points, fgMade: $fgMade, fgAttempts: $fgAttempts, threePtMade: $threePtMade, threePtAttempts: $threePtAttempts, ftMade: $ftMade, ftAttempts: $ftAttempts, rebounds: $rebounds, offRebounds: $offRebounds, defRebounds: $defRebounds, blocks: $blocks, steals: $steals, turnovers: $turnovers, assists: $assists)';
   }
 
   @override
@@ -1217,23 +1259,30 @@ class _$PlayerStatsImpl implements _PlayerStats {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.startPosition, startPosition) ||
-                other.startPosition == startPosition) &&
             (identical(other.jersey, jersey) || other.jersey == jersey) &&
-            (identical(other.min, min) || other.min == min) &&
-            (identical(other.pts, pts) || other.pts == pts) &&
-            (identical(other.fgm, fgm) || other.fgm == fgm) &&
-            (identical(other.fga, fga) || other.fga == fga) &&
-            (identical(other.fg3pm, fg3pm) || other.fg3pm == fg3pm) &&
-            (identical(other.fg3pa, fg3pa) || other.fg3pa == fg3pa) &&
-            (identical(other.ftm, ftm) || other.ftm == ftm) &&
-            (identical(other.fta, fta) || other.fta == fta) &&
-            (identical(other.reb, reb) || other.reb == reb) &&
-            (identical(other.oreb, oreb) || other.oreb == oreb) &&
-            (identical(other.dreb, dreb) || other.dreb == dreb) &&
-            (identical(other.blk, blk) || other.blk == blk) &&
-            (identical(other.stl, stl) || other.stl == stl) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.minutes, minutes) || other.minutes == minutes) &&
+            (identical(other.points, points) || other.points == points) &&
+            (identical(other.fgMade, fgMade) || other.fgMade == fgMade) &&
+            (identical(other.fgAttempts, fgAttempts) ||
+                other.fgAttempts == fgAttempts) &&
+            (identical(other.threePtMade, threePtMade) ||
+                other.threePtMade == threePtMade) &&
+            (identical(other.threePtAttempts, threePtAttempts) ||
+                other.threePtAttempts == threePtAttempts) &&
+            (identical(other.ftMade, ftMade) || other.ftMade == ftMade) &&
+            (identical(other.ftAttempts, ftAttempts) ||
+                other.ftAttempts == ftAttempts) &&
+            (identical(other.rebounds, rebounds) ||
+                other.rebounds == rebounds) &&
+            (identical(other.offRebounds, offRebounds) ||
+                other.offRebounds == offRebounds) &&
+            (identical(other.defRebounds, defRebounds) ||
+                other.defRebounds == defRebounds) &&
+            (identical(other.blocks, blocks) || other.blocks == blocks) &&
+            (identical(other.steals, steals) || other.steals == steals) &&
+            (identical(other.turnovers, turnovers) ||
+                other.turnovers == turnovers) &&
+            (identical(other.assists, assists) || other.assists == assists));
   }
 
   @JsonKey(ignore: true)
@@ -1243,22 +1292,22 @@ class _$PlayerStatsImpl implements _PlayerStats {
         id,
         firstName,
         lastName,
-        startPosition,
         jersey,
-        min,
-        pts,
-        fgm,
-        fga,
-        fg3pm,
-        fg3pa,
-        ftm,
-        fta,
-        reb,
-        oreb,
-        dreb,
-        blk,
-        stl,
-        to
+        minutes,
+        points,
+        fgMade,
+        fgAttempts,
+        threePtMade,
+        threePtAttempts,
+        ftMade,
+        ftAttempts,
+        rebounds,
+        offRebounds,
+        defRebounds,
+        blocks,
+        steals,
+        turnovers,
+        assists
       ]);
 
   @JsonKey(ignore: true)
@@ -1280,22 +1329,22 @@ abstract class _PlayerStats implements PlayerStats {
       {required final int id,
       required final String firstName,
       required final String lastName,
-      final String? startPosition,
       required final String jersey,
-      required final int min,
-      required final int pts,
-      required final int fgm,
-      required final int fga,
-      required final int fg3pm,
-      required final int fg3pa,
-      required final int ftm,
-      required final int fta,
-      required final int reb,
-      required final int oreb,
-      required final int dreb,
-      required final int blk,
-      required final int stl,
-      required final int to}) = _$PlayerStatsImpl;
+      required final int minutes,
+      required final int points,
+      required final int fgMade,
+      required final int fgAttempts,
+      required final int threePtMade,
+      required final int threePtAttempts,
+      required final int ftMade,
+      required final int ftAttempts,
+      required final int rebounds,
+      required final int offRebounds,
+      required final int defRebounds,
+      required final int blocks,
+      required final int steals,
+      required final int turnovers,
+      required final int assists}) = _$PlayerStatsImpl;
 
   factory _PlayerStats.fromJson(Map<String, dynamic> json) =
       _$PlayerStatsImpl.fromJson;
@@ -1307,37 +1356,37 @@ abstract class _PlayerStats implements PlayerStats {
   @override
   String get lastName;
   @override
-  String? get startPosition;
-  @override
   String get jersey;
   @override
-  int get min;
+  int get minutes;
   @override
-  int get pts;
+  int get points;
   @override
-  int get fgm;
+  int get fgMade;
   @override
-  int get fga;
+  int get fgAttempts;
   @override
-  int get fg3pm;
+  int get threePtMade;
   @override
-  int get fg3pa;
+  int get threePtAttempts;
   @override
-  int get ftm;
+  int get ftMade;
   @override
-  int get fta;
+  int get ftAttempts;
   @override
-  int get reb;
+  int get rebounds;
   @override
-  int get oreb;
+  int get offRebounds;
   @override
-  int get dreb;
+  int get defRebounds;
   @override
-  int get blk;
+  int get blocks;
   @override
-  int get stl;
+  int get steals;
   @override
-  int get to;
+  int get turnovers;
+  @override
+  int get assists;
   @override
   @JsonKey(ignore: true)
   _$$PlayerStatsImplCopyWith<_$PlayerStatsImpl> get copyWith =>
