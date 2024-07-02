@@ -35,7 +35,7 @@ class StandingsRow extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
-            TeamLogo(teamId: team.id, height: 24, width: 24),
+            TeamLogo(teamId: team.id, size: 24),
             const SizedBox(width: 8),
             Expanded(
               child: Text(

@@ -33,12 +33,7 @@ class GamePlayerStats extends StatelessWidget {
   Widget _buildHeaderRow(BuildContext context) {
     return Row(
       children: [
-        TeamLogo(
-          teamId: team.id,
-          width: 24,
-          height: 24,
-          fit: BoxFit.scaleDown,
-        ),
+        TeamLogo(teamId: team.id, size: 24),
         const SizedBox(width: 8),
         Expanded(
           child: Text(

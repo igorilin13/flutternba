@@ -108,7 +108,7 @@ class GameCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: alignment,
       children: [
-        TeamLogo(teamId: team.id, height: 48, width: 48),
+        TeamLogo(teamId: team.id, size: 48),
         const SizedBox(height: 8),
         Text(
           team.name,

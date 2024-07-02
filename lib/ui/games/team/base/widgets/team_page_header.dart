@@ -16,7 +16,7 @@ class TeamPageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        TeamLogo(teamId: teamId, height: 32, width: 32),
+        TeamLogo(teamId: teamId, size: 32),
         const SizedBox(width: 8),
         HeaderItem(
           text: teamName,

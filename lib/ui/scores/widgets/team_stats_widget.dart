@@ -32,7 +32,7 @@ class GameTeamStats extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Stack(
         children: [
-          TeamLogo(teamId: home.id, height: 28, width: 28),
+          TeamLogo(teamId: home.id, size: 28),
           Container(
             alignment: Alignment.bottomCenter,
             child: Text(
@@ -42,7 +42,7 @@ class GameTeamStats extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: TeamLogo(teamId: away.id, height: 28, width: 28),
+            child: TeamLogo(teamId: away.id, size: 28),
           ),
         ],
       ),

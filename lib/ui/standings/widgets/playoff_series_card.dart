@@ -58,7 +58,7 @@ class PlayoffSeriesCard extends StatelessWidget {
           style: theme.textTheme.bodyMedium,
         ),
         const SizedBox(width: 8),
-        TeamLogo(teamId: id, height: 24, width: 24, fit: BoxFit.scaleDown),
+        TeamLogo(teamId: id, size: 24),
         const SizedBox(width: 8),
         Text(
           name,

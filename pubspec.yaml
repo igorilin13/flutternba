@@ -43,6 +43,7 @@ flutter:
 
   assets:
     - assets/images/team_logos/
+    - assets/images/team_logos/dark/
 
 flutter_native_splash:
   color: "#083D92"

@@ -168,7 +168,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TeamLogo(teamId: team.id, height: 128),
+              TeamLogo(teamId: team.id, size: 128),
               const SizedBox(height: 16),
               Row(
                 mainAxisSize: MainAxisSize.min,

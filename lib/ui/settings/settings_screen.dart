@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       case HasFavoriteTeamState():
         return Row(
           children: [
-            TeamLogo(teamId: state.team.id, height: 32),
+            TeamLogo(teamId: state.team.id, size: 32),
             const SizedBox(width: 4),
             Text(
               state.team.name,
