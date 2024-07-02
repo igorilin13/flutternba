@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/favorite/core/base_select_favorite_cubit.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
+import 'package:flutternba/ui/util/widgets/app_bar.dart';
 import 'package:flutternba/ui/util/widgets/team_logo.dart';
 
 import '../../../data/teams/team_model.dart';
@@ -61,15 +62,12 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
     );
   }
 
-  AppBar _buildAppBar(BuildContext context, VoidCallback? onSkipClick) {
-    return AppBar(
-      title: Text(
-        UiStrings.titleSelectTeam,
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
-      centerTitle: true,
-      scrolledUnderElevation: 0,
-      backgroundColor: Theme.of(context).colorScheme.background,
+  NbaAppBar _buildAppBar(
+    BuildContext context,
+    VoidCallback? onSkipClick,
+  ) {
+    return NbaAppBar(
+      title: const Text(UiStrings.titleSelectTeam),
       actions: [
         if (onSkipClick != null)
           TextButton(
@@ -112,7 +110,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
   }) {
     switch (state) {
       case LoadingState():
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator.adaptive());
       case ErrorState():
         return Center(
           child: ErrorDisplay(

@@ -16,9 +16,7 @@ class ErrorDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final border = BorderRadius.circular(16);
     var theme = Theme.of(context);
-    return Material(
-      color: theme.colorScheme.surface,
-      borderRadius: border,
+    return Card(
       child: InkWell(
         onTap: onTap,
         borderRadius: border,

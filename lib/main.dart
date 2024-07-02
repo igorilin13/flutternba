@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
@@ -28,19 +31,29 @@ class _MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme cupertinoTextTheme = TextTheme(
+      headlineMedium: const CupertinoThemeData()
+          .textTheme
+          .navLargeTitleTextStyle
+          .copyWith(letterSpacing: -1.5),
+      titleLarge: const CupertinoThemeData().textTheme.navTitleTextStyle,
+    );
+
+    createTheme({required bool isDark}) {
+      return ThemeData(
+        colorScheme: isDark ? AppColorSchemes.dark : AppColorSchemes.light,
+        useMaterial3: true,
+        textTheme: Platform.isIOS ? cupertinoTextTheme : null,
+      );
+    }
+
     return BlocProvider(
       create: (BuildContext context) => SettingsCubit(locator(), locator()),
       child: MaterialApp(
         title: "NBA Schedules",
         restorationScopeId: "root",
-        darkTheme: ThemeData(
-          colorScheme: AppColorSchemes.dark,
-          useMaterial3: true,
-        ),
-        theme: ThemeData(
-          colorScheme: AppColorSchemes.light,
-          useMaterial3: true,
-        ),
+        darkTheme: createTheme(isDark: true),
+        theme: createTheme(isDark: false),
         themeMode: ThemeMode.system,
         home: _RootScreen(_onboardingComplete),
       ),
