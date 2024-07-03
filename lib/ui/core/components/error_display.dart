@@ -1,49 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutternba/ui/core/asset_paths.dart';
+import 'package:flutternba/ui/core/strings.dart';
 
 class NbaErrorDisplay extends StatelessWidget {
-  final String message;
+  final String? title;
+  final String? message;
+  final IconData? actionIcon;
+  final String? actionText;
   final VoidCallback? onTap;
-  final IconData icon;
 
   const NbaErrorDisplay({
     super.key,
-    required this.message,
+    this.title = UiStrings.genericErrorTitle,
+    this.message,
+    this.actionIcon = Icons.refresh,
+    this.actionText = UiStrings.actionRetry,
     this.onTap,
-    this.icon = Icons.refresh,
   });
 
   @override
   Widget build(BuildContext context) {
-    final border = BorderRadius.circular(16);
     var theme = Theme.of(context);
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: border,
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 340),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  size: 36,
-                  color: theme.colorScheme.onSurface,
-                ),
-                const SizedBox(width: 16),
-                Flexible(
-                  child: Text(
-                    message,
-                    style: theme.textTheme.titleMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(AssetPaths.ballIllustration, width: 175.0),
+          if (title != null)
+            Text(
+              title!,
+              style: theme.textTheme.headlineSmall,
+              textAlign: TextAlign.center,
             ),
-          ),
-        ),
+          const SizedBox(height: 4),
+          if (message != null)
+            Text(
+              message!,
+              style: theme.textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          const SizedBox(height: 16),
+          if (onTap != null)
+            SizedBox(
+              width: 280,
+              child: FilledButton(
+                onPressed: onTap,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (actionIcon != null) ...[
+                      Icon(actionIcon, size: 20),
+                      const SizedBox(width: 4),
+                    ],
+                    if (actionText != null) Text(actionText!.toUpperCase()),
+                  ],
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

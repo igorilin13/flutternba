@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/domain/date/league_dates_model.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/game_card.dart';
 import 'package:flutternba/ui/core/strings.dart';
@@ -62,9 +66,18 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
         return _buildNonDisplayState(
           context: context,
           state: state,
-          child: const NbaErrorDisplay(
-            message: UiStrings.noGamesMessage,
-            icon: Icons.calendar_today,
+          child: NbaErrorDisplay(
+            title: null,
+            message: UiStrings.noLeagueGamesMessage,
+            actionIcon: Icons.date_range,
+            actionText: UiStrings.actionSelectAnotherDate,
+            onTap: () {
+              _showDatePicker(
+                context,
+                state.datesModel,
+                context.read<LeagueGamesCubit>().selectDate,
+              );
+            },
           ),
         );
       case DisplayDataState():
@@ -121,11 +134,71 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
 
   Widget _buildDateControl(BuildContext context, LeagueGamesState state) {
     return GamesDateControl(
-      datesModel: state.datesModel,
+      selectedDate: state.datesModel.formattedDate,
       onPreviousTap: context.read<LeagueGamesCubit>().selectPreviousDay,
       onNextTap: context.read<LeagueGamesCubit>().selectNextDay,
-      onDateSelected: context.read<LeagueGamesCubit>().selectDate,
+      onDatePickerRequest: () {
+        _showDatePicker(
+          context,
+          state.datesModel,
+          context.read<LeagueGamesCubit>().selectDate,
+        );
+      },
     );
+  }
+
+  void _showDatePicker(
+    BuildContext context,
+    LeagueDatesModel datesModel,
+    Function(DateTime) onDateSelected,
+  ) {
+    if (Platform.isIOS) {
+      _showIOSPicker(context, datesModel, onDateSelected);
+    } else {
+      _showAndroidPicker(context, datesModel, onDateSelected);
+    }
+  }
+
+  void _showIOSPicker(
+    BuildContext context,
+    LeagueDatesModel datesModel,
+    Function(DateTime) onDateSelected,
+  ) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 280,
+        padding: const EdgeInsets.only(top: 8),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: CupertinoDatePicker(
+            initialDateTime: datesModel.selectedDate,
+            minimumDate: datesModel.minDate,
+            maximumDate: datesModel.maxDate,
+            mode: CupertinoDatePickerMode.date,
+            onDateTimeChanged: onDateSelected,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showAndroidPicker(
+    BuildContext context,
+    LeagueDatesModel datesModel,
+    Function(DateTime) onDateSelected,
+  ) async {
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: datesModel.selectedDate,
+      firstDate: datesModel.minDate,
+      lastDate: datesModel.maxDate,
+    );
+
+    if (newDate != null) {
+      onDateSelected(newDate);
+    }
   }
 
   @override

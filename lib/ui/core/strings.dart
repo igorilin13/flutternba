@@ -5,13 +5,16 @@ class UiStrings {
   static const String actionSkipOnboarding = "Later";
   static const String actionConfirm = "Confirm";
   static const String actionChooseTeam = "Choose team";
+  static const String actionRetry = "Retry";
+  static const String actionSelectAnotherDate = "Select date";
   static String actionShowAll = "Show all";
-  static const String teamListLoadError = "Error loading teams.\nTap to retry";
-  static const String gameListLoadError = "Error loading games.\nTap to retry";
+  static const String genericErrorTitle = "Something went wrong";
+  static const String teamListLoadError = "Error loading teams.";
+  static const String gameListLoadError = "Error loading games.";
   static const String upcomingGamesLoadError = "Error loading upcoming games";
   static const String previousGamesLoadError = "Error loading previous games";
-  static const String noGamesMessage =
-      "Looks like it's a quiet day – no games on the schedule";
+  static const String noLeagueGamesMessage = "There are no games on this day.";
+  static const String noTeamGamesMessage = "Games will be added here soon.";
   static const String noFavoriteTeamMessage =
       "Select your favorite team to personalize your experience";
   static const String sectionNextGame = "Next Game";
@@ -33,8 +36,7 @@ class UiStrings {
   static const String filterStandingsConference = "Conference";
   static const String filterStandingsDivision = "Division";
   static const String filterStandingsPlayoffs = "Playoffs";
-  static const String standingsLoadError =
-      "Oops, couldn't load standings;\ntap to retry";
+  static const String standingsLoadError = "Error loading standings.";
   static const String standingsHideScoresMessage =
       "Heads up! You're in 'Hide scores' mode,\nand standings may reveal spoilers.\nContinue anyway?";
   static const String actionRevealStandings = "Show standings";
@@ -46,8 +48,7 @@ class UiStrings {
   static const String shortLabelLoss = "L";
   static const String captionLastTen = "Last Ten";
   static const String captionStreak = "Streak";
-  static const String boxScoreLoadError =
-      "Couldn't load the game.\nTap to retry";
+  static const String boxScoreLoadError = "Error loading box score.";
   static const String boxScoreGameNotStarted =
       "Come back for stats after the game starts";
   static const String titleTeamStats = "Team stats";

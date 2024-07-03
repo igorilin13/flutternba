@@ -58,8 +58,8 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
       case NoGamesAvailableState():
         return const Center(
           child: NbaErrorDisplay(
-            message: UiStrings.noGamesMessage,
-            icon: Icons.calendar_today,
+            title: null,
+            message: UiStrings.noTeamGamesMessage,
           ),
         );
       case DisplayDataState():

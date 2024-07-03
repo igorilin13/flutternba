@@ -1,21 +1,17 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutternba/domain/date/league_dates_model.dart';
 
 class GamesDateControl extends StatelessWidget {
-  final LeagueDatesModel datesModel;
+  final String selectedDate;
   final VoidCallback onPreviousTap;
   final VoidCallback onNextTap;
-  final Function(DateTime) onDateSelected;
+  final VoidCallback onDatePickerRequest;
 
   const GamesDateControl({
     super.key,
-    required this.datesModel,
+    required this.selectedDate,
     required this.onPreviousTap,
     required this.onNextTap,
-    required this.onDateSelected,
+    required this.onDatePickerRequest,
   });
 
   @override
@@ -29,13 +25,13 @@ class GamesDateControl extends StatelessWidget {
           onPressed: onPreviousTap,
         ),
         InkWell(
-          onTap: () => _showDatePicker(context),
+          onTap: onDatePickerRequest,
           child: Row(
             children: [
               const Icon(Icons.date_range, size: 16),
               const SizedBox(width: 6),
               Text(
-                datesModel.formattedDate,
+                selectedDate,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -48,47 +44,5 @@ class GamesDateControl extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  void _showDatePicker(BuildContext context) async {
-    if (Platform.isIOS) {
-      _showIOSPicker(context);
-    } else {
-      await _showAndroidPicker(context);
-    }
-  }
-
-  void _showIOSPicker(BuildContext context) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => Container(
-        height: 280,
-        padding: const EdgeInsets.only(top: 8),
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: SafeArea(
-          top: false,
-          child: CupertinoDatePicker(
-            initialDateTime: datesModel.selectedDate,
-            minimumDate: datesModel.minDate,
-            maximumDate: datesModel.maxDate,
-            mode: CupertinoDatePickerMode.date,
-            onDateTimeChanged: onDateSelected,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _showAndroidPicker(BuildContext context) async {
-    final newDate = await showDatePicker(
-      context: context,
-      initialDate: datesModel.selectedDate,
-      firstDate: datesModel.minDate,
-      lastDate: datesModel.maxDate,
-    );
-
-    if (newDate != null) {
-      onDateSelected(newDate);
-    }
   }
 }

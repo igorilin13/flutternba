@@ -87,12 +87,8 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
     }
     return Container(
       padding: const EdgeInsets.all(16),
-      child: ElevatedButton(
+      child: FilledButton(
         onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        ),
         child: const Text(UiStrings.actionConfirm),
       ),
     );
