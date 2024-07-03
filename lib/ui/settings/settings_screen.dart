@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/ui/core/components/header_item.dart';
 import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
@@ -15,35 +16,43 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen>
     with AutomaticKeepAliveClientMixin {
+  static const double _settingHorizontalPadding = 16;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                UiStrings.titleSettings,
-                style: Theme.of(context).textTheme.headlineLarge,
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const NbaHeaderItem(text: UiStrings.titleSettings),
+              const SizedBox(height: 8),
+              Card(
+                clipBehavior: Clip.hardEdge,
+                child: Column(
+                  children: [
+                    if (state.shouldHideScores != null) ...[
+                      buildHideScoresSetting(
+                        context,
+                        state.shouldHideScores!,
+                        context.read<SettingsCubit>().setHideScores,
+                      ),
+                      const Divider(height: 0.5, thickness: 0.5),
+                    ],
+                    buildFavoriteTeamSetting(
+                      context,
+                      state.favoriteTeamState,
+                      () => ChangeFavoriteTeamScreen.navigate(context),
+                    )
+                  ],
+                ),
               ),
-            ),
-            if (state.shouldHideScores != null)
-              buildHideScoresSetting(
-                context,
-                state.shouldHideScores!,
-                (value) => context.read<SettingsCubit>().setHideScores(value),
-              ),
-            const SizedBox(height: 12),
-            buildFavoriteTeamSetting(
-              context,
-              state.favoriteTeamState,
-              () => ChangeFavoriteTeamScreen.navigate(context),
-            )
-          ],
+            ],
+          ),
         );
       },
     );
@@ -55,7 +64,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     void Function(bool) onChanged,
   ) {
     return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: _settingHorizontalPadding,
+        vertical: 4,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -64,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
-          Switch(value: value, onChanged: onChanged)
+          Switch.adaptive(value: value, onChanged: onChanged)
         ],
       ),
     );
@@ -78,7 +90,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(left: 24, right: 16, top: 8, bottom: 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: _settingHorizontalPadding,
+          vertical: 16,
+        ),
         child: Row(
           children: [
             Expanded(
@@ -101,33 +116,19 @@ class _SettingsScreenState extends State<SettingsScreen>
     switch (state) {
       case LoadingFavoriteTeamState():
         return const Padding(
-          padding: EdgeInsets.only(right: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: SizedBox(
             width: 20,
             height: 20,
-            child: CircularProgressIndicator(strokeWidth: 2),
+            child: CircularProgressIndicator.adaptive(strokeWidth: 2),
           ),
         );
-      case FavoriteTeamErrorState():
-        return Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Text(
-            UiStrings.favoriteTeamError,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        );
-      case NoFavoriteTeamState():
-        return Padding(
-          padding: const EdgeInsets.only(right: 24.0),
-          child: Text(
-            UiStrings.noFavoriteTeamValue,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        );
+      case FavoriteTeamErrorState() || NoFavoriteTeamState():
+        return const Icon(Icons.chevron_right);
       case HasFavoriteTeamState():
         return Row(
           children: [
-            NbaTeamLogo(teamId: state.team.id, size: 32),
+            NbaTeamLogo(teamId: state.team.id, size: 28),
             const SizedBox(width: 4),
             Text(
               state.team.name,

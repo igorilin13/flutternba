@@ -26,9 +26,7 @@ class UiStrings {
   static const String titleToday = "Today";
   static const String titleSettings = "Settings";
   static const String settingHideScores = "Hide scores";
-  static const String settingFavoriteTeam = "My team";
-  static const String favoriteTeamError = "Error";
-  static const String noFavoriteTeamValue = "-";
+  static const String settingFavoriteTeam = "Favorite team";
   static const String today = "Today";
   static const String yesterday = "Yesterday";
   static const String tomorrow = "Tomorrow";
