@@ -7,7 +7,7 @@ class UiStrings {
   static const String actionChooseTeam = "Choose team";
   static String actionShowAll = "Show all";
   static const String teamListLoadError = "Error loading teams.\nTap to retry";
-  static const String gameListLoadError = "Error loading games.\ntap to retry";
+  static const String gameListLoadError = "Error loading games.\nTap to retry";
   static const String upcomingGamesLoadError = "Error loading upcoming games";
   static const String previousGamesLoadError = "Error loading previous games";
   static const String noGamesMessage =

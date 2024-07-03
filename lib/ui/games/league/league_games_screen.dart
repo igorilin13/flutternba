@@ -47,7 +47,7 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
         return _buildNonDisplayState(
           context: context,
           state: state,
-          child: const CircularProgressIndicator(),
+          child: const CircularProgressIndicator.adaptive(),
         );
       case ErrorState():
         return _buildNonDisplayState(
