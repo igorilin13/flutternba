@@ -14,7 +14,9 @@ class NbaSystemUiOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: _createOverlayStyle(), child: child);
+      value: _createOverlayStyle(),
+      child: child,
+    );
   }
 
   SystemUiOverlayStyle _createOverlayStyle() {

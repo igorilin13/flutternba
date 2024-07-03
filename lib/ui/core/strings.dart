@@ -20,7 +20,7 @@ class UiStrings {
   static const String sectionPreviousGames = "Previous";
   static const String versus = "vs";
   static const String navigationStandings = "Standings";
-  static const String navigationFavorite = "My Team";
+  static const String navigationFavorite = "Favorite";
   static const String navigationLeague = "League";
   static const String navigationSettings = "Settings";
   static const String titleToday = "Today";
