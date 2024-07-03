@@ -135,21 +135,23 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
     Result<List<GameItem>>? upcomingGamesResult,
     bool isLoadingUpcoming,
     bool expandUpcoming,
-    PagedData<GameItem, GamesPageKey>? finishedGames,
+    PagedData<GameItem, GamesPageKey>? finishedGamesPagedData,
     Object? finishedGamesPageError,
     Result<TeamStandings>? teamStandings,
   ) {
     if (upcomingGamesResult == null &&
-        finishedGames == null &&
+        finishedGamesPagedData == null &&
         teamStandings == null) {
       return const TeamGamesState.initialLoading();
     }
 
     final upcomingGames = upcomingGamesResult?.valueOrNull;
+    final finishedGames = finishedGamesPagedData?.items;
+
     if (upcomingGamesResult?.isSuccess == true &&
         upcomingGames?.isEmpty == true &&
         finishedGamesPageError == null &&
-        finishedGames?.items.isEmpty == true) {
+        finishedGames?.isEmpty == true) {
       return const TeamGamesState.noGamesAvailable();
     }
 
@@ -157,19 +159,20 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
         ? upcomingGames ?? []
         : upcomingGames?.takeList(_displayedUpcomingGames) ?? [];
 
+    final showPrevGameSection =
+        upcomingGames?.isNotEmpty == true && finishedGames?.isNotEmpty == true;
     final finishedGamesData = finishedGames != null
         ? PagedData(
-            items: finishedGames.items.length > 1
-                ? finishedGames.items.sublist(1)
-                : <GameItem>[],
-            nextKey: finishedGames.nextKey,
+            items:
+                showPrevGameSection ? finishedGames.sublist(1) : finishedGames,
+            nextKey: finishedGamesPagedData?.nextKey,
           )
         : null;
 
     return TeamGamesState.displayData(
       teamId: teamId,
-      nextGame: displayedUpcomingGames.getOrNull(0),
-      previousGame: finishedGames?.items.getOrNull(0),
+      nextGame: displayedUpcomingGames.firstOrNull,
+      previousGame: showPrevGameSection ? finishedGames?.firstOrNull : null,
       upcomingGames: displayedUpcomingGames.length > 1
           ? displayedUpcomingGames.sublist(1)
           : [],

@@ -14,13 +14,14 @@ class UiStrings {
   static const String upcomingGamesLoadError = "Error loading upcoming games";
   static const String previousGamesLoadError = "Error loading previous games";
   static const String noLeagueGamesMessage = "There are no games on this day.";
+  static const String noTeamGamesTitle = "Check back later";
   static const String noTeamGamesMessage = "Games will be added here soon.";
-  static const String noFavoriteTeamMessage =
-      "Select your favorite team to personalize your experience";
+  static const String noFavoriteTeamMessage = "No favorite selected";
   static const String sectionNextGame = "Next Game";
-  static const String sectionPreviousGame = "Previous Game";
+  static const String sectionRecentGame = "Recent Game";
   static const String sectionUpcomingGames = "Upcoming";
   static const String sectionPreviousGames = "Previous";
+  static const String noUpcomingGamesMessage = "No upcoming games";
   static const String versus = "vs";
   static const String navigationStandings = "Standings";
   static const String navigationFavorite = "Favorite";
@@ -82,7 +83,7 @@ class UiStrings {
   static String tomorrowTimeFormat(String time) => "Tomorrow, $time";
 
   static String conferencePositionCaption(int rank, String conferenceName) =>
-      "${toOrdinal(rank)} in the ${conferenceName.capitalize()}";
+      "${toOrdinal(rank)} in the ${conferenceName.capitalize()} Conference";
 
   static String toOrdinal(int number) {
     if (number <= 0) {

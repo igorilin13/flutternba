@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/ui/core/components/cta_message.dart';
+import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
 import 'package:flutternba/ui/games/team/base/widgets/team_games_mixin.dart';
@@ -52,7 +53,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
   ) {
     switch (state) {
       case LoadingFavoriteTeamState():
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: NbaProgressIndicator());
       case NoFavoriteTeamState():
         return _buildNoFavoriteTeamMessage(
           context,
@@ -63,6 +64,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
           restorationId: 'favoriteTeamGames',
           gamesState: state.gamesState,
           finishedGamesController: finishedGamesController,
+          showBackButton: false,
         );
     }
   }

@@ -4,6 +4,7 @@ import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/ui/core/components/cta_message.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/game_card.dart';
+import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/scores/box_score_cubit.dart';
 import 'package:flutternba/ui/scores/widgets/player_stats_widget.dart';
@@ -45,7 +46,7 @@ class GameBoxScoreScreen extends StatelessWidget {
   Widget _buildContent(BuildContext context, GameBoxScoreState state) {
     switch (state) {
       case LoadingState():
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: NbaProgressIndicator());
       case ErrorState():
         return Center(
           child: NbaErrorDisplay(

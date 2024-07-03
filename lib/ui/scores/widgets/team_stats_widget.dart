@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/scores/box_score_models.dart';
+import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 
@@ -11,19 +12,14 @@ class GameTeamStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-        child: Column(
-          children: [
-            _buildHeaderRow(context),
-            for (final statType in _StatType.values) ...[
-              const SizedBox(height: 8),
-              _buildStatRow(context, statType),
-            ]
-          ],
-        ),
-      ),
+    return NbaListCard(
+      children: [
+        _buildHeaderRow(context),
+        for (final statType in _StatType.values) ...[
+          const SizedBox(height: 8),
+          _buildStatRow(context, statType),
+        ]
+      ],
     );
   }
 
@@ -50,12 +46,7 @@ class GameTeamStats extends StatelessWidget {
   }
 
   Widget _buildStatRow(BuildContext context, _StatType type) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
+    return NbaListCardTile(
       child: Stack(
         children: [
           Text(

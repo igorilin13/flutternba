@@ -4,19 +4,19 @@ import 'package:flutternba/ui/core/extensions.dart';
 
 class NbaTeamLogo extends StatelessWidget {
   final int teamId;
-  final double? size;
+  final double size;
   final BoxFit fit;
 
   const NbaTeamLogo({
     super.key,
     required this.teamId,
-    this.size,
+    required this.size,
     this.fit = BoxFit.contain,
   });
 
   @override
   Widget build(BuildContext context) {
-    final cachedSize = size?.toPx(context).round();
+    final cachedSize = size.toPx(context).round();
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return Image.asset(

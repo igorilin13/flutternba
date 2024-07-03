@@ -4,10 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NbaAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final bool showBackButton;
   final Widget? title;
   final List<Widget>? actions;
 
-  const NbaAppBar({super.key, this.title, this.actions});
+  const NbaAppBar({
+    super.key,
+    this.showBackButton = true,
+    this.title,
+    this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +22,7 @@ class NbaAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: title,
+      automaticallyImplyLeading: showBackButton,
       surfaceTintColor: isIOS ? Colors.transparent : null,
       shadowColor: isIOS ? CupertinoColors.darkBackgroundGray : null,
       scrolledUnderElevation: isIOS ? .1 : null,

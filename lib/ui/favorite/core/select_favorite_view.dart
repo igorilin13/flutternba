@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 import 'package:flutternba/ui/core/components/app_bar.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
+import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/core/base_select_favorite_cubit.dart';
@@ -101,7 +102,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
   }) {
     switch (state) {
       case LoadingState():
-        return const Center(child: CircularProgressIndicator.adaptive());
+        return const Center(child: NbaProgressIndicator());
       case ErrorState():
         return Center(
           child: NbaErrorDisplay(

@@ -7,6 +7,7 @@ import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/domain/date/league_dates_model.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/game_card.dart';
+import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/league/widgets/games_date_control.dart';
 import 'package:flutternba/ui/scores/box_score_screen.dart';
@@ -51,7 +52,7 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
         return _buildNonDisplayState(
           context: context,
           state: state,
-          child: const CircularProgressIndicator.adaptive(),
+          child: const NbaProgressIndicator(),
         );
       case ErrorState():
         return _buildNonDisplayState(

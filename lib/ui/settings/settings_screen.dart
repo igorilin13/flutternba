@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/core/components/header_item.dart';
+import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
@@ -117,11 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       case LoadingFavoriteTeamState():
         return const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          child: SizedBox(
-            width: 20,
-            height: 20,
-            child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-          ),
+          child: NbaProgressIndicator(size: NbaProgressIndicatorSize.small),
         );
       case FavoriteTeamErrorState() || NoFavoriteTeamState():
         return const Icon(Icons.chevron_right);

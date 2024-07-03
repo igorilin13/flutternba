@@ -5,6 +5,7 @@ import 'package:flutternba/domain/standings/standings_model.dart';
 import 'package:flutternba/ui/core/components/cta_message.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/header_item.dart';
+import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/team_games_screen.dart';
 import 'package:flutternba/ui/standings/standings_cubit.dart';
@@ -39,7 +40,7 @@ class _StandingsScreenState extends State<StandingsScreen>
   Widget _buildBody(BuildContext context, StandingsState state) {
     switch (state) {
       case LoadingState():
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: NbaProgressIndicator());
       case HideScoresOnState():
         return Center(
           child: Padding(

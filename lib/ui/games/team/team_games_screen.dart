@@ -37,14 +37,11 @@ class _TeamGamesScreenState extends State<TeamGamesScreen>
     return BlocProvider(
       create: (context) => TeamGamesCubit(widget.teamId, locator(), locator()),
       child: BlocConsumer<TeamGamesCubit, TeamGamesState>(
-          builder: (context, state) => Scaffold(
-                body: SafeArea(
-                  child: TeamGamesView<TeamGamesCubit>(
-                    restorationId: 'teamGames',
-                    gamesState: state,
-                    finishedGamesController: finishedGamesController,
-                  ),
-                ),
+          builder: (context, state) => TeamGamesView<TeamGamesCubit>(
+                restorationId: 'teamGames',
+                gamesState: state,
+                finishedGamesController: finishedGamesController,
+                showBackButton: true,
               ),
           listener: (context, state) => bindFinishedGames(state)),
     );
