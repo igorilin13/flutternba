@@ -7,8 +7,8 @@ import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
 import 'package:flutternba/domain/standings/standings_use_case.dart';
-import 'package:flutternba/ui/util/bloc/base_cubit.dart';
-import 'package:flutternba/ui/util/bloc/hideable_score_cubit.dart';
+import 'package:flutternba/ui/core/cubit/base_cubit.dart';
+import 'package:flutternba/ui/core/cubit/hideable_score_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 

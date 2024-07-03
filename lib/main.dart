@@ -1,16 +1,13 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/firebase_options.dart';
+import 'package:flutternba/ui/core/colors.dart';
 import 'package:flutternba/ui/favorite/onboarding/onboarding_screen.dart';
 import 'package:flutternba/ui/home/home_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
-import 'package:flutternba/ui/util/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,19 +28,10 @@ class _MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme cupertinoTextTheme = TextTheme(
-      headlineMedium: const CupertinoThemeData()
-          .textTheme
-          .navLargeTitleTextStyle
-          .copyWith(letterSpacing: -1.5),
-      titleLarge: const CupertinoThemeData().textTheme.navTitleTextStyle,
-    );
-
     createTheme({required bool isDark}) {
       return ThemeData(
         colorScheme: isDark ? AppColorSchemes.dark : AppColorSchemes.light,
         useMaterial3: true,
-        textTheme: Platform.isIOS ? cupertinoTextTheme : null,
       );
     }
 

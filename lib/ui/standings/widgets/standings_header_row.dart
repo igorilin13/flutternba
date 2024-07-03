@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/standings/widgets/standings_value_cell.dart';
-import 'package:flutternba/ui/util/strings.dart';
 
 class StandingsHeaderRow extends StatelessWidget {
   final String title;

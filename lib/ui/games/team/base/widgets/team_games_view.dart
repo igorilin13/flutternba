@@ -3,18 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/data/games/game_model.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/domain/games/game_item.dart';
+import 'package:flutternba/ui/core/colors.dart';
+import 'package:flutternba/ui/core/components/error_display.dart';
+import 'package:flutternba/ui/core/components/error_display_inline.dart';
+import 'package:flutternba/ui/core/components/game_card.dart';
+import 'package:flutternba/ui/core/components/header_item.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/base/base_team_games_cubit.dart';
 import 'package:flutternba/ui/games/team/base/team_games_state.dart';
 import 'package:flutternba/ui/games/team/base/widgets/expand_upcoming.dart';
 import 'package:flutternba/ui/games/team/base/widgets/team_tidbit_card.dart';
 import 'package:flutternba/ui/scores/box_score_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
-import 'package:flutternba/ui/util/colors.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/error_display.dart';
-import 'package:flutternba/ui/util/widgets/error_display_inline.dart';
-import 'package:flutternba/ui/util/widgets/game_card.dart';
-import 'package:flutternba/ui/util/widgets/header_item.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'team_page_header.dart';
@@ -57,7 +57,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
         return const Center(child: CircularProgressIndicator());
       case NoGamesAvailableState():
         return const Center(
-          child: ErrorDisplay(
+          child: NbaErrorDisplay(
             message: UiStrings.noGamesMessage,
             icon: Icons.calendar_today,
           ),
@@ -100,7 +100,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
         )
       else if (state.upcomingGamesError != null) ...[
         _buildSectionHeader(UiStrings.sectionUpcomingGames),
-        InlineErrorDisplay(
+        NbaInlineErrorDisplay(
           message: UiStrings.upcomingGamesLoadError,
           onTap: context.read<T>().retryLoadingUpcoming,
         ),
@@ -138,11 +138,11 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
             builderDelegate: PagedChildBuilderDelegate<GameItem>(
               itemBuilder: (context, item, index) =>
                   _buildGameCardWidget(context, item, hideScores, state.teamId),
-              firstPageErrorIndicatorBuilder: (_) => InlineErrorDisplay(
+              firstPageErrorIndicatorBuilder: (_) => NbaInlineErrorDisplay(
                 message: UiStrings.previousGamesLoadError,
                 onTap: context.read<T>().retryLoadingFinished,
               ),
-              newPageErrorIndicatorBuilder: (_) => InlineErrorDisplay(
+              newPageErrorIndicatorBuilder: (_) => NbaInlineErrorDisplay(
                 message: UiStrings.previousGamesLoadError,
                 onTap: context.read<T>().retryLoadingFinished,
               ),
@@ -171,7 +171,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8, left: 12, top: 12),
-      child: HeaderItem(text: title),
+      child: NbaHeaderItem(text: title),
     );
   }
 
@@ -183,7 +183,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
   ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: GameCard(
+      child: NbaGameCard(
         item: game,
         hideScores: hideScores,
         teamOutcomeId: teamId,

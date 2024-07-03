@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HeaderItem extends StatelessWidget {
+class NbaHeaderItem extends StatelessWidget {
   final String text;
   final TextStyle? style;
   final EdgeInsets padding;
 
-  const HeaderItem({
+  const NbaHeaderItem({
     super.key,
     required this.text,
     this.style,

@@ -5,8 +5,8 @@ import 'package:flutternba/data/scores/box_score_repository.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/domain/date/game_time_formatter.dart';
 import 'package:flutternba/domain/games/game_item.dart';
-import 'package:flutternba/ui/util/bloc/base_cubit.dart';
-import 'package:flutternba/ui/util/bloc/hideable_score_cubit.dart';
+import 'package:flutternba/ui/core/cubit/base_cubit.dart';
+import 'package:flutternba/ui/core/cubit/hideable_score_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 

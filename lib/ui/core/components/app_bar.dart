@@ -11,12 +11,18 @@ class NbaAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isIOS = Platform.isIOS;
+    final theme = Theme.of(context);
+
     return AppBar(
       title: title,
-      surfaceTintColor: Platform.isIOS ? Colors.transparent : null,
-      shadowColor: Platform.isIOS ? CupertinoColors.darkBackgroundGray : null,
-      scrolledUnderElevation: Platform.isIOS ? .1 : null,
-      toolbarHeight: Platform.isIOS ? 44 : null,
+      surfaceTintColor: isIOS ? Colors.transparent : null,
+      shadowColor: isIOS ? CupertinoColors.darkBackgroundGray : null,
+      scrolledUnderElevation: isIOS ? .1 : null,
+      toolbarHeight: isIOS ? 44 : null,
+      titleTextStyle: isIOS
+          ? theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)
+          : null,
       actions: actions,
     );
   }

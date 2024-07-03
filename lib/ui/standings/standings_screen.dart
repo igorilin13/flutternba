@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/domain/standings/standings_model.dart';
+import 'package:flutternba/ui/core/components/cta_message.dart';
+import 'package:flutternba/ui/core/components/error_display.dart';
+import 'package:flutternba/ui/core/components/header_item.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/team_games_screen.dart';
 import 'package:flutternba/ui/standings/standings_cubit.dart';
 import 'package:flutternba/ui/standings/widgets/playoff_series_card.dart';
 import 'package:flutternba/ui/standings/widgets/standings_header_row.dart';
 import 'package:flutternba/ui/standings/widgets/standings_row.dart';
 import 'package:flutternba/ui/standings/widgets/standings_type_control.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/cta_message.dart';
-import 'package:flutternba/ui/util/widgets/error_display.dart';
-import 'package:flutternba/ui/util/widgets/header_item.dart';
 
 class StandingsScreen extends StatefulWidget {
   const StandingsScreen({super.key});
@@ -44,7 +44,7 @@ class _StandingsScreenState extends State<StandingsScreen>
         return Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: ActionMessageDisplay(
+            child: NbaActionMessage(
               message: UiStrings.standingsHideScoresMessage,
               actionText: UiStrings.actionRevealStandings,
               icon: Icons.check,
@@ -54,7 +54,7 @@ class _StandingsScreenState extends State<StandingsScreen>
         );
       case ErrorState():
         return Center(
-          child: ErrorDisplay(
+          child: NbaErrorDisplay(
             message: UiStrings.standingsLoadError,
             onTap: context.read<StandingsCubit>().retryLoading,
           ),
@@ -89,7 +89,7 @@ class _StandingsScreenState extends State<StandingsScreen>
       ),
       for (var collection in state.collections) ...[
         if (collection.title != null)
-          HeaderItem(
+          NbaHeaderItem(
             text: collection.title!,
             padding: const EdgeInsets.only(top: 16),
             style: Theme.of(context).textTheme.headlineMedium,
@@ -134,7 +134,7 @@ class _StandingsScreenState extends State<StandingsScreen>
         ),
       ),
       for (var round in state.rounds) ...[
-        HeaderItem(
+        NbaHeaderItem(
           text: UiStrings.playoffRoundName(round.id),
           padding: const EdgeInsets.only(top: 16, bottom: 8),
           style: Theme.of(context).textTheme.headlineSmall,

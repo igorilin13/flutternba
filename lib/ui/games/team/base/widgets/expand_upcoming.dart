@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/util/strings.dart';
+import 'package:flutternba/ui/core/strings.dart';
 
 class ExpandUpcomingButtonItem extends StatelessWidget {
   final VoidCallback onPressed;

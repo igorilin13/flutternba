@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/ui/favorite/core/select_favorite_view.dart';
 
-import '../../../common/di/locator.dart';
-import '../../util/strings.dart';
-import '../core/select_favorite_view.dart';
 import 'change_favorite_cubit.dart';
 
 class ChangeFavoriteTeamScreen extends StatelessWidget {
@@ -23,7 +22,6 @@ class ChangeFavoriteTeamScreen extends StatelessWidget {
       ),
       child: Builder(builder: (context) {
         return SelectFavoriteTeamView<ChangeFavoriteTeamCubit>(
-          confirmButtonText: UiStrings.actionConfirm,
           onSkipTap: null,
           onSelectionComplete: onSelectionComplete,
         );

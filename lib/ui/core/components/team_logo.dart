@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/util/asset_paths.dart';
-import 'package:flutternba/ui/util/extensions.dart';
+import 'package:flutternba/ui/core/asset_paths.dart';
+import 'package:flutternba/ui/core/extensions.dart';
 
-class TeamLogo extends StatelessWidget {
+class NbaTeamLogo extends StatelessWidget {
   final int teamId;
   final double? size;
   final BoxFit fit;
 
-  const TeamLogo({
+  const NbaTeamLogo({
     super.key,
     required this.teamId,
     this.size,

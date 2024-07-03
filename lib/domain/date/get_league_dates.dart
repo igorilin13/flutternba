@@ -1,8 +1,7 @@
 import 'package:flutternba/common/util/date_ext.dart';
 import 'package:flutternba/domain/date/league_dates_model.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:intl/intl.dart';
-
-import '../../ui/util/strings.dart';
 
 class GetLeagueDatesUseCase {
   final dateFormat = DateFormat("MMMM d");

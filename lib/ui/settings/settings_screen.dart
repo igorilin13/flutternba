@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
+import 'package:flutternba/ui/core/strings.dart';
+import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
 import 'package:flutternba/ui/settings/settings_state.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/team_logo.dart';
-
-import '../favorite/change/change_favorite_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -128,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       case HasFavoriteTeamState():
         return Row(
           children: [
-            TeamLogo(teamId: state.team.id, size: 32),
+            NbaTeamLogo(teamId: state.team.id, size: 32),
             const SizedBox(width: 4),
             Text(
               state.team.name,

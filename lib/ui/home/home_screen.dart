@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutternba/ui/core/components/system_overlay.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/league/league_games_screen.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_screen.dart';
+import 'package:flutternba/ui/settings/settings_screen.dart';
 import 'package:flutternba/ui/standings/standings_screen.dart';
-import 'package:flutternba/ui/util/widgets/system_overlay.dart';
-
-import '../settings/settings_screen.dart';
-import '../util/strings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return SystemUiOverlay(
+    return NbaSystemUiOverlay(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Scaffold(
         bottomNavigationBar: NavigationBar(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/ui/core/components/error_display.dart';
+import 'package:flutternba/ui/core/components/game_card.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/league/widgets/games_date_control.dart';
 import 'package:flutternba/ui/scores/box_score_screen.dart';
+import 'package:flutternba/ui/settings/settings_cubit.dart';
 
-import '../../../common/di/locator.dart';
-import '../../settings/settings_cubit.dart';
-import '../../util/strings.dart';
-import '../../util/widgets/error_display.dart';
-import '../../util/widgets/game_card.dart';
 import 'league_games_cubit.dart';
 import 'league_games_state.dart';
 
@@ -53,7 +53,7 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
         return _buildNonDisplayState(
           context: context,
           state: state,
-          child: ErrorDisplay(
+          child: NbaErrorDisplay(
             message: UiStrings.gameListLoadError,
             onTap: context.read<LeagueGamesCubit>().retryLoading,
           ),
@@ -62,7 +62,7 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
         return _buildNonDisplayState(
           context: context,
           state: state,
-          child: const ErrorDisplay(
+          child: const NbaErrorDisplay(
             message: UiStrings.noGamesMessage,
             icon: Icons.calendar_today,
           ),
@@ -102,7 +102,7 @@ class _LeagueGamesScreenState extends State<LeagueGamesScreen>
         final Widget content;
         if (index > 0) {
           final item = items[index - 1];
-          content = GameCard(
+          content = NbaGameCard(
             item: item,
             hideScores: hideScores,
             onTap: () => GameBoxScoreScreen.navigate(context, item.game.id),

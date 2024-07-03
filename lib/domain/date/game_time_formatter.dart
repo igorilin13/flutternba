@@ -1,5 +1,5 @@
 import 'package:flutternba/common/util/date_ext.dart';
-import 'package:flutternba/ui/util/strings.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:intl/intl.dart';
 
 class FormatGameTimeUseCase {

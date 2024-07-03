@@ -3,10 +3,10 @@ import 'package:flutternba/common/util/result.dart';
 import 'package:flutternba/domain/date/get_league_dates.dart';
 import 'package:flutternba/domain/date/league_dates_model.dart';
 import 'package:flutternba/domain/games/game_item.dart';
+import 'package:flutternba/domain/games/league/get_league_games.dart';
+import 'package:flutternba/ui/core/cubit/base_cubit.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../domain/games/league/get_league_games.dart';
-import '../../util/bloc/base_cubit.dart';
 import 'league_games_state.dart';
 
 class LeagueGamesCubit extends BaseCubit<LeagueGamesState> {

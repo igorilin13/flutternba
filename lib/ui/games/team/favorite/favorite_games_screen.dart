@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/ui/core/components/cta_message.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
 import 'package:flutternba/ui/games/team/base/widgets/team_games_mixin.dart';
 import 'package:flutternba/ui/games/team/base/widgets/team_games_view.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_cubit.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_state.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/cta_message.dart';
 
 class FavoriteTeamGamesScreen extends StatefulWidget {
   const FavoriteTeamGamesScreen({super.key});
@@ -74,7 +74,7 @@ class _FavoriteTeamGamesScreenState extends State<FavoriteTeamGamesScreen>
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ActionMessageDisplay(
+        child: NbaActionMessage(
           message: UiStrings.noFavoriteTeamMessage,
           onAction: onSelectClick,
           actionText: UiStrings.actionChooseTeam,

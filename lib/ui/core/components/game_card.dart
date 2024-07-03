@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/games/game_model.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
+import 'package:flutternba/data/teams/team_model.dart';
 import 'package:flutternba/domain/games/game_item.dart';
-import 'package:flutternba/ui/util/colors.dart';
-import 'package:flutternba/ui/util/widgets/team_logo.dart';
+import 'package:flutternba/ui/core/colors.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
+import 'package:flutternba/ui/core/strings.dart';
 
-import '../../../data/teams/team_model.dart';
-import '../strings.dart';
-
-class GameCard extends StatelessWidget {
+class NbaGameCard extends StatelessWidget {
   final GameItem item;
   final bool hideScores;
   final int? teamOutcomeId;
   final VoidCallback? onTap;
 
-  const GameCard({
+  const NbaGameCard({
     super.key,
     required this.item,
     required this.hideScores,
@@ -108,7 +107,7 @@ class GameCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: alignment,
       children: [
-        TeamLogo(teamId: team.id, size: 48),
+        NbaTeamLogo(teamId: team.id, size: 48),
         const SizedBox(height: 8),
         Text(
           team.name,

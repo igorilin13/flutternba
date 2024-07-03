@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutternba/common/util/async_ext.dart';
+import 'package:flutternba/common/util/result.dart';
+import 'package:flutternba/data/settings/settings_repository.dart';
+import 'package:flutternba/data/teams/team_model.dart';
+import 'package:flutternba/data/teams/team_repository.dart';
+import 'package:flutternba/ui/core/cubit/base_cubit.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
-import 'package:flutternba/ui/util/bloc/base_cubit.dart';
 import 'package:rxdart/rxdart.dart';
-
-import '../../../common/util/result.dart';
-import '../../../data/settings/settings_repository.dart';
-import '../../../data/teams/team_model.dart';
-import '../../../data/teams/team_repository.dart';
 
 abstract class BaseSelectFavoriteTeamCubit
     extends BaseCubit<SelectFavoriteTeamState> {

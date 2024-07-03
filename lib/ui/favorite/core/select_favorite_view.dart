@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/data/teams/team_model.dart';
+import 'package:flutternba/ui/core/components/app_bar.dart';
+import 'package:flutternba/ui/core/components/error_display.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/core/base_select_favorite_cubit.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
-import 'package:flutternba/ui/util/widgets/app_bar.dart';
-import 'package:flutternba/ui/util/widgets/team_logo.dart';
-
-import '../../../data/teams/team_model.dart';
-import '../../util/strings.dart';
-import '../../util/widgets/error_display.dart';
 
 class SelectFavoriteTeamView<T extends BaseSelectFavoriteTeamCubit>
     extends StatefulWidget {
-  final String confirmButtonText;
   final VoidCallback onSelectionComplete;
   final VoidCallback? onSkipTap;
 
   const SelectFavoriteTeamView({
     super.key,
-    required this.confirmButtonText,
     required this.onSelectionComplete,
     this.onSkipTap,
   });
@@ -54,7 +51,6 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           bottomNavigationBar: _buildContinueButton(
             context,
             state,
-            widget.confirmButtonText,
             () => context.read<T>().confirmSelection(_selectedTeamId.value),
           ),
         );
@@ -84,7 +80,6 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
   Widget? _buildContinueButton(
     BuildContext context,
     SelectFavoriteTeamState state,
-    String text,
     VoidCallback onTap,
   ) {
     if (_selectedTeamId.value == null || state is! DisplayState) {
@@ -98,7 +93,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
         ),
-        child: Text(text),
+        child: const Text(UiStrings.actionConfirm),
       ),
     );
   }
@@ -113,7 +108,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
         return const Center(child: CircularProgressIndicator.adaptive());
       case ErrorState():
         return Center(
-          child: ErrorDisplay(
+          child: NbaErrorDisplay(
             message: UiStrings.teamListLoadError,
             onTap: context.read<T>().retryLoading,
           ),
@@ -166,7 +161,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TeamLogo(teamId: team.id, size: 128),
+              NbaTeamLogo(teamId: team.id, size: 128),
               const SizedBox(height: 16),
               Row(
                 mainAxisSize: MainAxisSize.min,

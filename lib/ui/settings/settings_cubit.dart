@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:flutternba/common/util/async_ext.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
+import 'package:flutternba/ui/core/cubit/base_cubit.dart';
 import 'package:flutternba/ui/settings/settings_state.dart';
 import 'package:rxdart/rxdart.dart';
-
-import '../util/bloc/base_cubit.dart';
 
 class SettingsCubit extends BaseCubit<SettingsState> {
   final SettingsRepository _settingsRepository;

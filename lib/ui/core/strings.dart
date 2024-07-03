@@ -3,12 +3,11 @@ import 'package:flutternba/common/util/string_ext.dart';
 class UiStrings {
   static const String titleSelectTeam = "Select your team";
   static const String actionSkipOnboarding = "Later";
-  static const String actionCompleteOnboarding = "Let's Go";
   static const String actionConfirm = "Confirm";
   static const String actionChooseTeam = "Choose team";
   static String actionShowAll = "Show all";
-  static const String teamListLoadError = "Couldn't load teams;\ntap to retry";
-  static const String gameListLoadError = "Couldn't load games;\ntap to retry";
+  static const String teamListLoadError = "Error loading teams.\nTap to retry";
+  static const String gameListLoadError = "Error loading games.\ntap to retry";
   static const String upcomingGamesLoadError = "Error loading upcoming games";
   static const String previousGamesLoadError = "Error loading previous games";
   static const String noGamesMessage =

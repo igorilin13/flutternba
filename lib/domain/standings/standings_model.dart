@@ -1,5 +1,5 @@
 import 'package:flutternba/data/standings/standings_model.dart';
-import 'package:flutternba/ui/util/strings.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'standings_model.freezed.dart';

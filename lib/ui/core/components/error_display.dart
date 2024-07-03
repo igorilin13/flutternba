@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ErrorDisplay extends StatelessWidget {
+class NbaErrorDisplay extends StatelessWidget {
   final String message;
   final VoidCallback? onTap;
   final IconData icon;
 
-  const ErrorDisplay({
+  const NbaErrorDisplay({
     super.key,
     required this.message,
     this.onTap,

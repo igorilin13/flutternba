@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ActionMessageDisplay extends StatelessWidget {
+class NbaActionMessage extends StatelessWidget {
   final String message;
   final VoidCallback onAction;
   final String actionText;
   final IconData icon;
 
-  const ActionMessageDisplay({
+  const NbaActionMessage({
     super.key,
     required this.message,
     required this.onAction,

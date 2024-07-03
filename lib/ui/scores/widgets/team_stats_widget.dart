@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/scores/box_score_models.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/team_logo.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
+import 'package:flutternba/ui/core/strings.dart';
 
 class GameTeamStats extends StatelessWidget {
   final TeamStats home;
@@ -32,7 +32,7 @@ class GameTeamStats extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Stack(
         children: [
-          TeamLogo(teamId: home.id, size: 28),
+          NbaTeamLogo(teamId: home.id, size: 28),
           Container(
             alignment: Alignment.bottomCenter,
             child: Text(
@@ -42,7 +42,7 @@ class GameTeamStats extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: TeamLogo(teamId: away.id, size: 28),
+            child: NbaTeamLogo(teamId: away.id, size: 28),
           ),
         ],
       ),

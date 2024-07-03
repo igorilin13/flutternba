@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutternba/common/util/string_ext.dart';
 import 'package:flutternba/data/scores/box_score_models.dart';
 import 'package:flutternba/data/teams/team_model.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/team_logo.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
+import 'package:flutternba/ui/core/strings.dart';
 
 class GamePlayerStats extends StatelessWidget {
   final Team team;
@@ -33,7 +33,7 @@ class GamePlayerStats extends StatelessWidget {
   Widget _buildHeaderRow(BuildContext context) {
     return Row(
       children: [
-        TeamLogo(teamId: team.id, size: 24),
+        NbaTeamLogo(teamId: team.id, size: 24),
         const SizedBox(width: 8),
         Expanded(
           child: Text(

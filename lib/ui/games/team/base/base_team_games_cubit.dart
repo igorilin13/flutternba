@@ -8,8 +8,8 @@ import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
 import 'package:flutternba/domain/games/game_item.dart';
 import 'package:flutternba/domain/games/team/team_games_use_case.dart';
+import 'package:flutternba/ui/core/cubit/base_cubit.dart';
 import 'package:flutternba/ui/games/team/base/team_games_state.dart';
-import 'package:flutternba/ui/util/bloc/base_cubit.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {

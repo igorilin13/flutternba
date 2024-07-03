@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/ui/core/components/cta_message.dart';
+import 'package:flutternba/ui/core/components/error_display.dart';
+import 'package:flutternba/ui/core/components/game_card.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/scores/box_score_cubit.dart';
 import 'package:flutternba/ui/scores/widgets/player_stats_widget.dart';
-import 'package:flutternba/ui/util/strings.dart';
-import 'package:flutternba/ui/util/widgets/cta_message.dart';
-import 'package:flutternba/ui/util/widgets/error_display.dart';
-import 'package:flutternba/ui/util/widgets/game_card.dart';
 
 import 'widgets/team_stats_widget.dart';
 
@@ -48,7 +48,7 @@ class GameBoxScoreScreen extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       case ErrorState():
         return Center(
-          child: ErrorDisplay(
+          child: NbaErrorDisplay(
             message: UiStrings.boxScoreLoadError,
             onTap: context.read<GameBoxScoreCubit>().retryLoading,
           ),
@@ -56,14 +56,14 @@ class GameBoxScoreScreen extends StatelessWidget {
       case ScheduledGameState():
         return Column(
           children: [
-            GameCard(item: state.gameItem, hideScores: false),
+            NbaGameCard(item: state.gameItem, hideScores: false),
             const SizedBox(height: 32),
             const Center(child: Text(UiStrings.boxScoreGameNotStarted))
           ],
         );
       case HideScoresOnState():
         return Center(
-          child: ActionMessageDisplay(
+          child: NbaActionMessage(
             message: UiStrings.boxScoreHideScoreOnMessage,
             actionText: UiStrings.actionRevealBoxScore,
             icon: Icons.check,
@@ -80,7 +80,7 @@ class GameBoxScoreScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          GameCard(item: state.gameItem, hideScores: false),
+          NbaGameCard(item: state.gameItem, hideScores: false),
           spacer,
           GameTeamStats(home: state.homeTeam.team, away: state.awayTeam.team),
           spacer,
