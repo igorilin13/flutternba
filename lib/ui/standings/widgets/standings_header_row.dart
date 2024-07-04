@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutternba/ui/core/strings.dart';
+import 'package:flutternba/ui/standings/widgets/standings_stat_type.dart';
 import 'package:flutternba/ui/standings/widgets/standings_value_cell.dart';
 
 class StandingsHeaderRow extends StatelessWidget {
   final String title;
-  final BoxDecoration decoration;
 
   const StandingsHeaderRow({
     super.key,
-    required this.decoration,
     required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: decoration,
-      padding: const EdgeInsets.only(left: 8, right: 4, top: 16, bottom: 4),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
           Expanded(
@@ -28,12 +25,9 @@ class StandingsHeaderRow extends StatelessWidget {
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-          const StandingsValueCell(text: UiStrings.standingsColumnWins),
-          const StandingsValueCell(text: UiStrings.standingsColumnLosses),
-          const StandingsValueCell(
-            text: UiStrings.standingsColumnWinPercentage,
-          ),
-          const StandingsValueCell(text: UiStrings.standingsColumnGamesBehind),
+          ...StandingsStatType.values.map((type) {
+            return StandingsValueCell(text: type.label);
+          }),
         ],
       ),
     );

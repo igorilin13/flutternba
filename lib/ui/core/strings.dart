@@ -39,7 +39,7 @@ class UiStrings {
   static const String filterStandingsPlayoffs = "Playoffs";
   static const String standingsLoadError = "Error loading standings.";
   static const String standingsHideScoresMessage =
-      "Heads up! You're in 'Hide scores' mode,\nand standings may reveal spoilers.\nContinue anyway?";
+      "Hide scores mode is on, and standings may reveal spoilers.\nContinue anyway?";
   static const String actionRevealStandings = "Show standings";
   static const String standingsColumnWins = "W";
   static const String standingsColumnLosses = "L";

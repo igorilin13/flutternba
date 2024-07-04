@@ -32,4 +32,12 @@ extension IterableExtensions<E> on Iterable<E> {
   ) {
     return sortedByCompare(selector, (a, b) => b.compareTo(a));
   }
+
+  Map<E, V> associateWith<V>(V Function(E item) valueTransform) {
+    final Map<E, V> map = {};
+    for (var item in this) {
+      map[item] = valueTransform(item);
+    }
+    return map;
+  }
 }

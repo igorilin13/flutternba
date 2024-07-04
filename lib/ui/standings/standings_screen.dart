@@ -5,6 +5,7 @@ import 'package:flutternba/domain/standings/standings_model.dart';
 import 'package:flutternba/ui/core/components/cta_message.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/header_item.dart';
+import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/team_games_screen.dart';
@@ -72,15 +73,6 @@ class _StandingsScreenState extends State<StandingsScreen>
     BuildContext context,
     DisplayRegSeasonState state,
   ) {
-    final rowDecoration = BoxDecoration(
-      border: Border(
-        bottom: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 0.2,
-        ),
-      ),
-    );
-
     final items = <Widget>[
       Center(
         child: StandingsTypeControl(
@@ -89,29 +81,32 @@ class _StandingsScreenState extends State<StandingsScreen>
         ),
       ),
       for (var collection in state.collections) ...[
+        const SizedBox(height: 24),
         if (collection.title != null)
           NbaHeaderItem(
             text: collection.title!,
-            padding: const EdgeInsets.only(top: 16),
-            style: Theme.of(context).textTheme.headlineMedium,
+            padding: const EdgeInsets.only(left: 8, bottom: 8),
           ),
         for (var group in collection.groups) ...[
-          if (collection.title == null) const SizedBox(height: 12),
-          StandingsHeaderRow(
-            decoration: rowDecoration,
-            title: group.title,
+          NbaListCard(
+            children: [
+              StandingsHeaderRow(title: group.title),
+              for (var team in group.teams) ...[
+                const SizedBox(height: 8),
+                NbaListCardTile(
+                  onTap: () => TeamGamesScreen.navigate(context, team.id),
+                  child: StandingsRow(
+                    team: team,
+                    rank: state.selectedType == StandingsType.conference
+                        ? team.conference
+                        : team.division,
+                    isHighlighted: team.id == state.favoriteTeamId,
+                  ),
+                ),
+              ],
+            ],
           ),
-          for (var team in group.teams) ...[
-            StandingsRow(
-              team: team,
-              rank: state.selectedType == StandingsType.conference
-                  ? team.conference
-                  : team.division,
-              decoration: rowDecoration,
-              isHighlighted: team.id == state.favoriteTeamId,
-              onTap: () => TeamGamesScreen.navigate(context, team.id),
-            ),
-          ],
+          const SizedBox(height: 16),
         ],
       ],
     ];
@@ -134,11 +129,11 @@ class _StandingsScreenState extends State<StandingsScreen>
           selected: state.selectedType,
         ),
       ),
+      const SizedBox(height: 4),
       for (var round in state.rounds) ...[
         NbaHeaderItem(
           text: UiStrings.playoffRoundName(round.id),
-          padding: const EdgeInsets.only(top: 16, bottom: 8),
-          style: Theme.of(context).textTheme.headlineSmall,
+          padding: const EdgeInsets.only(top: 20, bottom: 4, left: 8),
         ),
         for (var series in round.series)
           Padding(

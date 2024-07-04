@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/util/collections_ext.dart';
@@ -16,26 +19,48 @@ class StandingsTypeControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SegmentedButton<StandingsType>(
-      segments: availableTypes.mapList(
-        (type) => ButtonSegment<StandingsType>(
-          value: type,
-          label: Text(type.displayName),
+    if (Platform.isIOS) {
+      return SizedBox(
+        width: double.infinity,
+        child: CupertinoSlidingSegmentedControl<StandingsType>(
+          children: availableTypes.associateWith((item) {
+            return Text(item.displayName);
+          }),
+          groupValue: selected,
+          onValueChanged: (selected) {
+            if (selected != null) {
+              context.read<StandingsCubit>().changeType(selected);
+            }
+          },
         ),
-      ),
-      selected: {selected},
-      onSelectionChanged: (selected) {
-        context.read<StandingsCubit>().changeType(selected.first);
-      },
-      showSelectedIcon: false,
-      style: OutlinedButton.styleFrom(
-        visualDensity: const VisualDensity(horizontal: 4, vertical: -4),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        side: BorderSide(
-          width: 0.5,
-          color: Theme.of(context).colorScheme.outline,
+      );
+    } else {
+      return SizedBox(
+        width: double.infinity,
+        child: SegmentedButton<StandingsType>(
+          segments: availableTypes.mapList(
+            (type) => ButtonSegment<StandingsType>(
+              value: type,
+              label: Text(type.displayName),
+            ),
+          ),
+          selected: {selected},
+          onSelectionChanged: (selected) {
+            context.read<StandingsCubit>().changeType(selected.first);
+          },
+          showSelectedIcon: false,
+          style: OutlinedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            visualDensity: const VisualDensity(horizontal: 4, vertical: -4),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            side: BorderSide(
+              width: 0.5,
+              color: Theme.of(context).colorScheme.outline,
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

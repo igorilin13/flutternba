@@ -18,18 +18,25 @@ class NbaListCard extends StatelessWidget {
 
 class NbaListCardTile extends StatelessWidget {
   final Widget? child;
+  final VoidCallback? onTap;
 
-  const NbaListCardTile({super.key, this.child});
+  const NbaListCardTile({super.key, this.onTap, this.child});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Ink(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: child,
+        ),
       ),
-      child: child,
     );
   }
 }
