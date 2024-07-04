@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutternba/ui/core/components/header_item.dart';
+import 'package:flutternba/ui/core/components/app_bar.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
@@ -25,34 +25,34 @@ class _SettingsScreenState extends State<SettingsScreen>
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const NbaHeaderItem(text: UiStrings.titleSettings),
-              const SizedBox(height: 8),
-              Card(
-                clipBehavior: Clip.hardEdge,
-                child: Column(
-                  children: [
-                    if (state.shouldHideScores != null) ...[
-                      buildHideScoresSetting(
+        return Scaffold(
+          appBar: const NbaAppBar(title: Text(UiStrings.titleSettings)),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              children: [
+                Card(
+                  clipBehavior: Clip.hardEdge,
+                  child: Column(
+                    children: [
+                      if (state.shouldHideScores != null) ...[
+                        buildHideScoresSetting(
+                          context,
+                          state.shouldHideScores!,
+                          context.read<SettingsCubit>().setHideScores,
+                        ),
+                        const Divider(height: 0.5, thickness: 0.5),
+                      ],
+                      buildFavoriteTeamSetting(
                         context,
-                        state.shouldHideScores!,
-                        context.read<SettingsCubit>().setHideScores,
-                      ),
-                      const Divider(height: 0.5, thickness: 0.5),
+                        state.favoriteTeamState,
+                        () => ChangeFavoriteTeamScreen.navigate(context),
+                      )
                     ],
-                    buildFavoriteTeamSetting(
-                      context,
-                      state.favoriteTeamState,
-                      () => ChangeFavoriteTeamScreen.navigate(context),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
