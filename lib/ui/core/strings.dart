@@ -47,8 +47,6 @@ class UiStrings {
   static const String standingsColumnGamesBehind = "GB";
   static const String shortLabelWin = "W";
   static const String shortLabelLoss = "L";
-  static const String captionLastTen = "Last Ten";
-  static const String captionStreak = "Streak";
   static const String boxScoreLoadError = "Error loading box score.";
   static const String boxScoreGameNotStarted =
       "Come back for stats after the game starts";
@@ -68,8 +66,8 @@ class UiStrings {
   static const String statAbbrRebounds = "Reb";
   static const String statAbbrAssists = "Ast";
   static const String boxScoreHideScoreOnMessage =
-      "You're in 'Hide scores' mode.\nContinue anyway?";
-  static const String actionRevealBoxScore = "Show box score";
+      "Hide scores mode is on.\nContinue anyway?";
+  static const String actionRevealBoxScore = "Show score";
 
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
 
@@ -106,11 +104,6 @@ class UiStrings {
     }
   }
 
-  static String teamStreak(int streak, bool isWin) {
-    final streakType = isWin ? "W" : "L";
-    return "$streakType$streak";
-  }
-
   static String playoffRoundName(int id) {
     switch (id) {
       case 0:
@@ -125,4 +118,6 @@ class UiStrings {
         throw ArgumentError.value(id, "id", "Invalid playoff round id");
     }
   }
+
+  static String matchupTitle(String team1, String team2) => "$team1 vs $team2";
 }

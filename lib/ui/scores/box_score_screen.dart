@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/data/games/game_model.dart';
+import 'package:flutternba/ui/core/components/app_bar.dart';
 import 'package:flutternba/ui/core/components/cta_message.dart';
 import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/game_card.dart';
@@ -28,11 +30,7 @@ class GameBoxScoreScreen extends StatelessWidget {
       child: BlocBuilder<GameBoxScoreCubit, GameBoxScoreState>(
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              toolbarHeight: 40,
-              scrolledUnderElevation: 0,
-            ),
+            appBar: NbaAppBar(title: _getAppBarTitle(state)),
             body: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: _buildContent(context, state),
@@ -41,6 +39,22 @@ class GameBoxScoreScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget? _getAppBarTitle(GameBoxScoreState state) {
+    final Game? game;
+    if (state is ScheduledGameState) {
+      game = state.gameItem.game;
+    } else if (state is DisplayScoreState) {
+      game = state.gameItem.game;
+    } else {
+      game = null;
+    }
+    return game != null
+        ? Text(
+            UiStrings.matchupTitle(game.homeTeam.name, game.visitorTeam.name),
+          )
+        : null;
   }
 
   Widget _buildContent(BuildContext context, GameBoxScoreState state) {
@@ -58,8 +72,9 @@ class GameBoxScoreScreen extends StatelessWidget {
         return Column(
           children: [
             NbaGameCard(item: state.gameItem, hideScores: false),
-            const SizedBox(height: 32),
-            const Center(child: Text(UiStrings.boxScoreGameNotStarted))
+            const Expanded(
+              child: Center(child: Text(UiStrings.boxScoreGameNotStarted)),
+            )
           ],
         );
       case HideScoresOnState():
