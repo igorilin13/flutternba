@@ -1,4 +1,8 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
@@ -15,10 +19,27 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  _configureCrashlytics();
   final onboardingComplete =
       locator<SettingsRepository>().isOnboardingComplete();
 
   runApp(_MyApp(onboardingComplete));
+}
+
+void _configureCrashlytics() {
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  Isolate.current.addErrorListener(RawReceivePort((pair) async {
+    final List<dynamic> errorAndStacktrace = pair;
+    await FirebaseCrashlytics.instance.recordError(
+      errorAndStacktrace.first,
+      errorAndStacktrace.last,
+      fatal: true,
+    );
+  }).sendPort);
 }
 
 class _MyApp extends StatelessWidget {
