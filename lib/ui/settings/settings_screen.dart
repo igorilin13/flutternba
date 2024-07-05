@@ -26,7 +26,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: const NbaAppBar(title: Text(UiStrings.titleSettings)),
+          appBar: const NbaAppBar(
+            showBackButton: false,
+            title: Text(UiStrings.titleSettings),
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
