@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/common/util/string_ext.dart';
-import 'package:flutternba/data/scores/box_score_models.dart';
+import 'package:flutternba/data/scores/remote/box_score_response.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/team_logo.dart';

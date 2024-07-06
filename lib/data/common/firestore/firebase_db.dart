@@ -12,6 +12,9 @@ class AppFirebaseDb {
   DocumentReference<Map<String, dynamic>> getTeamInfo(int teamId) =>
       _firestore.doc("teams/$teamId");
 
+  DocumentReference<Map<String, dynamic>> getGame(int gameId) =>
+      _firestore.doc("games/$gameId");
+
   Query<Map<String, dynamic>> getLeagueGames(DateTime date) {
     final formattedDate = "${date.year}-"
         "${date.month.toString().padLeft(2, "0")}-"

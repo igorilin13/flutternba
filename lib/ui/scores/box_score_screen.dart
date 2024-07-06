@@ -26,6 +26,7 @@ class GameBoxScoreScreen extends StatelessWidget {
         locator(),
         locator(),
         locator(),
+        locator(),
       ),
       child: BlocBuilder<GameBoxScoreCubit, GameBoxScoreState>(
         builder: (context, state) {
@@ -42,14 +43,13 @@ class GameBoxScoreScreen extends StatelessWidget {
   }
 
   Widget? _getAppBarTitle(GameBoxScoreState state) {
-    final Game? game;
-    if (state is ScheduledGameState) {
-      game = state.gameItem.game;
-    } else if (state is DisplayScoreState) {
-      game = state.gameItem.game;
-    } else {
-      game = null;
-    }
+    final Game? game = switch (state) {
+      LoadingState() => state.gameItem?.game,
+      ErrorState() => null,
+      ScheduledGameState() => state.gameItem.game,
+      HideScoresOnState() => null,
+      DisplayScoreState() => state.gameItem.game,
+    };
     return game != null
         ? Text(
             UiStrings.matchupTitle(game.homeTeam.name, game.visitorTeam.name),
@@ -60,7 +60,13 @@ class GameBoxScoreScreen extends StatelessWidget {
   Widget _buildContent(BuildContext context, GameBoxScoreState state) {
     switch (state) {
       case LoadingState():
-        return const Center(child: NbaProgressIndicator());
+        return Column(
+          children: [
+            if (state.gameItem != null)
+              NbaGameCard(item: state.gameItem!, hideScores: false),
+            const Expanded(child: Center(child: NbaProgressIndicator())),
+          ],
+        );
       case ErrorState():
         return Center(
           child: NbaErrorDisplay(

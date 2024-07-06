@@ -9,8 +9,7 @@ import {
   TeamBoxScore,
   TeamStats,
 } from "./boxscore-models";
-import { getGame, getTeamStandings } from "../db/firestore-service";
-import { TeamStandings, WinLossRecord } from "../standings/standings-models";
+import { getGame } from "../db/firestore-service";
 import { toGameInfo } from "../db/db-models";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
@@ -51,12 +50,8 @@ export const getBoxScore = onCall({ secrets: [apiKey] }, async (request) => {
     );
 
     const teamBoxScores: TeamBoxScore[] = [];
-    const standingsByTeamId = await loadStandings(
-      Array.from(playersByTeamId.keys()),
-    );
     playersByTeamId.forEach((players, teamId) => {
-      const record = standingsByTeamId.get(teamId)?.overall ?? null;
-      teamBoxScores.push(toTeamBoxScoreModel(teamId, record, players));
+      teamBoxScores.push(toTeamBoxScoreModel(teamId, players));
     });
 
     const gameInfo = toGameInfo(
@@ -71,19 +66,6 @@ export const getBoxScore = onCall({ secrets: [apiKey] }, async (request) => {
     return Promise.reject(Error("Error loading box scores"));
   }
 });
-
-async function loadStandings(
-  teamIds: number[],
-): Promise<Map<number, TeamStandings>> {
-  const result = new Map<number, TeamStandings>();
-  for (const teamId of teamIds) {
-    const standings = await getTeamStandings(teamId);
-    if (standings) {
-      result.set(teamId, standings);
-    }
-  }
-  return result;
-}
 
 function toPlayerStatsModel(response: PlayerGameStatsResponse): PlayerStats {
   return new PlayerStats(
@@ -111,7 +93,6 @@ function toPlayerStatsModel(response: PlayerGameStatsResponse): PlayerStats {
 
 function toTeamBoxScoreModel(
   teamId: number,
-  record: WinLossRecord | null,
   players: PlayerStats[],
 ): TeamBoxScore {
   const teamStats = new TeamStats(
@@ -154,5 +135,5 @@ function toTeamBoxScoreModel(
         return b.minutes - a.minutes;
       }
     });
-  return new TeamBoxScore(teamStats, record, displayedPlayers);
+  return new TeamBoxScore(teamStats, displayedPlayers);
 }

@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'box_score_models.dart';
+part of 'box_score_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GameBoxScoreImpl _$$GameBoxScoreImplFromJson(Map<String, dynamic> json) =>
-    _$GameBoxScoreImpl(
+_$GameBoxScoreResponseImpl _$$GameBoxScoreResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GameBoxScoreResponseImpl(
       game: Game.fromJson(json['game'] as Map<String, dynamic>),
       home: json['home'] == null
           ? null
@@ -17,7 +18,8 @@ _$GameBoxScoreImpl _$$GameBoxScoreImplFromJson(Map<String, dynamic> json) =>
           : TeamBoxScore.fromJson(json['away'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$GameBoxScoreImplToJson(_$GameBoxScoreImpl instance) =>
+Map<String, dynamic> _$$GameBoxScoreResponseImplToJson(
+        _$GameBoxScoreResponseImpl instance) =>
     <String, dynamic>{
       'game': instance.game,
       'home': instance.home,
@@ -27,9 +29,6 @@ Map<String, dynamic> _$$GameBoxScoreImplToJson(_$GameBoxScoreImpl instance) =>
 _$TeamBoxScoreImpl _$$TeamBoxScoreImplFromJson(Map<String, dynamic> json) =>
     _$TeamBoxScoreImpl(
       team: TeamStats.fromJson(json['team'] as Map<String, dynamic>),
-      record: json['record'] == null
-          ? null
-          : WinLossRecord.fromJson(json['record'] as Map<String, dynamic>),
       players: (json['players'] as List<dynamic>)
           .map((e) => PlayerStats.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -38,7 +37,6 @@ _$TeamBoxScoreImpl _$$TeamBoxScoreImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$TeamBoxScoreImplToJson(_$TeamBoxScoreImpl instance) =>
     <String, dynamic>{
       'team': instance.team,
-      'record': instance.record,
       'players': instance.players,
     };
 

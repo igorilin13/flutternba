@@ -59,9 +59,10 @@ extension FirestoreDocExtensions on DocumentReference<Map<String, dynamic>> {
   }
 
   Future<Result<T?>> getResultOpt<T>(
-    T Function(DocumentSnapshot<Map<String, dynamic>> doc) converter,
-  ) {
-    return get().then((snapshot) {
+    T Function(DocumentSnapshot<Map<String, dynamic>> doc) converter, [
+    GetOptions? options,
+  ]) {
+    return get(options).then((snapshot) {
       return runCatching(() => snapshot.exists ? converter(snapshot) : null);
     }).catchError((e) => Result<T>.failure(e));
   }

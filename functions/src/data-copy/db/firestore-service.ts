@@ -56,16 +56,6 @@ export async function saveTeamStandings(
   });
 }
 
-export async function getTeamStandings(
-  teamId: number,
-): Promise<TeamStandings | null> {
-  const doc = await db.collection("standings").doc(teamId.toString()).get();
-  if (!doc.exists) {
-    return null;
-  }
-  return doc.data() as TeamStandings;
-}
-
 export async function getPlayoffGames(): Promise<
   FirebaseFirestore.DocumentData[]
 > {

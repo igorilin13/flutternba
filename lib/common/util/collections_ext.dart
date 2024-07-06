@@ -34,9 +34,26 @@ extension IterableExtensions<E> on Iterable<E> {
   }
 
   Map<E, V> associateWith<V>(V Function(E item) valueTransform) {
-    final Map<E, V> map = {};
+    return associateBy(
+      keySelector: (item) => item,
+      valueTransform: valueTransform,
+    );
+  }
+
+  Map<K, E> associateValuesBy<K>(K Function(E item) keyOf) {
+    return associateBy(
+      keySelector: keyOf,
+      valueTransform: (item) => item,
+    );
+  }
+
+  Map<K, V> associateBy<K, V>({
+    required K Function(E item) keySelector,
+    required V Function(E item) valueTransform,
+  }) {
+    final Map<K, V> map = {};
     for (var item in this) {
-      map[item] = valueTransform(item);
+      map[keySelector(item)] = valueTransform(item);
     }
     return map;
   }

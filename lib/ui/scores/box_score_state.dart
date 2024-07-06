@@ -2,7 +2,7 @@ part of 'box_score_cubit.dart';
 
 @freezed
 sealed class GameBoxScoreState with _$GameBoxScoreState {
-  const factory GameBoxScoreState.loading() = LoadingState;
+  const factory GameBoxScoreState.loading(GameItem? gameItem) = LoadingState;
 
   const factory GameBoxScoreState.error() = ErrorState;
 

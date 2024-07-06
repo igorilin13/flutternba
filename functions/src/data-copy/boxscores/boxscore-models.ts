@@ -1,5 +1,4 @@
 import { GameInfoModel } from "../db/db-models";
-import { WinLossRecord } from "../standings/standings-models";
 
 export class GameBoxScore {
   constructor(
@@ -12,7 +11,6 @@ export class GameBoxScore {
 export class TeamBoxScore {
   constructor(
     public team: TeamStats,
-    public record: WinLossRecord | null,
     public players: PlayerStats[],
   ) {}
 }

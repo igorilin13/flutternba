@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameBoxScoreState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(GameItem? gameItem) loading,
     required TResult Function() error,
     required TResult Function(GameItem gameItem) scheduled,
     required TResult Function() hideScoresOn,
@@ -29,7 +29,7 @@ mixin _$GameBoxScoreState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function(GameItem? gameItem)? loading,
     TResult? Function()? error,
     TResult? Function(GameItem gameItem)? scheduled,
     TResult? Function()? hideScoresOn,
@@ -40,7 +40,7 @@ mixin _$GameBoxScoreState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(GameItem? gameItem)? loading,
     TResult Function()? error,
     TResult Function(GameItem gameItem)? scheduled,
     TResult Function()? hideScoresOn,
@@ -103,6 +103,10 @@ abstract class _$$LoadingStateImplCopyWith<$Res> {
   factory _$$LoadingStateImplCopyWith(
           _$LoadingStateImpl value, $Res Function(_$LoadingStateImpl) then) =
       __$$LoadingStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({GameItem? gameItem});
+
+  $GameItemCopyWith<$Res>? get gameItem;
 }
 
 /// @nodoc
@@ -112,31 +116,68 @@ class __$$LoadingStateImplCopyWithImpl<$Res>
   __$$LoadingStateImplCopyWithImpl(
       _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? gameItem = freezed,
+  }) {
+    return _then(_$LoadingStateImpl(
+      freezed == gameItem
+          ? _value.gameItem
+          : gameItem // ignore: cast_nullable_to_non_nullable
+              as GameItem?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GameItemCopyWith<$Res>? get gameItem {
+    if (_value.gameItem == null) {
+      return null;
+    }
+
+    return $GameItemCopyWith<$Res>(_value.gameItem!, (value) {
+      return _then(_value.copyWith(gameItem: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$LoadingStateImpl implements LoadingState {
-  const _$LoadingStateImpl();
+  const _$LoadingStateImpl(this.gameItem);
+
+  @override
+  final GameItem? gameItem;
 
   @override
   String toString() {
-    return 'GameBoxScoreState.loading()';
+    return 'GameBoxScoreState.loading(gameItem: $gameItem)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingStateImpl &&
+            (identical(other.gameItem, gameItem) ||
+                other.gameItem == gameItem));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, gameItem);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
+      __$$LoadingStateImplCopyWithImpl<_$LoadingStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(GameItem? gameItem) loading,
     required TResult Function() error,
     required TResult Function(GameItem gameItem) scheduled,
     required TResult Function() hideScoresOn,
@@ -144,13 +185,13 @@ class _$LoadingStateImpl implements LoadingState {
             GameItem gameItem, TeamBoxScore homeTeam, TeamBoxScore awayTeam)
         hasScore,
   }) {
-    return loading();
+    return loading(gameItem);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function(GameItem? gameItem)? loading,
     TResult? Function()? error,
     TResult? Function(GameItem gameItem)? scheduled,
     TResult? Function()? hideScoresOn,
@@ -158,13 +199,13 @@ class _$LoadingStateImpl implements LoadingState {
             GameItem gameItem, TeamBoxScore homeTeam, TeamBoxScore awayTeam)?
         hasScore,
   }) {
-    return loading?.call();
+    return loading?.call(gameItem);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(GameItem? gameItem)? loading,
     TResult Function()? error,
     TResult Function(GameItem gameItem)? scheduled,
     TResult Function()? hideScoresOn,
@@ -174,7 +215,7 @@ class _$LoadingStateImpl implements LoadingState {
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(gameItem);
     }
     return orElse();
   }
@@ -221,7 +262,12 @@ class _$LoadingStateImpl implements LoadingState {
 }
 
 abstract class LoadingState implements GameBoxScoreState {
-  const factory LoadingState() = _$LoadingStateImpl;
+  const factory LoadingState(final GameItem? gameItem) = _$LoadingStateImpl;
+
+  GameItem? get gameItem;
+  @JsonKey(ignore: true)
+  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -262,7 +308,7 @@ class _$ErrorStateImpl implements ErrorState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(GameItem? gameItem) loading,
     required TResult Function() error,
     required TResult Function(GameItem gameItem) scheduled,
     required TResult Function() hideScoresOn,
@@ -276,7 +322,7 @@ class _$ErrorStateImpl implements ErrorState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function(GameItem? gameItem)? loading,
     TResult? Function()? error,
     TResult? Function(GameItem gameItem)? scheduled,
     TResult? Function()? hideScoresOn,
@@ -290,7 +336,7 @@ class _$ErrorStateImpl implements ErrorState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(GameItem? gameItem)? loading,
     TResult Function()? error,
     TResult Function(GameItem gameItem)? scheduled,
     TResult Function()? hideScoresOn,
@@ -426,7 +472,7 @@ class _$ScheduledGameStateImpl implements ScheduledGameState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(GameItem? gameItem) loading,
     required TResult Function() error,
     required TResult Function(GameItem gameItem) scheduled,
     required TResult Function() hideScoresOn,
@@ -440,7 +486,7 @@ class _$ScheduledGameStateImpl implements ScheduledGameState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function(GameItem? gameItem)? loading,
     TResult? Function()? error,
     TResult? Function(GameItem gameItem)? scheduled,
     TResult? Function()? hideScoresOn,
@@ -454,7 +500,7 @@ class _$ScheduledGameStateImpl implements ScheduledGameState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(GameItem? gameItem)? loading,
     TResult Function()? error,
     TResult Function(GameItem gameItem)? scheduled,
     TResult Function()? hideScoresOn,
@@ -558,7 +604,7 @@ class _$HideScoresOnStateImpl implements HideScoresOnState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(GameItem? gameItem) loading,
     required TResult Function() error,
     required TResult Function(GameItem gameItem) scheduled,
     required TResult Function() hideScoresOn,
@@ -572,7 +618,7 @@ class _$HideScoresOnStateImpl implements HideScoresOnState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function(GameItem? gameItem)? loading,
     TResult? Function()? error,
     TResult? Function(GameItem gameItem)? scheduled,
     TResult? Function()? hideScoresOn,
@@ -586,7 +632,7 @@ class _$HideScoresOnStateImpl implements HideScoresOnState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(GameItem? gameItem)? loading,
     TResult Function()? error,
     TResult Function(GameItem gameItem)? scheduled,
     TResult Function()? hideScoresOn,
@@ -758,7 +804,7 @@ class _$DisplayScoreStateImpl implements DisplayScoreState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(GameItem? gameItem) loading,
     required TResult Function() error,
     required TResult Function(GameItem gameItem) scheduled,
     required TResult Function() hideScoresOn,
@@ -772,7 +818,7 @@ class _$DisplayScoreStateImpl implements DisplayScoreState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function(GameItem? gameItem)? loading,
     TResult? Function()? error,
     TResult? Function(GameItem gameItem)? scheduled,
     TResult? Function()? hideScoresOn,
@@ -786,7 +832,7 @@ class _$DisplayScoreStateImpl implements DisplayScoreState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(GameItem? gameItem)? loading,
     TResult Function()? error,
     TResult Function(GameItem gameItem)? scheduled,
     TResult Function()? hideScoresOn,

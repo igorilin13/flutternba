@@ -43,11 +43,11 @@ Future<void> initLocator() async {
   );
 
   locator.registerFactory(() => MakeStandingsUseCase());
-  locator.registerFactory(() => StandingsRepository(locator()));
+  locator.registerLazySingleton(() => StandingsRepository(locator()));
 
   locator.registerFactory(() => PlayoffsRepository(locator()));
 
-  locator.registerFactory(() => BoxScoreRepository(locator()));
+  locator.registerFactory(() => BoxScoreRepository(locator(), locator()));
 
   await locator.allReady();
 }
