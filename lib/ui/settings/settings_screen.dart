@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/ui/core/components/app_bar.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
-import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
@@ -128,11 +127,17 @@ class _SettingsScreenState extends State<SettingsScreen>
       case HasFavoriteTeamState():
         return Row(
           children: [
-            NbaTeamLogo(teamId: state.team.id, size: 28),
             const SizedBox(width: 4),
             Text(
               state.team.name,
               style: Theme.of(context).textTheme.labelLarge,
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurfaceVariant
+                  .withOpacity(0.5),
             ),
           ],
         );
