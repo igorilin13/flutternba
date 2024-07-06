@@ -67,7 +67,6 @@ class PlayerStats with _$PlayerStats {
     required int id,
     required String firstName,
     required String lastName,
-    required String jersey,
     required int minutes,
     required int points,
     required int fgMade,

@@ -840,7 +840,6 @@ mixin _$PlayerStats {
   int get id => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  String get jersey => throw _privateConstructorUsedError;
   int get minutes => throw _privateConstructorUsedError;
   int get points => throw _privateConstructorUsedError;
   int get fgMade => throw _privateConstructorUsedError;
@@ -873,7 +872,6 @@ abstract class $PlayerStatsCopyWith<$Res> {
       {int id,
       String firstName,
       String lastName,
-      String jersey,
       int minutes,
       int points,
       int fgMade,
@@ -907,7 +905,6 @@ class _$PlayerStatsCopyWithImpl<$Res, $Val extends PlayerStats>
     Object? id = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? jersey = null,
     Object? minutes = null,
     Object? points = null,
     Object? fgMade = null,
@@ -936,10 +933,6 @@ class _$PlayerStatsCopyWithImpl<$Res, $Val extends PlayerStats>
       lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      jersey: null == jersey
-          ? _value.jersey
-          : jersey // ignore: cast_nullable_to_non_nullable
               as String,
       minutes: null == minutes
           ? _value.minutes
@@ -1017,7 +1010,6 @@ abstract class _$$PlayerStatsImplCopyWith<$Res>
       {int id,
       String firstName,
       String lastName,
-      String jersey,
       int minutes,
       int points,
       int fgMade,
@@ -1049,7 +1041,6 @@ class __$$PlayerStatsImplCopyWithImpl<$Res>
     Object? id = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? jersey = null,
     Object? minutes = null,
     Object? points = null,
     Object? fgMade = null,
@@ -1078,10 +1069,6 @@ class __$$PlayerStatsImplCopyWithImpl<$Res>
       lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      jersey: null == jersey
-          ? _value.jersey
-          : jersey // ignore: cast_nullable_to_non_nullable
               as String,
       minutes: null == minutes
           ? _value.minutes
@@ -1154,7 +1141,6 @@ class _$PlayerStatsImpl implements _PlayerStats {
       {required this.id,
       required this.firstName,
       required this.lastName,
-      required this.jersey,
       required this.minutes,
       required this.points,
       required this.fgMade,
@@ -1180,8 +1166,6 @@ class _$PlayerStatsImpl implements _PlayerStats {
   final String firstName;
   @override
   final String lastName;
-  @override
-  final String jersey;
   @override
   final int minutes;
   @override
@@ -1215,7 +1199,7 @@ class _$PlayerStatsImpl implements _PlayerStats {
 
   @override
   String toString() {
-    return 'PlayerStats(id: $id, firstName: $firstName, lastName: $lastName, jersey: $jersey, minutes: $minutes, points: $points, fgMade: $fgMade, fgAttempts: $fgAttempts, threePtMade: $threePtMade, threePtAttempts: $threePtAttempts, ftMade: $ftMade, ftAttempts: $ftAttempts, rebounds: $rebounds, offRebounds: $offRebounds, defRebounds: $defRebounds, blocks: $blocks, steals: $steals, turnovers: $turnovers, assists: $assists)';
+    return 'PlayerStats(id: $id, firstName: $firstName, lastName: $lastName, minutes: $minutes, points: $points, fgMade: $fgMade, fgAttempts: $fgAttempts, threePtMade: $threePtMade, threePtAttempts: $threePtAttempts, ftMade: $ftMade, ftAttempts: $ftAttempts, rebounds: $rebounds, offRebounds: $offRebounds, defRebounds: $defRebounds, blocks: $blocks, steals: $steals, turnovers: $turnovers, assists: $assists)';
   }
 
   @override
@@ -1228,7 +1212,6 @@ class _$PlayerStatsImpl implements _PlayerStats {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.jersey, jersey) || other.jersey == jersey) &&
             (identical(other.minutes, minutes) || other.minutes == minutes) &&
             (identical(other.points, points) || other.points == points) &&
             (identical(other.fgMade, fgMade) || other.fgMade == fgMade) &&
@@ -1256,28 +1239,26 @@ class _$PlayerStatsImpl implements _PlayerStats {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        firstName,
-        lastName,
-        jersey,
-        minutes,
-        points,
-        fgMade,
-        fgAttempts,
-        threePtMade,
-        threePtAttempts,
-        ftMade,
-        ftAttempts,
-        rebounds,
-        offRebounds,
-        defRebounds,
-        blocks,
-        steals,
-        turnovers,
-        assists
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      firstName,
+      lastName,
+      minutes,
+      points,
+      fgMade,
+      fgAttempts,
+      threePtMade,
+      threePtAttempts,
+      ftMade,
+      ftAttempts,
+      rebounds,
+      offRebounds,
+      defRebounds,
+      blocks,
+      steals,
+      turnovers,
+      assists);
 
   @JsonKey(ignore: true)
   @override
@@ -1298,7 +1279,6 @@ abstract class _PlayerStats implements PlayerStats {
       {required final int id,
       required final String firstName,
       required final String lastName,
-      required final String jersey,
       required final int minutes,
       required final int points,
       required final int fgMade,
@@ -1324,8 +1304,6 @@ abstract class _PlayerStats implements PlayerStats {
   String get firstName;
   @override
   String get lastName;
-  @override
-  String get jersey;
   @override
   int get minutes;
   @override
