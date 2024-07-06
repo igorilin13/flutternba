@@ -16,26 +16,25 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SelectFavoriteTeamState {
-  bool get selectionComplete => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool selectionComplete) loading,
-    required TResult Function(bool selectionComplete) error,
-    required TResult Function(List<Team> teams, bool selectionComplete) display,
+    required TResult Function() loading,
+    required TResult Function() error,
+    required TResult Function(List<Team> teams) display,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool selectionComplete)? loading,
-    TResult? Function(bool selectionComplete)? error,
-    TResult? Function(List<Team> teams, bool selectionComplete)? display,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(List<Team> teams)? display,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool selectionComplete)? loading,
-    TResult Function(bool selectionComplete)? error,
-    TResult Function(List<Team> teams, bool selectionComplete)? display,
+    TResult Function()? loading,
+    TResult Function()? error,
+    TResult Function(List<Team> teams)? display,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,10 +60,6 @@ mixin _$SelectFavoriteTeamState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SelectFavoriteTeamStateCopyWith<SelectFavoriteTeamState> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -72,8 +67,6 @@ abstract class $SelectFavoriteTeamStateCopyWith<$Res> {
   factory $SelectFavoriteTeamStateCopyWith(SelectFavoriteTeamState value,
           $Res Function(SelectFavoriteTeamState) then) =
       _$SelectFavoriteTeamStateCopyWithImpl<$Res, SelectFavoriteTeamState>;
-  @useResult
-  $Res call({bool selectionComplete});
 }
 
 /// @nodoc
@@ -86,30 +79,13 @@ class _$SelectFavoriteTeamStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? selectionComplete = null,
-  }) {
-    return _then(_value.copyWith(
-      selectionComplete: null == selectionComplete
-          ? _value.selectionComplete
-          : selectionComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$LoadingStateImplCopyWith<$Res>
-    implements $SelectFavoriteTeamStateCopyWith<$Res> {
+abstract class _$$LoadingStateImplCopyWith<$Res> {
   factory _$$LoadingStateImplCopyWith(
           _$LoadingStateImpl value, $Res Function(_$LoadingStateImpl) then) =
       __$$LoadingStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool selectionComplete});
 }
 
 /// @nodoc
@@ -119,83 +95,57 @@ class __$$LoadingStateImplCopyWithImpl<$Res>
   __$$LoadingStateImplCopyWithImpl(
       _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? selectionComplete = null,
-  }) {
-    return _then(_$LoadingStateImpl(
-      selectionComplete: null == selectionComplete
-          ? _value.selectionComplete
-          : selectionComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$LoadingStateImpl implements LoadingState {
-  const _$LoadingStateImpl({this.selectionComplete = false});
-
-  @override
-  @JsonKey()
-  final bool selectionComplete;
+  const _$LoadingStateImpl();
 
   @override
   String toString() {
-    return 'SelectFavoriteTeamState.loading(selectionComplete: $selectionComplete)';
+    return 'SelectFavoriteTeamState.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadingStateImpl &&
-            (identical(other.selectionComplete, selectionComplete) ||
-                other.selectionComplete == selectionComplete));
+        (other.runtimeType == runtimeType && other is _$LoadingStateImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectionComplete);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
-      __$$LoadingStateImplCopyWithImpl<_$LoadingStateImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool selectionComplete) loading,
-    required TResult Function(bool selectionComplete) error,
-    required TResult Function(List<Team> teams, bool selectionComplete) display,
+    required TResult Function() loading,
+    required TResult Function() error,
+    required TResult Function(List<Team> teams) display,
   }) {
-    return loading(selectionComplete);
+    return loading();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool selectionComplete)? loading,
-    TResult? Function(bool selectionComplete)? error,
-    TResult? Function(List<Team> teams, bool selectionComplete)? display,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(List<Team> teams)? display,
   }) {
-    return loading?.call(selectionComplete);
+    return loading?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool selectionComplete)? loading,
-    TResult Function(bool selectionComplete)? error,
-    TResult Function(List<Team> teams, bool selectionComplete)? display,
+    TResult Function()? loading,
+    TResult Function()? error,
+    TResult Function(List<Team> teams)? display,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(selectionComplete);
+      return loading();
     }
     return orElse();
   }
@@ -236,26 +186,14 @@ class _$LoadingStateImpl implements LoadingState {
 }
 
 abstract class LoadingState implements SelectFavoriteTeamState {
-  const factory LoadingState({final bool selectionComplete}) =
-      _$LoadingStateImpl;
-
-  @override
-  bool get selectionComplete;
-  @override
-  @JsonKey(ignore: true)
-  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory LoadingState() = _$LoadingStateImpl;
 }
 
 /// @nodoc
-abstract class _$$ErrorStateImplCopyWith<$Res>
-    implements $SelectFavoriteTeamStateCopyWith<$Res> {
+abstract class _$$ErrorStateImplCopyWith<$Res> {
   factory _$$ErrorStateImplCopyWith(
           _$ErrorStateImpl value, $Res Function(_$ErrorStateImpl) then) =
       __$$ErrorStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool selectionComplete});
 }
 
 /// @nodoc
@@ -265,83 +203,57 @@ class __$$ErrorStateImplCopyWithImpl<$Res>
   __$$ErrorStateImplCopyWithImpl(
       _$ErrorStateImpl _value, $Res Function(_$ErrorStateImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? selectionComplete = null,
-  }) {
-    return _then(_$ErrorStateImpl(
-      selectionComplete: null == selectionComplete
-          ? _value.selectionComplete
-          : selectionComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$ErrorStateImpl implements ErrorState {
-  const _$ErrorStateImpl({this.selectionComplete = false});
-
-  @override
-  @JsonKey()
-  final bool selectionComplete;
+  const _$ErrorStateImpl();
 
   @override
   String toString() {
-    return 'SelectFavoriteTeamState.error(selectionComplete: $selectionComplete)';
+    return 'SelectFavoriteTeamState.error()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorStateImpl &&
-            (identical(other.selectionComplete, selectionComplete) ||
-                other.selectionComplete == selectionComplete));
+        (other.runtimeType == runtimeType && other is _$ErrorStateImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectionComplete);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
-      __$$ErrorStateImplCopyWithImpl<_$ErrorStateImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool selectionComplete) loading,
-    required TResult Function(bool selectionComplete) error,
-    required TResult Function(List<Team> teams, bool selectionComplete) display,
+    required TResult Function() loading,
+    required TResult Function() error,
+    required TResult Function(List<Team> teams) display,
   }) {
-    return error(selectionComplete);
+    return error();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool selectionComplete)? loading,
-    TResult? Function(bool selectionComplete)? error,
-    TResult? Function(List<Team> teams, bool selectionComplete)? display,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(List<Team> teams)? display,
   }) {
-    return error?.call(selectionComplete);
+    return error?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool selectionComplete)? loading,
-    TResult Function(bool selectionComplete)? error,
-    TResult Function(List<Team> teams, bool selectionComplete)? display,
+    TResult Function()? loading,
+    TResult Function()? error,
+    TResult Function(List<Team> teams)? display,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(selectionComplete);
+      return error();
     }
     return orElse();
   }
@@ -382,25 +294,16 @@ class _$ErrorStateImpl implements ErrorState {
 }
 
 abstract class ErrorState implements SelectFavoriteTeamState {
-  const factory ErrorState({final bool selectionComplete}) = _$ErrorStateImpl;
-
-  @override
-  bool get selectionComplete;
-  @override
-  @JsonKey(ignore: true)
-  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory ErrorState() = _$ErrorStateImpl;
 }
 
 /// @nodoc
-abstract class _$$DisplayStateImplCopyWith<$Res>
-    implements $SelectFavoriteTeamStateCopyWith<$Res> {
+abstract class _$$DisplayStateImplCopyWith<$Res> {
   factory _$$DisplayStateImplCopyWith(
           _$DisplayStateImpl value, $Res Function(_$DisplayStateImpl) then) =
       __$$DisplayStateImplCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({List<Team> teams, bool selectionComplete});
+  $Res call({List<Team> teams});
 }
 
 /// @nodoc
@@ -415,17 +318,12 @@ class __$$DisplayStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? teams = null,
-    Object? selectionComplete = null,
   }) {
     return _then(_$DisplayStateImpl(
-      teams: null == teams
+      null == teams
           ? _value._teams
           : teams // ignore: cast_nullable_to_non_nullable
               as List<Team>,
-      selectionComplete: null == selectionComplete
-          ? _value.selectionComplete
-          : selectionComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -433,9 +331,7 @@ class __$$DisplayStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DisplayStateImpl implements DisplayState {
-  const _$DisplayStateImpl(
-      {required final List<Team> teams, required this.selectionComplete})
-      : _teams = teams;
+  const _$DisplayStateImpl(final List<Team> teams) : _teams = teams;
 
   final List<Team> _teams;
   @override
@@ -446,11 +342,8 @@ class _$DisplayStateImpl implements DisplayState {
   }
 
   @override
-  final bool selectionComplete;
-
-  @override
   String toString() {
-    return 'SelectFavoriteTeamState.display(teams: $teams, selectionComplete: $selectionComplete)';
+    return 'SelectFavoriteTeamState.display(teams: $teams)';
   }
 
   @override
@@ -458,14 +351,12 @@ class _$DisplayStateImpl implements DisplayState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DisplayStateImpl &&
-            const DeepCollectionEquality().equals(other._teams, _teams) &&
-            (identical(other.selectionComplete, selectionComplete) ||
-                other.selectionComplete == selectionComplete));
+            const DeepCollectionEquality().equals(other._teams, _teams));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_teams), selectionComplete);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_teams));
 
   @JsonKey(ignore: true)
   @override
@@ -476,33 +367,33 @@ class _$DisplayStateImpl implements DisplayState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool selectionComplete) loading,
-    required TResult Function(bool selectionComplete) error,
-    required TResult Function(List<Team> teams, bool selectionComplete) display,
+    required TResult Function() loading,
+    required TResult Function() error,
+    required TResult Function(List<Team> teams) display,
   }) {
-    return display(teams, selectionComplete);
+    return display(teams);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool selectionComplete)? loading,
-    TResult? Function(bool selectionComplete)? error,
-    TResult? Function(List<Team> teams, bool selectionComplete)? display,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(List<Team> teams)? display,
   }) {
-    return display?.call(teams, selectionComplete);
+    return display?.call(teams);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool selectionComplete)? loading,
-    TResult Function(bool selectionComplete)? error,
-    TResult Function(List<Team> teams, bool selectionComplete)? display,
+    TResult Function()? loading,
+    TResult Function()? error,
+    TResult Function(List<Team> teams)? display,
     required TResult orElse(),
   }) {
     if (display != null) {
-      return display(teams, selectionComplete);
+      return display(teams);
     }
     return orElse();
   }
@@ -543,14 +434,9 @@ class _$DisplayStateImpl implements DisplayState {
 }
 
 abstract class DisplayState implements SelectFavoriteTeamState {
-  const factory DisplayState(
-      {required final List<Team> teams,
-      required final bool selectionComplete}) = _$DisplayStateImpl;
+  const factory DisplayState(final List<Team> teams) = _$DisplayStateImpl;
 
   List<Team> get teams;
-  @override
-  bool get selectionComplete;
-  @override
   @JsonKey(ignore: true)
   _$$DisplayStateImplCopyWith<_$DisplayStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

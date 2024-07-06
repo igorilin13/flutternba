@@ -31,12 +31,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<T, SelectFavoriteTeamState>(
-      listener: (context, state) {
-        if (state.selectionComplete) {
-          widget.onSelectionComplete();
-        }
-      },
+    return BlocBuilder<T, SelectFavoriteTeamState>(
       builder: (context, state) {
         return Scaffold(
           appBar: _buildAppBar(context, widget.onSkipTap),
@@ -52,7 +47,10 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
           bottomNavigationBar: _buildContinueButton(
             context,
             state,
-            () => context.read<T>().confirmSelection(_selectedTeamId.value),
+            onTap: () async {
+              await context.read<T>().confirmSelection(_selectedTeamId.value);
+              widget.onSelectionComplete();
+            },
           ),
         );
       },
@@ -80,9 +78,9 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
 
   Widget? _buildContinueButton(
     BuildContext context,
-    SelectFavoriteTeamState state,
-    VoidCallback onTap,
-  ) {
+    SelectFavoriteTeamState state, {
+    required VoidCallback onTap,
+  }) {
     if (_selectedTeamId.value == null || state is! DisplayState) {
       return null;
     }

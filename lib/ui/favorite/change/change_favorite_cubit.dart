@@ -4,10 +4,9 @@ class ChangeFavoriteTeamCubit extends BaseSelectFavoriteTeamCubit {
   ChangeFavoriteTeamCubit(super.teamsRepository, super.settingsRepository);
 
   @override
-  void confirmSelection(int? teamId) async {
+  Future<void> confirmSelection(int? teamId) async {
     if (teamId != null) {
       await saveSelectedTeam(teamId);
     }
-    completeSelection();
   }
 }

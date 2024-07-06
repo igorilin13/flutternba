@@ -8,7 +8,6 @@ import 'package:flutternba/data/teams/team_model.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/ui/core/cubit/base_cubit.dart';
 import 'package:flutternba/ui/favorite/core/select_favorite_state.dart';
-import 'package:rxdart/rxdart.dart';
 
 abstract class BaseSelectFavoriteTeamCubit
     extends BaseCubit<SelectFavoriteTeamState> {
@@ -16,49 +15,28 @@ abstract class BaseSelectFavoriteTeamCubit
   @protected
   final SettingsRepository settingsRepository;
 
-  final BehaviorSubject<bool> _selectionCompleteSubject =
-      BehaviorSubject.seeded(false);
-
   BaseSelectFavoriteTeamCubit(
     this._teamsRepository,
     this.settingsRepository,
-  ) : super(const SelectFavoriteTeamState.loading()) {
-    disposeControllersOnClose([_selectionCompleteSubject]);
-  }
+  ) : super(const SelectFavoriteTeamState.loading());
 
   @override
   Stream<SelectFavoriteTeamState> buildStateStream() {
-    return CombineLatestStream.combine2(
-      _teamsRepository.getTeams().asLoadingStream(),
-      _selectionCompleteSubject.stream,
-      _mapToState,
-    );
+    return _teamsRepository.getTeams().asLoadingStream().map(_mapToState);
   }
 
-  SelectFavoriteTeamState _mapToState(
-    Result<List<Team>>? teamsResult,
-    bool selectionComplete,
-  ) {
+  SelectFavoriteTeamState _mapToState(Result<List<Team>>? teamsResult) {
     return teamsResult?.fold(
-          onSuccess: (teams) => SelectFavoriteTeamState.display(
-            teams: teams,
-            selectionComplete: selectionComplete,
-          ),
-          onFailure: (_) => SelectFavoriteTeamState.error(
-            selectionComplete: selectionComplete,
-          ),
+          onSuccess: (teams) => SelectFavoriteTeamState.display(teams),
+          onFailure: (_) => const SelectFavoriteTeamState.error(),
         ) ??
-        SelectFavoriteTeamState.loading(selectionComplete: selectionComplete);
+        const SelectFavoriteTeamState.loading();
   }
 
-  void confirmSelection(int? teamId);
-
-  Future<void> saveSelectedTeam(int teamId) async {
-    await settingsRepository.setFavoriteTeam(teamId);
-  }
+  Future<void> confirmSelection(int? teamId);
 
   @protected
-  void completeSelection() {
-    _selectionCompleteSubject.add(true);
+  Future<void> saveSelectedTeam(int teamId) {
+    return settingsRepository.setFavoriteTeam(teamId);
   }
 }
