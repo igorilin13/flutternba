@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'result.freezed.dart';
@@ -74,7 +77,8 @@ sealed class Result<T> with _$Result<T> {
 Future<Result<T>> runCatchingAsync<T>(Future<T> Function() block) async {
   try {
     return Result.success(await block());
-  } catch (e) {
+  } catch (e, stack) {
+    await FirebaseCrashlytics.instance.recordError(e, stack);
     return Result.failure(e);
   }
 }
@@ -82,7 +86,8 @@ Future<Result<T>> runCatchingAsync<T>(Future<T> Function() block) async {
 Result<T> runCatching<T>(T Function() block) {
   try {
     return Result.success(block());
-  } catch (e) {
+  } catch (e, stack) {
+    FirebaseCrashlytics.instance.recordError(e, stack);
     return Result.failure(e);
   }
 }
