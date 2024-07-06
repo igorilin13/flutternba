@@ -1,18 +1,20 @@
-import 'package:flutternba/common/util/result.dart';
-
-extension FutureResultExtensions<T> on Future<Result<T>> {
-  Future<Result<R>> mapResult<R>(R Function(T) transform) async {
-    return (await this).mapValue(transform);
-  }
-}
+import 'package:rxdart/rxdart.dart';
 
 extension FutureExtensions<T> on Future<T> {
+  Stream<T?> asLoadingStream() {
+    return asNullableStream().startWith(null);
+  }
+
   Stream<T?> asNullableStream() {
     return asStream();
   }
 }
 
 extension StreamExtensions<T> on Stream<T> {
+  Stream<T?> asLoadingStream() {
+    return nullable().startWith(null);
+  }
+
   Stream<T?> nullable() {
     return this;
   }

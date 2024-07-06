@@ -38,11 +38,7 @@ class SettingsCubit extends BaseCubit<SettingsState> {
 
   Stream<FavoriteTeamSettingState> buildFavoriteTeamState(int? teamId) {
     if (teamId != null) {
-      return _teamsRepository
-          .getTeam(teamId)
-          .asNullableStream()
-          .startWith(null)
-          .map(
+      return _teamsRepository.getTeam(teamId).asLoadingStream().map(
             (result) =>
                 result?.fold(
                   onSuccess: (team) =>

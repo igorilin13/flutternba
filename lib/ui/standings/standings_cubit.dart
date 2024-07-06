@@ -36,8 +36,8 @@ class StandingsCubit extends BaseCubit<StandingsState> with HideableScoreCubit {
   @override
   Stream<StandingsState> buildStateStream() {
     return CombineLatestStream.combine5(
-      _standingsRepository.getAllTeams().asNullableStream().startWith(null),
-      _playoffsRepository.getPlayoffRounds().asNullableStream().startWith(null),
+      _standingsRepository.getAllTeams().asLoadingStream(),
+      _playoffsRepository.getPlayoffRounds().asLoadingStream(),
       _standingsType,
       shouldHideScores(_settingsRepository.shouldHideScores()),
       _settingsRepository.getFavoriteTeamId(),

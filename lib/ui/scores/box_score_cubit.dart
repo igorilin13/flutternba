@@ -40,7 +40,7 @@ class GameBoxScoreCubit extends BaseCubit<GameBoxScoreState>
   Stream<GameBoxScoreState> buildStateStream() {
     return CombineLatestStream.combine3(
       _boxScoreRepository.getBoxScore(gameId),
-      _standingsRepository.getAllTeams().asNullableStream().startWith(null),
+      _standingsRepository.getAllTeams().asLoadingStream(),
       shouldHideScores(_settingsRepository.shouldHideScores()),
       _mapToState,
     );

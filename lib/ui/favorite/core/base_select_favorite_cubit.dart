@@ -29,7 +29,7 @@ abstract class BaseSelectFavoriteTeamCubit
   @override
   Stream<SelectFavoriteTeamState> buildStateStream() {
     return CombineLatestStream.combine2(
-      _teamsRepository.getTeams().asNullableStream().startWith(null),
+      _teamsRepository.getTeams().asLoadingStream(),
       _selectionCompleteSubject.stream,
       _mapToState,
     );

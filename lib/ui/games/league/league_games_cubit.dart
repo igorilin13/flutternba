@@ -27,8 +27,7 @@ class LeagueGamesCubit extends BaseCubit<LeagueGamesState> {
   Stream<LeagueGamesState> buildStateStream() {
     return selectedDate.switchMap((date) {
       return _getLeagueGamesUseCase(date)
-          .nullable()
-          .startWith(null)
+          .asLoadingStream()
           .map((result) => _mapToState(result, _getLeagueDatesUseCase(date)));
     });
   }

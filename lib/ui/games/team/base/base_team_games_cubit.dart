@@ -70,7 +70,7 @@ abstract class BaseTeamGamesCubit<State> extends BaseCubit<State> {
       expandUpcomingGames,
       _finishedGames,
       _finishedGamesPageError,
-      _standingsRepository.getTeam(teamId).asNullableStream().startWith(null),
+      _standingsRepository.getTeam(teamId).asLoadingStream(),
       mapToState,
     );
   }
