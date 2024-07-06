@@ -141,6 +141,7 @@ class _StandingsScreenState extends State<StandingsScreen>
             child: PlayoffSeriesCard(
               series: series,
               favoriteTeamId: state.favoriteTeamId,
+              onTeamTap: (id) => TeamGamesScreen.navigate(context, id),
             ),
           ),
       ],

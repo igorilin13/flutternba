@@ -5,10 +5,12 @@ import 'package:flutternba/ui/core/components/team_logo.dart';
 class PlayoffSeriesCard extends StatelessWidget {
   final PlayoffSeries series;
   final int? favoriteTeamId;
+  final void Function(int teamId) onTeamTap;
 
   const PlayoffSeriesCard({
     super.key,
     required this.series,
+    required this.onTeamTap,
     this.favoriteTeamId,
   });
 
@@ -57,13 +59,24 @@ class PlayoffSeriesCard extends StatelessWidget {
           rank.toString(),
           style: theme.textTheme.bodyMedium,
         ),
-        const SizedBox(width: 8),
-        NbaTeamLogo(teamId: id, size: 24),
-        const SizedBox(width: 8),
-        Text(
-          name,
-          style: theme.textTheme.bodyLarge?.copyWith(
-            fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
+        const SizedBox(width: 4),
+        InkWell(
+          onTap: () => onTeamTap(id),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Row(
+              children: [
+                NbaTeamLogo(teamId: id, size: 24),
+                const SizedBox(width: 8),
+                Text(
+                  name,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight:
+                        isHighlighted ? FontWeight.bold : FontWeight.normal,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         const Spacer(),
