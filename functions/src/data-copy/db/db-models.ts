@@ -5,12 +5,15 @@ import {
   GameState,
   TeamResponse,
 } from "../ball-io/ball-io-responses";
+import { colorsByTeamId } from "../enrich/enrich-data";
 
 export class TeamInfoModel {
   constructor(
     public id: number,
     public name: string,
     public fullName: string,
+    public abbreviation: string,
+    public color: string,
   ) {}
 }
 
@@ -58,5 +61,12 @@ export function toGameInfo(
 }
 
 export function toTeamInfoModel(team: TeamResponse) {
-  return new TeamInfoModel(team.id, team.name, team.full_name);
+  const color = colorsByTeamId[team.id];
+  return new TeamInfoModel(
+    team.id,
+    team.name,
+    team.full_name,
+    team.abbreviation,
+    color,
+  );
 }

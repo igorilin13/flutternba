@@ -23,6 +23,8 @@ mixin _$Team {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
+  String get abbreviation => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +36,12 @@ abstract class $TeamCopyWith<$Res> {
   factory $TeamCopyWith(Team value, $Res Function(Team) then) =
       _$TeamCopyWithImpl<$Res, Team>;
   @useResult
-  $Res call({int id, String name, String fullName});
+  $Res call(
+      {int id,
+      String name,
+      String fullName,
+      String abbreviation,
+      String color});
 }
 
 /// @nodoc
@@ -53,6 +60,8 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
     Object? id = null,
     Object? name = null,
     Object? fullName = null,
+    Object? abbreviation = null,
+    Object? color = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -67,6 +76,14 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
+      abbreviation: null == abbreviation
+          ? _value.abbreviation
+          : abbreviation // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -78,7 +95,12 @@ abstract class _$$TeamImplCopyWith<$Res> implements $TeamCopyWith<$Res> {
       __$$TeamImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String fullName});
+  $Res call(
+      {int id,
+      String name,
+      String fullName,
+      String abbreviation,
+      String color});
 }
 
 /// @nodoc
@@ -94,6 +116,8 @@ class __$$TeamImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? fullName = null,
+    Object? abbreviation = null,
+    Object? color = null,
   }) {
     return _then(_$TeamImpl(
       id: null == id
@@ -108,6 +132,14 @@ class __$$TeamImplCopyWithImpl<$Res>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
+      abbreviation: null == abbreviation
+          ? _value.abbreviation
+          : abbreviation // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -116,7 +148,11 @@ class __$$TeamImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TeamImpl implements _Team {
   const _$TeamImpl(
-      {required this.id, required this.name, required this.fullName});
+      {required this.id,
+      required this.name,
+      required this.fullName,
+      required this.abbreviation,
+      required this.color});
 
   factory _$TeamImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamImplFromJson(json);
@@ -127,10 +163,14 @@ class _$TeamImpl implements _Team {
   final String name;
   @override
   final String fullName;
+  @override
+  final String abbreviation;
+  @override
+  final String color;
 
   @override
   String toString() {
-    return 'Team(id: $id, name: $name, fullName: $fullName)';
+    return 'Team(id: $id, name: $name, fullName: $fullName, abbreviation: $abbreviation, color: $color)';
   }
 
   @override
@@ -141,12 +181,16 @@ class _$TeamImpl implements _Team {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.fullName, fullName) ||
-                other.fullName == fullName));
+                other.fullName == fullName) &&
+            (identical(other.abbreviation, abbreviation) ||
+                other.abbreviation == abbreviation) &&
+            (identical(other.color, color) || other.color == color));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, fullName);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, fullName, abbreviation, color);
 
   @JsonKey(ignore: true)
   @override
@@ -166,7 +210,9 @@ abstract class _Team implements Team {
   const factory _Team(
       {required final int id,
       required final String name,
-      required final String fullName}) = _$TeamImpl;
+      required final String fullName,
+      required final String abbreviation,
+      required final String color}) = _$TeamImpl;
 
   factory _Team.fromJson(Map<String, dynamic> json) = _$TeamImpl.fromJson;
 
@@ -176,6 +222,10 @@ abstract class _Team implements Team {
   String get name;
   @override
   String get fullName;
+  @override
+  String get abbreviation;
+  @override
+  String get color;
   @override
   @JsonKey(ignore: true)
   _$$TeamImplCopyWith<_$TeamImpl> get copyWith =>

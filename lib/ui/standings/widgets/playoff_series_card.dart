@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/standings/playoffs/playoff_models.dart';
-import 'package:flutternba/ui/core/components/team_logo.dart';
 
 class PlayoffSeriesCard extends StatelessWidget {
   final PlayoffSeries series;
@@ -53,38 +52,30 @@ class PlayoffSeriesCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isHighlighted = id == favoriteTeamId;
 
-    return Row(
-      children: [
-        Text(
-          rank.toString(),
-          style: theme.textTheme.bodyMedium,
-        ),
-        const SizedBox(width: 4),
-        InkWell(
-          onTap: () => onTeamTap(id),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Row(
-              children: [
-                NbaTeamLogo(teamId: id, size: 24),
-                const SizedBox(width: 8),
-                Text(
-                  name,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight:
-                        isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  ),
-                )
-              ],
+    return InkWell(
+      onTap: () => onTeamTap(id),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 16,
+            child: Text(
+              rank.toString(),
+              style: theme.textTheme.bodyMedium,
             ),
           ),
-        ),
-        const Spacer(),
-        Text(
-          wins.toString(),
-          style: theme.textTheme.headlineSmall,
-        ),
-      ],
+          Text(
+            name,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            wins.toString(),
+            style: theme.textTheme.headlineSmall,
+          ),
+        ],
+      ),
     );
   }
 }

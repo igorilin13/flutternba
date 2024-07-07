@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
-import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/standings/widgets/standings_stat_type.dart';
 import 'package:flutternba/ui/standings/widgets/standings_value_cell.dart';
 
@@ -27,8 +26,6 @@ class StandingsRow extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
-        NbaTeamLogo(teamId: team.id, size: 24),
-        const SizedBox(width: 4),
         Expanded(
           child: Text(
             team.teamName,

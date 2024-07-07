@@ -10,7 +10,6 @@ import 'package:flutternba/ui/core/components/game_card.dart';
 import 'package:flutternba/ui/core/components/header_item.dart';
 import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
-import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/base/base_team_games_cubit.dart';
 import 'package:flutternba/ui/games/team/base/team_games_state.dart';
@@ -77,21 +76,12 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
     return NbaAppBar(
       showBackButton: widget.showBackButton,
       title: standings != null
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                NbaTeamLogo(teamId: standings.id, size: 32),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: NbaHeaderItem(
-                    text: standings.fullTeamName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
+          ? NbaHeaderItem(
+              text: standings.fullTeamName,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w500),
             )
           : null,
     );

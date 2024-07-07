@@ -104,7 +104,12 @@ class GameBoxScoreScreen extends StatelessWidget {
         children: [
           NbaGameCard(item: state.gameItem, hideScores: false),
           spacer,
-          GameTeamStats(home: state.homeTeam.team, away: state.awayTeam.team),
+          GameTeamStats(
+            homeTeam: state.gameItem.game.homeTeam,
+            homeStats: state.homeTeam.team,
+            awayTeam: state.gameItem.game.visitorTeam,
+            awayStats: state.awayTeam.team,
+          ),
           spacer,
           GamePlayerStats(
             team: state.gameItem.game.homeTeam,

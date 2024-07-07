@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutternba/data/scores/remote/box_score_response.dart';
+import 'package:flutternba/data/teams/team_model.dart';
 import 'package:flutternba/ui/core/components/list_card.dart';
-import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 
 class GameTeamStats extends StatelessWidget {
-  final TeamStats home;
-  final TeamStats away;
+  final TeamStats homeStats;
+  final Team homeTeam;
+  final TeamStats awayStats;
+  final Team awayTeam;
 
-  const GameTeamStats({super.key, required this.home, required this.away});
+  const GameTeamStats({
+    super.key,
+    required this.homeTeam,
+    required this.homeStats,
+    required this.awayTeam,
+    required this.awayStats,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +32,19 @@ class GameTeamStats extends StatelessWidget {
   }
 
   Widget _buildHeaderRow(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.titleSmall;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Stack(
         children: [
-          NbaTeamLogo(teamId: home.id, size: 28),
+          Text(homeTeam.abbreviation, style: textStyle),
           Container(
             alignment: Alignment.bottomCenter,
-            child: Text(
-              UiStrings.titleTeamStats,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            child: Text(UiStrings.titleTeamStats, style: textStyle),
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: NbaTeamLogo(teamId: away.id, size: 28),
+            child: Text(awayTeam.abbreviation, style: textStyle),
           ),
         ],
       ),
@@ -50,7 +56,7 @@ class GameTeamStats extends StatelessWidget {
       child: Stack(
         children: [
           Text(
-            type.buildValue(home),
+            type.buildValue(homeStats),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Center(
@@ -62,7 +68,7 @@ class GameTeamStats extends StatelessWidget {
           Container(
             alignment: Alignment.centerRight,
             child: Text(
-              type.buildValue(away),
+              type.buildValue(awayStats),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

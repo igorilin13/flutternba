@@ -9,6 +9,8 @@ class Team with _$Team {
     required int id,
     required String name,
     required String fullName,
+    required String abbreviation,
+    required String color,
   }) = _Team;
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);

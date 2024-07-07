@@ -11,6 +11,7 @@ export interface TeamResponse {
   id: number;
   name: string;
   full_name: string;
+  abbreviation: string;
 }
 
 export interface BaseGameResponse {
