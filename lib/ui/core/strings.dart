@@ -1,6 +1,7 @@
 import 'package:flutternba/common/util/string_ext.dart';
 
 class UiStrings {
+  static const String appTitle = "BBall Schedules";
   static const String titleSelectTeam = "Select your team";
   static const String actionSkipOnboarding = "Later";
   static const String actionConfirm = "Confirm";

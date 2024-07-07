@@ -9,6 +9,7 @@ import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/firebase_options.dart';
 import 'package:flutternba/ui/core/colors.dart';
+import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/onboarding/onboarding_screen.dart';
 import 'package:flutternba/ui/home/home_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
@@ -59,7 +60,7 @@ class _MyApp extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => SettingsCubit(locator(), locator()),
       child: MaterialApp(
-        title: "NBA Schedules",
+        title: UiStrings.appTitle,
         restorationScopeId: "root",
         darkTheme: createTheme(isDark: true),
         theme: createTheme(isDark: false),
