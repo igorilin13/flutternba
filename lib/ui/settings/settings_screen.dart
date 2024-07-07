@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/ui/core/components/app_bar.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/favorite/change/change_favorite_screen.dart';
 import 'package:flutternba/ui/settings/settings_cubit.dart';
 import 'package:flutternba/ui/settings/settings_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -16,8 +18,6 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen>
     with AutomaticKeepAliveClientMixin {
-  static const double _settingHorizontalPadding = 16;
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -32,6 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Card(
                   clipBehavior: Clip.hardEdge,
@@ -49,10 +50,30 @@ class _SettingsScreenState extends State<SettingsScreen>
                         context,
                         state.favoriteTeamState,
                         () => ChangeFavoriteTeamScreen.navigate(context),
-                      )
+                      ),
                     ],
                   ),
                 ),
+                const SizedBox(height: 24),
+                Card(
+                  clipBehavior: Clip.hardEdge,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        title: const Text(UiStrings.linkPrivacyPolicy),
+                        trailing: Icon(
+                          Icons.launch,
+                          color: _getTrailingIconColor(context),
+                          size: 20,
+                        ),
+                        onTap: _openPrivacyPolicy,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -66,22 +87,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     bool value,
     void Function(bool) onChanged,
   ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _settingHorizontalPadding,
-        vertical: 4,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              UiStrings.settingHideScores,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
-          Switch.adaptive(value: value, onChanged: onChanged)
-        ],
-      ),
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      title: const Text(UiStrings.settingHideScores),
+      trailing: Switch.adaptive(value: value, onChanged: onChanged),
     );
   }
 
@@ -90,25 +99,11 @@ class _SettingsScreenState extends State<SettingsScreen>
     FavoriteTeamSettingState state,
     VoidCallback onTap,
   ) {
-    return InkWell(
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 16, right: 12),
+      title: const Text(UiStrings.settingFavoriteTeam),
+      trailing: buildFavoriteTeamSettingValue(context, state),
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: _settingHorizontalPadding,
-          vertical: 16,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                UiStrings.settingFavoriteTeam,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ),
-            buildFavoriteTeamSettingValue(context, state)
-          ],
-        ),
-      ),
     );
   }
 
@@ -123,25 +118,34 @@ class _SettingsScreenState extends State<SettingsScreen>
           child: NbaProgressIndicator(size: NbaProgressIndicatorSize.small),
         );
       case FavoriteTeamErrorState() || NoFavoriteTeamState():
-        return const Icon(Icons.chevron_right);
+        return Icon(
+          Icons.chevron_right,
+          color: _getTrailingIconColor(context),
+        );
       case HasFavoriteTeamState():
         return Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(width: 4),
             Text(
               state.team.name,
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Icon(
               Icons.chevron_right,
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurfaceVariant
-                  .withOpacity(0.5),
+              color: _getTrailingIconColor(context),
             ),
           ],
         );
     }
+  }
+
+  Color _getTrailingIconColor(BuildContext context) {
+    return Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.5);
+  }
+
+  void _openPrivacyPolicy() {
+    final url = Uri.parse(AppConfig.privacyPolicyUrl);
+    launchUrl(url);
   }
 
   @override

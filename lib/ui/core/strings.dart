@@ -69,6 +69,7 @@ class UiStrings {
   static const String boxScoreHideScoreOnMessage =
       "Hide scores mode is on.\nContinue anyway?";
   static const String actionRevealBoxScore = "Show score";
+  static const String linkPrivacyPolicy = "Privacy Policy";
 
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
 
