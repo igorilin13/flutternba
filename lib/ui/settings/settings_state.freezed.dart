@@ -19,6 +19,8 @@ mixin _$SettingsState {
   bool? get shouldHideScores => throw _privateConstructorUsedError;
   FavoriteTeamSettingState get favoriteTeamState =>
       throw _privateConstructorUsedError;
+  GameRemindersSettingState get gameRemindersState =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SettingsStateCopyWith<SettingsState> get copyWith =>
@@ -32,9 +34,12 @@ abstract class $SettingsStateCopyWith<$Res> {
       _$SettingsStateCopyWithImpl<$Res, SettingsState>;
   @useResult
   $Res call(
-      {bool? shouldHideScores, FavoriteTeamSettingState favoriteTeamState});
+      {bool? shouldHideScores,
+      FavoriteTeamSettingState favoriteTeamState,
+      GameRemindersSettingState gameRemindersState});
 
   $FavoriteTeamSettingStateCopyWith<$Res> get favoriteTeamState;
+  $GameRemindersSettingStateCopyWith<$Res> get gameRemindersState;
 }
 
 /// @nodoc
@@ -52,6 +57,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   $Res call({
     Object? shouldHideScores = freezed,
     Object? favoriteTeamState = null,
+    Object? gameRemindersState = null,
   }) {
     return _then(_value.copyWith(
       shouldHideScores: freezed == shouldHideScores
@@ -62,6 +68,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.favoriteTeamState
           : favoriteTeamState // ignore: cast_nullable_to_non_nullable
               as FavoriteTeamSettingState,
+      gameRemindersState: null == gameRemindersState
+          ? _value.gameRemindersState
+          : gameRemindersState // ignore: cast_nullable_to_non_nullable
+              as GameRemindersSettingState,
     ) as $Val);
   }
 
@@ -71,6 +81,15 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     return $FavoriteTeamSettingStateCopyWith<$Res>(_value.favoriteTeamState,
         (value) {
       return _then(_value.copyWith(favoriteTeamState: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GameRemindersSettingStateCopyWith<$Res> get gameRemindersState {
+    return $GameRemindersSettingStateCopyWith<$Res>(_value.gameRemindersState,
+        (value) {
+      return _then(_value.copyWith(gameRemindersState: value) as $Val);
     });
   }
 }
@@ -84,10 +103,14 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool? shouldHideScores, FavoriteTeamSettingState favoriteTeamState});
+      {bool? shouldHideScores,
+      FavoriteTeamSettingState favoriteTeamState,
+      GameRemindersSettingState gameRemindersState});
 
   @override
   $FavoriteTeamSettingStateCopyWith<$Res> get favoriteTeamState;
+  @override
+  $GameRemindersSettingStateCopyWith<$Res> get gameRemindersState;
 }
 
 /// @nodoc
@@ -103,6 +126,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? shouldHideScores = freezed,
     Object? favoriteTeamState = null,
+    Object? gameRemindersState = null,
   }) {
     return _then(_$SettingsStateImpl(
       shouldHideScores: freezed == shouldHideScores
@@ -113,6 +137,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.favoriteTeamState
           : favoriteTeamState // ignore: cast_nullable_to_non_nullable
               as FavoriteTeamSettingState,
+      gameRemindersState: null == gameRemindersState
+          ? _value.gameRemindersState
+          : gameRemindersState // ignore: cast_nullable_to_non_nullable
+              as GameRemindersSettingState,
     ));
   }
 }
@@ -121,16 +149,20 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 
 class _$SettingsStateImpl implements _SettingsState {
   const _$SettingsStateImpl(
-      {required this.shouldHideScores, required this.favoriteTeamState});
+      {required this.shouldHideScores,
+      required this.favoriteTeamState,
+      required this.gameRemindersState});
 
   @override
   final bool? shouldHideScores;
   @override
   final FavoriteTeamSettingState favoriteTeamState;
+  @override
+  final GameRemindersSettingState gameRemindersState;
 
   @override
   String toString() {
-    return 'SettingsState(shouldHideScores: $shouldHideScores, favoriteTeamState: $favoriteTeamState)';
+    return 'SettingsState(shouldHideScores: $shouldHideScores, favoriteTeamState: $favoriteTeamState, gameRemindersState: $gameRemindersState)';
   }
 
   @override
@@ -141,12 +173,14 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.shouldHideScores, shouldHideScores) ||
                 other.shouldHideScores == shouldHideScores) &&
             (identical(other.favoriteTeamState, favoriteTeamState) ||
-                other.favoriteTeamState == favoriteTeamState));
+                other.favoriteTeamState == favoriteTeamState) &&
+            (identical(other.gameRemindersState, gameRemindersState) ||
+                other.gameRemindersState == gameRemindersState));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, shouldHideScores, favoriteTeamState);
+  int get hashCode => Object.hash(
+      runtimeType, shouldHideScores, favoriteTeamState, gameRemindersState);
 
   @JsonKey(ignore: true)
   @override
@@ -158,13 +192,16 @@ class _$SettingsStateImpl implements _SettingsState {
 abstract class _SettingsState implements SettingsState {
   const factory _SettingsState(
           {required final bool? shouldHideScores,
-          required final FavoriteTeamSettingState favoriteTeamState}) =
+          required final FavoriteTeamSettingState favoriteTeamState,
+          required final GameRemindersSettingState gameRemindersState}) =
       _$SettingsStateImpl;
 
   @override
   bool? get shouldHideScores;
   @override
   FavoriteTeamSettingState get favoriteTeamState;
+  @override
+  GameRemindersSettingState get gameRemindersState;
   @override
   @JsonKey(ignore: true)
   _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
@@ -752,5 +789,169 @@ abstract class HasFavoriteTeamState implements FavoriteTeamSettingState {
   Team get team;
   @JsonKey(ignore: true)
   _$$HasFavoriteTeamStateImplCopyWith<_$HasFavoriteTeamStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$GameRemindersSettingState {
+  bool get isAvailable => throw _privateConstructorUsedError;
+  bool get isTurnedOn => throw _privateConstructorUsedError;
+  bool get isSaving => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GameRemindersSettingStateCopyWith<GameRemindersSettingState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GameRemindersSettingStateCopyWith<$Res> {
+  factory $GameRemindersSettingStateCopyWith(GameRemindersSettingState value,
+          $Res Function(GameRemindersSettingState) then) =
+      _$GameRemindersSettingStateCopyWithImpl<$Res, GameRemindersSettingState>;
+  @useResult
+  $Res call({bool isAvailable, bool isTurnedOn, bool isSaving});
+}
+
+/// @nodoc
+class _$GameRemindersSettingStateCopyWithImpl<$Res,
+        $Val extends GameRemindersSettingState>
+    implements $GameRemindersSettingStateCopyWith<$Res> {
+  _$GameRemindersSettingStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isAvailable = null,
+    Object? isTurnedOn = null,
+    Object? isSaving = null,
+  }) {
+    return _then(_value.copyWith(
+      isAvailable: null == isAvailable
+          ? _value.isAvailable
+          : isAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTurnedOn: null == isTurnedOn
+          ? _value.isTurnedOn
+          : isTurnedOn // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: null == isSaving
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GameRemindersSettingStateImplCopyWith<$Res>
+    implements $GameRemindersSettingStateCopyWith<$Res> {
+  factory _$$GameRemindersSettingStateImplCopyWith(
+          _$GameRemindersSettingStateImpl value,
+          $Res Function(_$GameRemindersSettingStateImpl) then) =
+      __$$GameRemindersSettingStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool isAvailable, bool isTurnedOn, bool isSaving});
+}
+
+/// @nodoc
+class __$$GameRemindersSettingStateImplCopyWithImpl<$Res>
+    extends _$GameRemindersSettingStateCopyWithImpl<$Res,
+        _$GameRemindersSettingStateImpl>
+    implements _$$GameRemindersSettingStateImplCopyWith<$Res> {
+  __$$GameRemindersSettingStateImplCopyWithImpl(
+      _$GameRemindersSettingStateImpl _value,
+      $Res Function(_$GameRemindersSettingStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isAvailable = null,
+    Object? isTurnedOn = null,
+    Object? isSaving = null,
+  }) {
+    return _then(_$GameRemindersSettingStateImpl(
+      isAvailable: null == isAvailable
+          ? _value.isAvailable
+          : isAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTurnedOn: null == isTurnedOn
+          ? _value.isTurnedOn
+          : isTurnedOn // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: null == isSaving
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GameRemindersSettingStateImpl implements _GameRemindersSettingState {
+  const _$GameRemindersSettingStateImpl(
+      {required this.isAvailable,
+      required this.isTurnedOn,
+      required this.isSaving});
+
+  @override
+  final bool isAvailable;
+  @override
+  final bool isTurnedOn;
+  @override
+  final bool isSaving;
+
+  @override
+  String toString() {
+    return 'GameRemindersSettingState(isAvailable: $isAvailable, isTurnedOn: $isTurnedOn, isSaving: $isSaving)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GameRemindersSettingStateImpl &&
+            (identical(other.isAvailable, isAvailable) ||
+                other.isAvailable == isAvailable) &&
+            (identical(other.isTurnedOn, isTurnedOn) ||
+                other.isTurnedOn == isTurnedOn) &&
+            (identical(other.isSaving, isSaving) ||
+                other.isSaving == isSaving));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, isAvailable, isTurnedOn, isSaving);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GameRemindersSettingStateImplCopyWith<_$GameRemindersSettingStateImpl>
+      get copyWith => __$$GameRemindersSettingStateImplCopyWithImpl<
+          _$GameRemindersSettingStateImpl>(this, _$identity);
+}
+
+abstract class _GameRemindersSettingState implements GameRemindersSettingState {
+  const factory _GameRemindersSettingState(
+      {required final bool isAvailable,
+      required final bool isTurnedOn,
+      required final bool isSaving}) = _$GameRemindersSettingStateImpl;
+
+  @override
+  bool get isAvailable;
+  @override
+  bool get isTurnedOn;
+  @override
+  bool get isSaving;
+  @override
+  @JsonKey(ignore: true)
+  _$$GameRemindersSettingStateImplCopyWith<_$GameRemindersSettingStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

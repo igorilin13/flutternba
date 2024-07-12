@@ -1,11 +1,11 @@
-import 'dart:isolate';
-import 'dart:ui';
+import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutternba/common/di/locator.dart';
+import 'package:flutternba/common/integrations/crashlytics.dart';
+import 'package:flutternba/common/integrations/firebase_messaging.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/firebase_options.dart';
 import 'package:flutternba/ui/core/colors.dart';
@@ -20,33 +20,35 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  _configureCrashlytics();
+  CrashlyticsIntegration.init();
   final onboardingComplete =
       locator<SettingsRepository>().isOnboardingComplete();
 
   runApp(_MyApp(onboardingComplete));
 }
 
-void _configureCrashlytics() {
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
-  Isolate.current.addErrorListener(RawReceivePort((pair) async {
-    final List<dynamic> errorAndStacktrace = pair;
-    await FirebaseCrashlytics.instance.recordError(
-      errorAndStacktrace.first,
-      errorAndStacktrace.last,
-      fatal: true,
-    );
-  }).sendPort);
-}
-
-class _MyApp extends StatelessWidget {
+class _MyApp extends StatefulWidget {
   final bool _onboardingComplete;
 
   const _MyApp(this._onboardingComplete);
+
+  @override
+  State<_MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<_MyApp> {
+  late StreamSubscription _messagingSubscription;
+  final FirebaseMessagingIntegration _messagingIntegration = locator();
+
+  @override
+  void initState() {
+    _initFirebaseMessaging();
+    super.initState();
+  }
+
+  void _initFirebaseMessaging() {
+    _messagingSubscription = _messagingIntegration.init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +60,26 @@ class _MyApp extends StatelessWidget {
     }
 
     return BlocProvider(
-      create: (BuildContext context) => SettingsCubit(locator(), locator()),
+      create: (BuildContext context) => SettingsCubit(
+        locator(),
+        locator(),
+        locator(),
+      ),
       child: MaterialApp(
         title: UiStrings.appTitle,
         restorationScopeId: "root",
         darkTheme: createTheme(isDark: true),
         theme: createTheme(isDark: false),
         themeMode: ThemeMode.system,
-        home: _RootScreen(_onboardingComplete),
+        home: _RootScreen(widget._onboardingComplete),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _messagingSubscription.cancel();
+    super.dispose();
   }
 }
 

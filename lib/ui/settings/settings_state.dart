@@ -8,11 +8,13 @@ class SettingsState with _$SettingsState {
   static const initial = SettingsState(
     shouldHideScores: null,
     favoriteTeamState: LoadingFavoriteTeamState(),
+    gameRemindersState: GameRemindersSettingState.initial,
   );
 
   const factory SettingsState({
     required bool? shouldHideScores,
     required FavoriteTeamSettingState favoriteTeamState,
+    required GameRemindersSettingState gameRemindersState,
   }) = _SettingsState;
 }
 
@@ -23,4 +25,19 @@ sealed class FavoriteTeamSettingState with _$FavoriteTeamSettingState {
   const factory FavoriteTeamSettingState.noFavorite() = NoFavoriteTeamState;
   const factory FavoriteTeamSettingState.hasFavorite(Team team) =
       HasFavoriteTeamState;
+}
+
+@freezed
+class GameRemindersSettingState with _$GameRemindersSettingState {
+  static const initial = GameRemindersSettingState(
+    isAvailable: false,
+    isTurnedOn: false,
+    isSaving: false,
+  );
+
+  const factory GameRemindersSettingState({
+    required bool isAvailable,
+    required bool isTurnedOn,
+    required bool isSaving,
+  }) = _GameRemindersSettingState;
 }

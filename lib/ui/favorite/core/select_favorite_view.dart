@@ -48,8 +48,10 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
             context,
             state,
             onTap: () async {
-              await context.read<T>().confirmSelection(_selectedTeamId.value);
-              widget.onSelectionComplete();
+              final cubit = context.read<T>();
+              if (await cubit.confirmSelection(_selectedTeamId.value)) {
+                widget.onSelectionComplete();
+              }
             },
           ),
         );
@@ -84,13 +86,28 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
     if (_selectedTeamId.value == null || state is! DisplayState) {
       return null;
     }
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: FilledButton(
-        onPressed: onTap,
-        child: const Text(UiStrings.actionConfirm),
-      ),
-    );
+
+    if (state.isConfirmationInProgress) {
+      return const Padding(
+        padding: EdgeInsets.only(bottom: 24, top: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            NbaProgressIndicator(size: NbaProgressIndicatorSize.small),
+            SizedBox(height: 4),
+            Text(UiStrings.confirmSelectionInProgress)
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: FilledButton(
+          onPressed: onTap,
+          child: const Text(UiStrings.actionConfirm),
+        ),
+      );
+    }
   }
 
   Widget _buildBody(

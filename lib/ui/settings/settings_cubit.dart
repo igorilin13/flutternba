@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutternba/common/util/async_ext.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
@@ -10,10 +11,15 @@ import 'package:rxdart/rxdart.dart';
 class SettingsCubit extends BaseCubit<SettingsState> {
   final SettingsRepository _settingsRepository;
   final TeamsRepository _teamsRepository;
+  final FirebaseMessaging _firebaseMessaging;
+
+  final BehaviorSubject<bool> _isUpdatingGameReminders =
+      BehaviorSubject.seeded(false);
 
   SettingsCubit(
     this._settingsRepository,
     this._teamsRepository,
+    this._firebaseMessaging,
   ) : super(SettingsState.initial);
 
   @override
@@ -22,18 +28,24 @@ class SettingsCubit extends BaseCubit<SettingsState> {
         .getFavoriteTeamId()
         .switchMap(buildFavoriteTeamState);
 
-    return CombineLatestStream.combine2(
+    return CombineLatestStream.combine4(
       _settingsRepository.shouldHideScores(),
       favoriteTeamSettingStream,
-      (hideScores, favoriteTeam) => SettingsState(
-        shouldHideScores: hideScores,
-        favoriteTeamState: favoriteTeam,
-      ),
+      _settingsRepository.areGameRemindersOn(),
+      _isUpdatingGameReminders,
+      (hideScores, favoriteTeam, gameRemindersOn, isUpdatingGameReminders) {
+        final isAvailable = favoriteTeam is HasFavoriteTeamState;
+        return SettingsState(
+          shouldHideScores: hideScores,
+          favoriteTeamState: favoriteTeam,
+          gameRemindersState: GameRemindersSettingState(
+            isAvailable: isAvailable,
+            isTurnedOn: gameRemindersOn,
+            isSaving: isUpdatingGameReminders,
+          ),
+        );
+      },
     );
-  }
-
-  void setHideScores(bool value) async {
-    await _settingsRepository.setHideScores(value);
   }
 
   Stream<FavoriteTeamSettingState> buildFavoriteTeamState(int? teamId) {
@@ -50,5 +62,25 @@ class SettingsCubit extends BaseCubit<SettingsState> {
     } else {
       return Stream.value(const FavoriteTeamSettingState.noFavorite());
     }
+  }
+
+  void setHideScores(bool value) async {
+    await _settingsRepository.setHideScores(value);
+  }
+
+  void setGameReminders(bool value) async {
+    _isUpdatingGameReminders.add(true);
+
+    if (value) {
+      final permissionResult = await _firebaseMessaging.requestPermission();
+      if (permissionResult.authorizationStatus ==
+          AuthorizationStatus.authorized) {
+        await _settingsRepository.setGameReminders(true);
+      }
+    } else {
+      await _settingsRepository.setGameReminders(false);
+    }
+
+    _isUpdatingGameReminders.add(false);
   }
 }

@@ -70,6 +70,13 @@ class UiStrings {
       "Hide scores mode is on.\nContinue anyway?";
   static const String actionRevealBoxScore = "Show score";
   static const String linkPrivacyPolicy = "Privacy Policy";
+  static const String gameRemindersSettingTitle = "Game reminders";
+  static const String gameRemindersSettingDescription =
+      "Receive a notification when your favorite team plays.";
+  static const String gameRemindersChannelName = "Game reminders";
+  static const String gameRemindersChannelDescription =
+      gameRemindersSettingDescription;
+  static const String confirmSelectionInProgress = "Saving your selection";
 
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
 

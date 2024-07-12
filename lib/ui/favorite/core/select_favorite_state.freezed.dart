@@ -20,21 +20,22 @@ mixin _$SelectFavoriteTeamState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Team> teams) display,
+    required TResult Function(List<Team> teams, bool isConfirmationInProgress)
+        display,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<Team> teams)? display,
+    TResult? Function(List<Team> teams, bool isConfirmationInProgress)? display,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Team> teams)? display,
+    TResult Function(List<Team> teams, bool isConfirmationInProgress)? display,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,7 +122,8 @@ class _$LoadingStateImpl implements LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Team> teams) display,
+    required TResult Function(List<Team> teams, bool isConfirmationInProgress)
+        display,
   }) {
     return loading();
   }
@@ -131,7 +133,7 @@ class _$LoadingStateImpl implements LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<Team> teams)? display,
+    TResult? Function(List<Team> teams, bool isConfirmationInProgress)? display,
   }) {
     return loading?.call();
   }
@@ -141,7 +143,7 @@ class _$LoadingStateImpl implements LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Team> teams)? display,
+    TResult Function(List<Team> teams, bool isConfirmationInProgress)? display,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -229,7 +231,8 @@ class _$ErrorStateImpl implements ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Team> teams) display,
+    required TResult Function(List<Team> teams, bool isConfirmationInProgress)
+        display,
   }) {
     return error();
   }
@@ -239,7 +242,7 @@ class _$ErrorStateImpl implements ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<Team> teams)? display,
+    TResult? Function(List<Team> teams, bool isConfirmationInProgress)? display,
   }) {
     return error?.call();
   }
@@ -249,7 +252,7 @@ class _$ErrorStateImpl implements ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Team> teams)? display,
+    TResult Function(List<Team> teams, bool isConfirmationInProgress)? display,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -303,7 +306,7 @@ abstract class _$$DisplayStateImplCopyWith<$Res> {
           _$DisplayStateImpl value, $Res Function(_$DisplayStateImpl) then) =
       __$$DisplayStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Team> teams});
+  $Res call({List<Team> teams, bool isConfirmationInProgress});
 }
 
 /// @nodoc
@@ -318,12 +321,17 @@ class __$$DisplayStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? teams = null,
+    Object? isConfirmationInProgress = null,
   }) {
     return _then(_$DisplayStateImpl(
       null == teams
           ? _value._teams
           : teams // ignore: cast_nullable_to_non_nullable
               as List<Team>,
+      null == isConfirmationInProgress
+          ? _value.isConfirmationInProgress
+          : isConfirmationInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -331,7 +339,9 @@ class __$$DisplayStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DisplayStateImpl implements DisplayState {
-  const _$DisplayStateImpl(final List<Team> teams) : _teams = teams;
+  const _$DisplayStateImpl(
+      final List<Team> teams, this.isConfirmationInProgress)
+      : _teams = teams;
 
   final List<Team> _teams;
   @override
@@ -342,8 +352,11 @@ class _$DisplayStateImpl implements DisplayState {
   }
 
   @override
+  final bool isConfirmationInProgress;
+
+  @override
   String toString() {
-    return 'SelectFavoriteTeamState.display(teams: $teams)';
+    return 'SelectFavoriteTeamState.display(teams: $teams, isConfirmationInProgress: $isConfirmationInProgress)';
   }
 
   @override
@@ -351,12 +364,15 @@ class _$DisplayStateImpl implements DisplayState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DisplayStateImpl &&
-            const DeepCollectionEquality().equals(other._teams, _teams));
+            const DeepCollectionEquality().equals(other._teams, _teams) &&
+            (identical(
+                    other.isConfirmationInProgress, isConfirmationInProgress) ||
+                other.isConfirmationInProgress == isConfirmationInProgress));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_teams));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_teams), isConfirmationInProgress);
 
   @JsonKey(ignore: true)
   @override
@@ -369,9 +385,10 @@ class _$DisplayStateImpl implements DisplayState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Team> teams) display,
+    required TResult Function(List<Team> teams, bool isConfirmationInProgress)
+        display,
   }) {
-    return display(teams);
+    return display(teams, isConfirmationInProgress);
   }
 
   @override
@@ -379,9 +396,9 @@ class _$DisplayStateImpl implements DisplayState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<Team> teams)? display,
+    TResult? Function(List<Team> teams, bool isConfirmationInProgress)? display,
   }) {
-    return display?.call(teams);
+    return display?.call(teams, isConfirmationInProgress);
   }
 
   @override
@@ -389,11 +406,11 @@ class _$DisplayStateImpl implements DisplayState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Team> teams)? display,
+    TResult Function(List<Team> teams, bool isConfirmationInProgress)? display,
     required TResult orElse(),
   }) {
     if (display != null) {
-      return display(teams);
+      return display(teams, isConfirmationInProgress);
     }
     return orElse();
   }
@@ -434,9 +451,12 @@ class _$DisplayStateImpl implements DisplayState {
 }
 
 abstract class DisplayState implements SelectFavoriteTeamState {
-  const factory DisplayState(final List<Team> teams) = _$DisplayStateImpl;
+  const factory DisplayState(
+          final List<Team> teams, final bool isConfirmationInProgress) =
+      _$DisplayStateImpl;
 
   List<Team> get teams;
+  bool get isConfirmationInProgress;
   @JsonKey(ignore: true)
   _$$DisplayStateImplCopyWith<_$DisplayStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

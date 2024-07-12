@@ -10,6 +10,8 @@ sealed class SelectFavoriteTeamState with _$SelectFavoriteTeamState {
 
   const factory SelectFavoriteTeamState.error() = ErrorState;
 
-  const factory SelectFavoriteTeamState.display(List<Team> teams) =
-      DisplayState;
+  const factory SelectFavoriteTeamState.display(
+    List<Team> teams,
+    bool isConfirmationInProgress,
+  ) = DisplayState;
 }

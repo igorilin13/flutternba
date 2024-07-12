@@ -55,6 +55,11 @@ class _SettingsScreenState extends State<SettingsScreen>
                   ),
                 ),
                 const SizedBox(height: 24),
+                ..._buildGameRemindersSetting(
+                  context,
+                  state.gameRemindersState,
+                ),
+                const SizedBox(height: 20),
                 Card(
                   clipBehavior: Clip.hardEdge,
                   child: Column(
@@ -137,6 +142,48 @@ class _SettingsScreenState extends State<SettingsScreen>
           ],
         );
     }
+  }
+
+  List<Widget> _buildGameRemindersSetting(
+    BuildContext context,
+    GameRemindersSettingState state,
+  ) {
+    final theme = Theme.of(context);
+
+    return [
+      Card(
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          title: const Text(UiStrings.gameRemindersSettingTitle),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (state.isSaving) ...[
+                const NbaProgressIndicator(
+                  size: NbaProgressIndicatorSize.small,
+                ),
+                const SizedBox(width: 8),
+              ],
+              Switch.adaptive(
+                value: state.isTurnedOn,
+                onChanged: state.isAvailable && !state.isSaving
+                    ? context.read<SettingsCubit>().setGameReminders
+                    : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          UiStrings.gameRemindersSettingDescription,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+      ),
+    ];
   }
 
   Color _getTrailingIconColor(BuildContext context) {

@@ -1,5 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutternba/common/integrations/firebase_messaging.dart';
+import 'package:flutternba/common/integrations/local_notifications.dart';
 import 'package:flutternba/data/common/firebase_functions.dart';
 import 'package:flutternba/data/common/firestore/firebase_db.dart';
 import 'package:flutternba/data/games/games_repository.dart';
@@ -20,12 +25,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 final locator = GetIt.instance;
 
 Future<void> initLocator() async {
+  locator.registerLazySingleton(
+    () => LocalNotificationsIntegration(FlutterLocalNotificationsPlugin()),
+  );
+  locator.registerLazySingleton(() => FirebaseMessagingIntegration(locator()));
+
   locator.registerSingletonAsync(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => SettingsLocalDataSource(locator()));
-  locator.registerLazySingleton(() => SettingsRepository(locator()));
+  locator.registerLazySingleton(
+    () => SettingsRepository(
+      locator(),
+      locator(),
+      locator(),
+    ),
+  );
 
-  locator.registerLazySingleton(() => FirebaseFirestore.instance);
-  locator.registerLazySingleton(() => FirebaseFunctions.instance);
+  locator.registerFactory(() => FirebaseFirestore.instance);
+  locator.registerFactory(() => FirebaseFunctions.instance);
+  locator.registerFactory(() => FirebaseMessaging.instance);
+  locator.registerFactory(() => FirebaseCrashlytics.instance);
   locator.registerFactory(() => AppFirebaseDb(locator()));
   locator.registerFactory(() => FirebaseRemoteApi(locator()));
 
