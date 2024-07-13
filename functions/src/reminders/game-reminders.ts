@@ -1,3 +1,4 @@
+import { logger } from "firebase-functions";
 import { GameInfoModel } from "../data-copy/db/db-models";
 import {
   getDueReminders,
@@ -32,7 +33,7 @@ export async function updatePendingReminders(games: GameInfoModel[]) {
   const pendingDate = await getPendingRemindersDate();
 
   if (today !== pendingDate) {
-    console.log("Updating pending reminders");
+    logger.info("Updating pending reminders");
     const remindersById: { [key: number]: GameReminder } = {};
     games.forEach((game) => {
       const scheduledString = game.scheduled;
@@ -47,14 +48,14 @@ export async function updatePendingReminders(games: GameInfoModel[]) {
     });
     await setPendingReminders(today, remindersById);
   } else {
-    console.log("Pending reminders already up to date");
+    logger.info("Pending reminders already up to date");
   }
 }
 
 export async function sendDueReminders() {
   const now = new Date().getTime();
   const reminders = await getDueReminders(now);
-  console.log(reminders.length, "reminders due");
+  logger.info(reminders.length, "reminders due");
 
   const sentTeamIds: string[] = [];
   await Promise.all(
@@ -69,9 +70,9 @@ export async function sendDueReminders() {
       try {
         await messaging().send(message);
         sentTeamIds.push(teamId);
-        console.log("Sent reminder for", teamId);
+        logger.info("Sent reminder for", teamId);
       } catch (e) {
-        console.error("Error sending message:", e);
+        logger.error("Error sending message:", e);
       }
     }),
   );

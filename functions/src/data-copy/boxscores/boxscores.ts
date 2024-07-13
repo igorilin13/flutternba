@@ -1,3 +1,4 @@
+import { logger } from "firebase-functions";
 import { onCall } from "firebase-functions/v2/https";
 import { getGameStats } from "../ball-io/ball-io-api";
 import { defineSecret } from "firebase-functions/params";
@@ -62,7 +63,7 @@ export const getBoxScore = onCall({ secrets: [apiKey] }, async (request) => {
 
     return new GameBoxScore(gameInfo, teamBoxScores[0], teamBoxScores[1]);
   } catch (error) {
-    console.error("Error loading box scores", error);
+    logger.error("Error loading box scores", error);
     return Promise.reject(Error("Error loading box scores"));
   }
 });

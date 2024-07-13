@@ -12,7 +12,7 @@ const playoffRoundIndices = [
 export function calculatePlayoffRounds(
   gameDocs: FirebaseFirestore.DocumentData[],
   teamStandings: TeamStandings[],
-) {
+): [PlayoffRound[], Map<number, string>] {
   const conferenceRankByTeamId = teamStandings.reduce(
     (map, item) => {
       map[item.id] = item.conference;
@@ -30,14 +30,17 @@ export function calculatePlayoffRounds(
     gamesBySeries.set(seriesKey, games);
   });
 
+  const seriesIdByGameId = new Map<number, string>();
   const series = Array.from(gamesBySeries.values()).map((games) => {
     const homeTeamId = games[0].homeTeamId;
     const awayTeamId = games[0].visitorTeamId;
+    const seriesId = [homeTeamId, awayTeamId].sort().join("-");
     let homeTeamWins = 0;
     let awayTeamWins = 0;
     games
       .filter((game) => game.status == GameState.Finished)
       .forEach((game) => {
+        seriesIdByGameId.set(game.id, seriesId);
         (game.homeTeamScore > game.visitorTeamScore
           ? game.homeTeamId
           : game.visitorTeamId) === homeTeamId
@@ -45,6 +48,7 @@ export function calculatePlayoffRounds(
           : awayTeamWins++;
       });
     return new PlayoffSeries(
+      seriesId,
       conferenceRankByTeamId[homeTeamId].id,
       conferenceRankByTeamId[homeTeamId].rank,
       homeTeamId,
@@ -57,7 +61,7 @@ export function calculatePlayoffRounds(
     );
   });
 
-  return playoffRoundIndices
+  const rounds = playoffRoundIndices
     .map(([start, end], index) => {
       const roundSeries = series.slice(start, end + 1);
       roundSeries.sort((a, b) => {
@@ -70,4 +74,6 @@ export function calculatePlayoffRounds(
       return new PlayoffRound(index, roundSeries);
     })
     .filter((round) => round.series.length > 0);
+
+  return [rounds, seriesIdByGameId];
 }

@@ -19,6 +19,7 @@ import {
   savePlayoffRounds,
   saveTeamInfos,
   saveTeamStandings,
+  updatePlayoffIdForGameIds,
 } from "./db/firestore-service";
 import { getStandings } from "./standings/espn-standings-api";
 import { calculatePlayoffRounds } from "./playoffs/playoffs";
@@ -50,7 +51,7 @@ export const hourlyUpdate = onSchedule({ schedule: "0 * * * *" }, async () => {
 
   const teamStandings = await updateStandings();
   if (teamStandings) {
-    updatePlayoffData(teamStandings);
+    await updatePlayoffData(teamStandings);
   }
 });
 
@@ -89,7 +90,7 @@ async function updateAllGames() {
       const response: ApiResponse<Array<GameResponse>> = (
         await getSeasonLeagueGames(apiKey, currentCursor)
       ).data;
-      console.log(
+      logger.info(
         `Loaded ${response.data.length} games for cursor ${currentCursor}`,
       );
 
@@ -139,10 +140,27 @@ async function updateStandings(): Promise<TeamStandings[] | null> {
 
 async function updatePlayoffData(teamStandings: TeamStandings[]) {
   const playoffGames = await getPlayoffGames();
-  const rounds = calculatePlayoffRounds(playoffGames, teamStandings);
+  const [rounds, seriesIdByGameId] = calculatePlayoffRounds(
+    playoffGames,
+    teamStandings,
+  );
   if (rounds.length > 0) {
     await savePlayoffRounds(rounds);
     logger.info("Playoff data saved successfully");
+
+    const updateGameIdWithSeriesId = new Map<number, string>();
+    playoffGames.forEach((game) => {
+      if (!game.playoffId) {
+        const seriesId = seriesIdByGameId.get(game.id);
+        if (seriesId) {
+          updateGameIdWithSeriesId.set(game.id, seriesId);
+        }
+      }
+    });
+    if (updateGameIdWithSeriesId.size > 0) {
+      await updatePlayoffIdForGameIds(updateGameIdWithSeriesId);
+      logger.info("Playoff games series id updated successfully");
+    }
   } else {
     await clearPlayoffData();
     logger.info("No playoff data available, cleared existing collection");

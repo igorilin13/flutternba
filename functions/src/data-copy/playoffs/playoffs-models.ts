@@ -7,6 +7,7 @@ export class PlayoffRound {
 
 export class PlayoffSeries {
   constructor(
+    public id: string,
     public conferenceId: number,
     public homeTeamRank: number,
     public homeTeamId: number,

@@ -4,6 +4,7 @@ import { GameInfoModel, toTeamInfoModel } from "./db-models";
 import { TeamStandings } from "../standings/standings-models";
 import { PlayoffRound } from "../playoffs/playoffs-models";
 import { GameReminder } from "../../reminders/game-reminders";
+import { logger } from "firebase-functions/v1";
 
 const db = getFirestore();
 
@@ -34,6 +35,18 @@ export function saveGames(
     games.forEach((game) => {
       const docRef = db.collection("games").doc(game.id.toString());
       batch.set(docRef, toFirestoreSaveableObject(game));
+    });
+  });
+}
+
+export function updatePlayoffIdForGameIds(
+  map: Map<number, string>,
+): Promise<FirebaseFirestore.WriteResult[]> {
+  return withBatch((batch) => {
+    map.forEach((playoffId, gameId) => {
+      const docRef = db.collection("games").doc(gameId.toString());
+      logger.info(`Updating playoffId for game ${gameId} to ${playoffId}`);
+      batch.update(docRef, { playoffId: playoffId });
     });
   });
 }

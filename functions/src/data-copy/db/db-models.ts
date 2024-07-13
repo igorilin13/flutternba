@@ -31,6 +31,7 @@ export class GameInfoModel {
     public status: number,
     public scheduled: string | null,
     public inGameTime: string | null,
+    public playoffId: string | null = null,
   ) {}
 }
 
