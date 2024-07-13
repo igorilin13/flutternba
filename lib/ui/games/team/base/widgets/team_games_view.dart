@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/games/game_model.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
 import 'package:flutternba/domain/games/game_item.dart';
@@ -10,6 +11,7 @@ import 'package:flutternba/ui/core/components/game_card.dart';
 import 'package:flutternba/ui/core/components/header_item.dart';
 import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/base/base_team_games_cubit.dart';
 import 'package:flutternba/ui/games/team/base/team_games_state.dart';
@@ -76,12 +78,25 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
     return NbaAppBar(
       showBackButton: widget.showBackButton,
       title: standings != null
-          ? NbaHeaderItem(
-              text: standings.fullTeamName,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w500),
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (AppConfig.showTeamLogos)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: NbaTeamLogo.imageOnly(
+                      teamId: standings.id,
+                      size: NbaTeamLogoSize.small,
+                    ),
+                  ),
+                NbaHeaderItem(
+                  text: standings.fullTeamName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                ),
+              ],
             )
           : null,
     );

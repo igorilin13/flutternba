@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/scores/remote/box_score_response.dart';
 import 'package:flutternba/data/teams/team_model.dart';
 import 'package:flutternba/ui/core/components/list_card.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
 
 class GameTeamStats extends StatelessWidget {
@@ -32,23 +34,37 @@ class GameTeamStats extends StatelessWidget {
   }
 
   Widget _buildHeaderRow(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.titleSmall;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Stack(
         children: [
-          Text(homeTeam.abbreviation, style: textStyle),
+          _buildLogoOrName(context, homeTeam),
           Container(
             alignment: Alignment.bottomCenter,
-            child: Text(UiStrings.titleTeamStats, style: textStyle),
+            child: Text(
+              UiStrings.titleTeamStats,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: Text(awayTeam.abbreviation, style: textStyle),
+            child: _buildLogoOrName(context, awayTeam),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildLogoOrName(BuildContext context, Team team) {
+    return AppConfig.showTeamLogos
+        ? NbaTeamLogo.imageOnly(
+            teamId: team.id,
+            size: NbaTeamLogoSize.small,
+          )
+        : Text(
+            team.abbreviation,
+            style: Theme.of(context).textTheme.titleSmall,
+          );
   }
 
   Widget _buildStatRow(BuildContext context, _StatType type) {

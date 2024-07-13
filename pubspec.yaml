@@ -47,6 +47,8 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/team_logos/
+    - assets/images/team_logos/dark/
     - assets/images/illustrations/
 
 flutter_native_splash:

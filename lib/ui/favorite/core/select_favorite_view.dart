@@ -174,6 +174,7 @@ class _SelectFavoriteTeamViewState<T extends BaseSelectFavoriteTeamCubit>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NbaTeamLogo(
+                teamId: team.id,
                 name: team.abbreviation,
                 color: team.color,
                 size: NbaTeamLogoSize.large,

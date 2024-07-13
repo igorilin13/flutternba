@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/standings/standings_model.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/standings/widgets/standings_stat_type.dart';
 import 'package:flutternba/ui/standings/widgets/standings_value_cell.dart';
 
@@ -26,6 +28,14 @@ class StandingsRow extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
+        if (AppConfig.showTeamLogos)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: NbaTeamLogo.imageOnly(
+              teamId: team.id,
+              size: NbaTeamLogoSize.xSmall,
+            ),
+          ),
         Expanded(
           child: Text(
             team.teamName,

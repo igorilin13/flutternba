@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/data/standings/playoffs/playoff_models.dart';
+import 'package:flutternba/ui/core/components/team_logo.dart';
 
 class PlayoffSeriesCard extends StatelessWidget {
   final PlayoffSeries series;
@@ -63,6 +65,14 @@ class PlayoffSeriesCard extends StatelessWidget {
               style: theme.textTheme.bodyMedium,
             ),
           ),
+          if (AppConfig.showTeamLogos)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: NbaTeamLogo.imageOnly(
+                teamId: id,
+                size: NbaTeamLogoSize.xSmall,
+              ),
+            ),
           Text(
             name,
             style: theme.textTheme.bodyLarge?.copyWith(

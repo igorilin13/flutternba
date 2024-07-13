@@ -108,6 +108,7 @@ class NbaGameCard extends StatelessWidget {
       crossAxisAlignment: alignment,
       children: [
         NbaTeamLogo(
+          teamId: team.id,
           name: team.abbreviation,
           color: team.color,
           size: NbaTeamLogoSize.medium,
