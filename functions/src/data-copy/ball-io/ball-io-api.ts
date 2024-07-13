@@ -9,6 +9,7 @@ import {
   PlayerGameStatsResponse,
   TeamResponse,
 } from "./ball-io-responses";
+import { formatAsDateOnly } from "../../utils/dates";
 
 const apiUrl = defineString("BALLIO_API_URL");
 
@@ -21,13 +22,9 @@ export function getTeams(
 export function getTodayLeagueGames(
   apiKey: SecretParam,
 ): Promise<AxiosResponse<ApiResponse<Array<GameResponse>>>> {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-  const date = `${year}-${month}-${day}`;
+  const date = formatAsDateOnly(new Date());
 
-  return performGetRequest(apiKey, `games?per_page=100dates[]=${date}`);
+  return performGetRequest(apiKey, `games?per_page=100&dates[]=${date}`);
 }
 
 export function getSeasonLeagueGames(

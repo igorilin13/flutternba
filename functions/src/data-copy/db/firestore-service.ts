@@ -1,8 +1,9 @@
 import { getFirestore } from "firebase-admin/firestore";
-import { GameResponse, TeamResponse } from "../ball-io/ball-io-responses";
-import { GameInfoModel, toGameInfoModel, toTeamInfoModel } from "./db-models";
+import { TeamResponse } from "../ball-io/ball-io-responses";
+import { GameInfoModel, toTeamInfoModel } from "./db-models";
 import { TeamStandings } from "../standings/standings-models";
 import { PlayoffRound } from "../playoffs/playoffs-models";
+import { GameReminder } from "../../reminders/game-reminders";
 
 const db = getFirestore();
 
@@ -27,12 +28,12 @@ export async function clearAllGames() {
 }
 
 export function saveGames(
-  games: GameResponse[],
+  games: GameInfoModel[],
 ): Promise<FirebaseFirestore.WriteResult[]> {
   return withBatch((batch) => {
     games.forEach((game) => {
       const docRef = db.collection("games").doc(game.id.toString());
-      batch.set(docRef, toFirestoreSaveableObject(toGameInfoModel(game)));
+      batch.set(docRef, toFirestoreSaveableObject(game));
     });
   });
 }
@@ -83,6 +84,43 @@ export async function clearPlayoffData() {
   return withBatch((batch) => {
     docs.forEach((doc) => {
       batch.delete(doc);
+    });
+  });
+}
+
+export async function getPendingRemindersDate(): Promise<string | undefined> {
+  const doc = await db.doc("reminders/info").get();
+  return doc.data()?.date;
+}
+
+export async function setPendingReminders(
+  date: string,
+  remindersByTeamId: { [key: number]: GameReminder },
+) {
+  return withBatch((batch) => {
+    batch.set(db.doc("reminders/info"), { date });
+    Object.entries(remindersByTeamId).forEach(([teamId, reminder]) => {
+      const docRef = db.collection("reminders").doc(teamId.toString());
+      batch.set(docRef, toFirestoreSaveableObject(reminder));
+    });
+  });
+}
+
+export async function getDueReminders(
+  time: number,
+): Promise<[string, GameReminder][]> {
+  const result = await db
+    .collection("reminders")
+    .where("due", "<=", time)
+    .get();
+  return result.docs.map((doc) => [doc.id, doc.data() as GameReminder]);
+}
+
+export async function removeReminders(teamIds: string[]) {
+  return withBatch((batch) => {
+    teamIds.forEach((teamId) => {
+      const docRef = db.collection("reminders").doc(teamId.toString());
+      batch.delete(docRef);
     });
   });
 }

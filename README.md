@@ -9,6 +9,7 @@ Features:
 - Box scores
 - Favorite team selection
 - Hide scores mode
+- Game reminders
 
 See video demo on [Youtube](https://youtu.be/NdkIE5Gyf6U)
 

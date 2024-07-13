@@ -23,25 +23,43 @@ import {
 import { getStandings } from "./standings/espn-standings-api";
 import { calculatePlayoffRounds } from "./playoffs/playoffs";
 import { TeamStandings } from "./standings/standings-models";
+import {
+  sendDueReminders,
+  updatePendingReminders,
+} from "../reminders/game-reminders";
+import { GameInfoModel, toGameInfoModel } from "./db/db-models";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 
 export const startOfSeasonUpdate = onSchedule(
   { secrets: [apiKey], schedule: "0 6 1 10 *" },
   async () => {
-    await updateTeamInfos();
-    await updateAllGames();
-    await clearPlayoffData();
+    await Promise.all([
+      updateTeamInfos(),
+      updateAllGames(),
+      clearPlayoffData(),
+    ]);
   },
 );
 
 export const hourlyUpdate = onSchedule({ schedule: "0 * * * *" }, async () => {
-  await updateTodayGames();
+  const todayGames = await updateTodayGames();
+  if (todayGames) {
+    await updatePendingReminders(todayGames);
+  }
+
   const teamStandings = await updateStandings();
   if (teamStandings) {
     updatePlayoffData(teamStandings);
   }
 });
+
+export const remindersJob = onSchedule(
+  { schedule: "*/15 * * * *" },
+  async () => {
+    await sendDueReminders();
+  },
+);
 
 async function updateTeamInfos() {
   try {
@@ -63,7 +81,7 @@ async function updateAllGames() {
     await clearAllGames();
     logger.info("All games cleared");
 
-    const result: GameResponse[] = [];
+    const result: GameInfoModel[] = [];
     let currentCursor: number | null = null;
     let loadedAllPages = false;
 
@@ -75,7 +93,11 @@ async function updateAllGames() {
         `Loaded ${response.data.length} games for cursor ${currentCursor}`,
       );
 
-      result.push(...response.data);
+      result.push(
+        ...response.data.map((response: GameResponse) =>
+          toGameInfoModel(response),
+        ),
+      );
 
       currentCursor = response.meta.next_cursor;
       loadedAllPages = !currentCursor;
@@ -88,13 +110,18 @@ async function updateAllGames() {
   }
 }
 
-async function updateTodayGames() {
+async function updateTodayGames(): Promise<GameInfoModel[] | undefined> {
   try {
     const response = (await getTodayLeagueGames(apiKey)).data;
-    await saveGames(response.data);
-    logger.info("Today's games loaded successfully");
+    const games = response.data.map((response: GameResponse) =>
+      toGameInfoModel(response),
+    );
+    await saveGames(games);
+    logger.info("Today's games loaded successfully", games.length);
+    return games;
   } catch (error) {
     logger.error("Error loading today games", error);
+    return undefined;
   }
 }
 
