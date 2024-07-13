@@ -22,6 +22,7 @@ Map<String, dynamic> _$$PlayoffRoundImplToJson(_$PlayoffRoundImpl instance) =>
 
 _$PlayoffSeriesImpl _$$PlayoffSeriesImplFromJson(Map<String, dynamic> json) =>
     _$PlayoffSeriesImpl(
+      id: json['id'] as String,
       conferenceId: (json['conferenceId'] as num).toInt(),
       homeTeamRank: (json['homeTeamRank'] as num).toInt(),
       homeTeamId: (json['homeTeamId'] as num).toInt(),
@@ -35,6 +36,7 @@ _$PlayoffSeriesImpl _$$PlayoffSeriesImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$PlayoffSeriesImplToJson(_$PlayoffSeriesImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'conferenceId': instance.conferenceId,
       'homeTeamRank': instance.homeTeamRank,
       'homeTeamId': instance.homeTeamId,

@@ -9,6 +9,7 @@ import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
 import 'package:flutternba/ui/core/strings.dart';
 import 'package:flutternba/ui/games/team/team_games_screen.dart';
+import 'package:flutternba/ui/playoffs/playoff_series_screen.dart';
 import 'package:flutternba/ui/standings/standings_cubit.dart';
 import 'package:flutternba/ui/standings/widgets/playoff_series_card.dart';
 import 'package:flutternba/ui/standings/widgets/standings_header_row.dart';
@@ -141,7 +142,11 @@ class _StandingsScreenState extends State<StandingsScreen>
             child: PlayoffSeriesCard(
               series: series,
               favoriteTeamId: state.favoriteTeamId,
-              onTeamTap: (id) => TeamGamesScreen.navigate(context, id),
+              onTap: () => PlayoffSeriesScreen.navigate(
+                context,
+                round.id,
+                series.id,
+              ),
             ),
           ),
       ],

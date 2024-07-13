@@ -24,6 +24,12 @@ class AppFirebaseDb {
         .where("leagueDate", isEqualTo: formattedDate);
   }
 
+  Query<Map<String, dynamic>> getPlayoffSeriesGames(String seriesId) {
+    return _firestore
+        .collection("games")
+        .where("playoffId", isEqualTo: seriesId);
+  }
+
   Query<Map<String, dynamic>> getLiveOrScheduledTeamGames(
     int teamId,
     int? limit,

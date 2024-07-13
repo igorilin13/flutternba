@@ -34,4 +34,10 @@ class GamesRepository {
         .getLeagueGames(date)
         .getResult((doc) => Game.fromJson(doc.data()));
   }
+
+  Future<Result<List<Game>>> getPlayoffSeriesGames(String seriesId) {
+    return _db
+        .getPlayoffSeriesGames(seriesId)
+        .getResult((doc) => Game.fromJson(doc.data()), throwIfEmpty: true);
+  }
 }

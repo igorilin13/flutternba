@@ -182,6 +182,7 @@ PlayoffSeries _$PlayoffSeriesFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PlayoffSeries {
+  String get id => throw _privateConstructorUsedError;
   int get conferenceId => throw _privateConstructorUsedError;
   int get homeTeamRank => throw _privateConstructorUsedError;
   int get homeTeamId => throw _privateConstructorUsedError;
@@ -205,7 +206,8 @@ abstract class $PlayoffSeriesCopyWith<$Res> {
       _$PlayoffSeriesCopyWithImpl<$Res, PlayoffSeries>;
   @useResult
   $Res call(
-      {int conferenceId,
+      {String id,
+      int conferenceId,
       int homeTeamRank,
       int homeTeamId,
       String homeTeamName,
@@ -229,6 +231,7 @@ class _$PlayoffSeriesCopyWithImpl<$Res, $Val extends PlayoffSeries>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? conferenceId = null,
     Object? homeTeamRank = null,
     Object? homeTeamId = null,
@@ -240,6 +243,10 @@ class _$PlayoffSeriesCopyWithImpl<$Res, $Val extends PlayoffSeries>
     Object? awayTeamWins = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       conferenceId: null == conferenceId
           ? _value.conferenceId
           : conferenceId // ignore: cast_nullable_to_non_nullable
@@ -289,7 +296,8 @@ abstract class _$$PlayoffSeriesImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int conferenceId,
+      {String id,
+      int conferenceId,
       int homeTeamRank,
       int homeTeamId,
       String homeTeamName,
@@ -311,6 +319,7 @@ class __$$PlayoffSeriesImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? conferenceId = null,
     Object? homeTeamRank = null,
     Object? homeTeamId = null,
@@ -322,6 +331,10 @@ class __$$PlayoffSeriesImplCopyWithImpl<$Res>
     Object? awayTeamWins = null,
   }) {
     return _then(_$PlayoffSeriesImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       conferenceId: null == conferenceId
           ? _value.conferenceId
           : conferenceId // ignore: cast_nullable_to_non_nullable
@@ -366,7 +379,8 @@ class __$$PlayoffSeriesImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PlayoffSeriesImpl implements _PlayoffSeries {
   const _$PlayoffSeriesImpl(
-      {required this.conferenceId,
+      {required this.id,
+      required this.conferenceId,
       required this.homeTeamRank,
       required this.homeTeamId,
       required this.homeTeamName,
@@ -379,6 +393,8 @@ class _$PlayoffSeriesImpl implements _PlayoffSeries {
   factory _$PlayoffSeriesImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlayoffSeriesImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final int conferenceId;
   @override
@@ -400,7 +416,7 @@ class _$PlayoffSeriesImpl implements _PlayoffSeries {
 
   @override
   String toString() {
-    return 'PlayoffSeries(conferenceId: $conferenceId, homeTeamRank: $homeTeamRank, homeTeamId: $homeTeamId, homeTeamName: $homeTeamName, homeTeamWins: $homeTeamWins, awayTeamRank: $awayTeamRank, awayTeamId: $awayTeamId, awayTeamName: $awayTeamName, awayTeamWins: $awayTeamWins)';
+    return 'PlayoffSeries(id: $id, conferenceId: $conferenceId, homeTeamRank: $homeTeamRank, homeTeamId: $homeTeamId, homeTeamName: $homeTeamName, homeTeamWins: $homeTeamWins, awayTeamRank: $awayTeamRank, awayTeamId: $awayTeamId, awayTeamName: $awayTeamName, awayTeamWins: $awayTeamWins)';
   }
 
   @override
@@ -408,6 +424,7 @@ class _$PlayoffSeriesImpl implements _PlayoffSeries {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PlayoffSeriesImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.conferenceId, conferenceId) ||
                 other.conferenceId == conferenceId) &&
             (identical(other.homeTeamRank, homeTeamRank) ||
@@ -432,6 +449,7 @@ class _$PlayoffSeriesImpl implements _PlayoffSeries {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       conferenceId,
       homeTeamRank,
       homeTeamId,
@@ -458,7 +476,8 @@ class _$PlayoffSeriesImpl implements _PlayoffSeries {
 
 abstract class _PlayoffSeries implements PlayoffSeries {
   const factory _PlayoffSeries(
-      {required final int conferenceId,
+      {required final String id,
+      required final int conferenceId,
       required final int homeTeamRank,
       required final int homeTeamId,
       required final String homeTeamName,
@@ -471,6 +490,8 @@ abstract class _PlayoffSeries implements PlayoffSeries {
   factory _PlayoffSeries.fromJson(Map<String, dynamic> json) =
       _$PlayoffSeriesImpl.fromJson;
 
+  @override
+  String get id;
   @override
   int get conferenceId;
   @override

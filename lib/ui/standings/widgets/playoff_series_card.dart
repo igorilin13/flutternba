@@ -6,39 +6,44 @@ import 'package:flutternba/ui/core/components/team_logo.dart';
 class PlayoffSeriesCard extends StatelessWidget {
   final PlayoffSeries series;
   final int? favoriteTeamId;
-  final void Function(int teamId) onTeamTap;
+  final VoidCallback onTap;
 
   const PlayoffSeriesCard({
     super.key,
     required this.series,
-    required this.onTeamTap,
+    required this.onTap,
     this.favoriteTeamId,
   });
 
   @override
   Widget build(BuildContext context) {
+    final borderRadius = BorderRadius.circular(8);
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          children: [
-            buildTeamRow(
-              context,
-              id: series.homeTeamId,
-              rank: series.homeTeamRank,
-              name: series.homeTeamName,
-              wins: series.homeTeamWins,
-            ),
-            const SizedBox(height: 4),
-            buildTeamRow(
-              context,
-              id: series.awayTeamId,
-              rank: series.awayTeamRank,
-              name: series.awayTeamName,
-              wins: series.awayTeamWins,
-            ),
-          ],
+      shape: RoundedRectangleBorder(borderRadius: borderRadius),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: borderRadius,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Column(
+            children: [
+              buildTeamRow(
+                context,
+                id: series.homeTeamId,
+                rank: series.homeTeamRank,
+                name: series.homeTeamName,
+                wins: series.homeTeamWins,
+              ),
+              const SizedBox(height: 4),
+              buildTeamRow(
+                context,
+                id: series.awayTeamId,
+                rank: series.awayTeamRank,
+                name: series.awayTeamName,
+                wins: series.awayTeamWins,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -54,38 +59,35 @@ class PlayoffSeriesCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isHighlighted = id == favoriteTeamId;
 
-    return InkWell(
-      onTap: () => onTeamTap(id),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 16,
-            child: Text(
-              rank.toString(),
-              style: theme.textTheme.bodyMedium,
+    return Row(
+      children: [
+        SizedBox(
+          width: 16,
+          child: Text(
+            rank.toString(),
+            style: theme.textTheme.bodyMedium,
+          ),
+        ),
+        if (AppConfig.showTeamLogos)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: NbaTeamLogo.imageOnly(
+              teamId: id,
+              size: NbaTeamLogoSize.xSmall,
             ),
           ),
-          if (AppConfig.showTeamLogos)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: NbaTeamLogo.imageOnly(
-                teamId: id,
-                size: NbaTeamLogoSize.xSmall,
-              ),
-            ),
-          Text(
-            name,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-            ),
+        Text(
+          name,
+          style: theme.textTheme.bodyLarge?.copyWith(
+            fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
           ),
-          const Spacer(),
-          Text(
-            wins.toString(),
-            style: theme.textTheme.headlineSmall,
-          ),
-        ],
-      ),
+        ),
+        const Spacer(),
+        Text(
+          wins.toString(),
+          style: theme.textTheme.headlineSmall,
+        ),
+      ],
     );
   }
 }

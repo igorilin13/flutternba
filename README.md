@@ -4,6 +4,7 @@ Features:
 
 - Regular season standings (conference/division)
 - Playoff bracket
+- Playoff series overview
 - Team schedules & scores
 - League schedules & scores on a selected day
 - Box scores

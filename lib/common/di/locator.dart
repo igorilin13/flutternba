@@ -17,6 +17,7 @@ import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/domain/date/game_time_formatter.dart';
 import 'package:flutternba/domain/date/get_league_dates.dart';
 import 'package:flutternba/domain/games/league/get_league_games.dart';
+import 'package:flutternba/domain/games/playoffs/get_playoff_series.dart';
 import 'package:flutternba/domain/games/team/team_games_use_case.dart';
 import 'package:flutternba/domain/standings/standings_use_case.dart';
 import 'package:get_it/get_it.dart';
@@ -55,6 +56,9 @@ Future<void> initLocator() async {
   locator.registerFactory(() => GetLeagueDatesUseCase());
   locator.registerFactory(
     () => GetLeagueGamesUseCase(locator(), locator(), locator()),
+  );
+  locator.registerFactory(
+    () => GetPlayoffSeriesUseCase(locator(), locator(), locator()),
   );
   locator.registerFactory(
     () => TeamGamesUseCase(locator(), locator(), locator()),

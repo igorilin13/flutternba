@@ -17,6 +17,7 @@ class PlayoffRound with _$PlayoffRound {
 @freezed
 class PlayoffSeries with _$PlayoffSeries {
   const factory PlayoffSeries({
+    required String id,
     required int conferenceId,
     required int homeTeamRank,
     required int homeTeamId,

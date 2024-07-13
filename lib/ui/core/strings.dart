@@ -12,6 +12,8 @@ class UiStrings {
   static const String genericErrorTitle = "Something went wrong";
   static const String teamListLoadError = "Error loading teams.";
   static const String gameListLoadError = "Error loading games.";
+  static const String playoffSeriesLoadError =
+      "Error loading games for this series.";
   static const String upcomingGamesLoadError = "Error loading upcoming games";
   static const String previousGamesLoadError = "Error loading previous games";
   static const String noLeagueGamesMessage = "There are no games on this day.";
@@ -128,5 +130,33 @@ class UiStrings {
     }
   }
 
+  static String playoffRoundNameShort(int id) {
+    switch (id) {
+      case 0:
+        return "First Round";
+      case 1:
+        return "Conf. Semis";
+      case 2:
+        return "Conf. Finals";
+      case 3:
+        return "NBA Finals";
+      default:
+        throw ArgumentError.value(id, "id", "Invalid playoff round id");
+    }
+  }
+
   static String matchupTitle(String team1, String team2) => "$team1 vs $team2";
+
+  static String playoffGameTitle(int gameNumber) => "Game $gameNumber";
+
+  static String playoffSeriesTied(int wins) => "Series tied $wins-$wins";
+
+  static String playoffSeriesLeader(
+    String winnerName,
+    int wins,
+    int losses,
+    bool isFinished,
+  ) {
+    return "$winnerName ${isFinished ? "wins" : "leads"} $wins-$losses";
+  }
 }
