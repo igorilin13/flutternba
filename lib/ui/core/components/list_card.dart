@@ -29,7 +29,7 @@ class NbaListCardTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       child: Ink(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
