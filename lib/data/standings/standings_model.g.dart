@@ -8,9 +8,7 @@ part of 'standings_model.dart';
 
 _$TeamStandingsImpl _$$TeamStandingsImplFromJson(Map<String, dynamic> json) =>
     _$TeamStandingsImpl(
-      id: (json['id'] as num).toInt(),
-      teamName: json['teamName'] as String,
-      fullTeamName: json['fullTeamName'] as String,
+      team: Team.fromJson(json['team'] as Map<String, dynamic>),
       conference: TeamRank.fromJson(json['conference'] as Map<String, dynamic>),
       division: TeamRank.fromJson(json['division'] as Map<String, dynamic>),
       overall: WinLossRecord.fromJson(json['overall'] as Map<String, dynamic>),
@@ -23,9 +21,7 @@ _$TeamStandingsImpl _$$TeamStandingsImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$TeamStandingsImplToJson(_$TeamStandingsImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'teamName': instance.teamName,
-      'fullTeamName': instance.fullTeamName,
+      'team': instance.team,
       'conference': instance.conference,
       'division': instance.division,
       'overall': instance.overall,

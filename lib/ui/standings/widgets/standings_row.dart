@@ -6,13 +6,13 @@ import 'package:flutternba/ui/standings/widgets/standings_stat_type.dart';
 import 'package:flutternba/ui/standings/widgets/standings_value_cell.dart';
 
 class StandingsRow extends StatelessWidget {
-  final TeamStandings team;
+  final TeamStandings item;
   final TeamRank rank;
   final bool isHighlighted;
 
   const StandingsRow({
     super.key,
-    required this.team,
+    required this.item,
     required this.rank,
     required this.isHighlighted,
   });
@@ -32,13 +32,13 @@ class StandingsRow extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: NbaTeamLogo.imageOnly(
-              teamId: team.id,
+              teamId: item.id,
               size: NbaTeamLogoSize.xSmall,
             ),
           ),
         Expanded(
           child: Text(
-            team.teamName,
+            item.team.name,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight:
                       isHighlighted ? FontWeight.bold : FontWeight.normal,
@@ -48,7 +48,7 @@ class StandingsRow extends StatelessWidget {
         ),
         ...StandingsStatType.values.map((type) {
           return StandingsValueCell(
-            text: type.getValue(team.overall, rank.gamesBehind),
+            text: type.getValue(item.overall, rank.gamesBehind),
           );
         }),
       ],

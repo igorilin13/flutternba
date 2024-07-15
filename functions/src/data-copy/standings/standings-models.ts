@@ -1,8 +1,8 @@
+import { TeamInfoModel } from "../db/db-models";
+
 export class TeamStandings {
   constructor(
-    public id: number,
-    public teamName: string,
-    public fullTeamName: string,
+    public team: TeamInfoModel,
     public conference: TeamRank,
     public division: TeamRank,
     public overall: WinLossRecord,
@@ -11,6 +11,8 @@ export class TeamStandings {
     public lastTen: WinLossRecord,
     public streak: number,
     public isWinStreak: boolean,
+    public points: number,
+    public pointsAgainst: number,
   ) {}
 }
 

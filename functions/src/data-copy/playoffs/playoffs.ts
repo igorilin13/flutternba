@@ -15,7 +15,7 @@ export function calculatePlayoffRounds(
 ): [PlayoffRound[], Map<number, string>] {
   const conferenceRankByTeamId = teamStandings.reduce(
     (map, item) => {
-      map[item.id] = item.conference;
+      map[item.team.id] = item.conference;
       return map;
     },
     {} as Record<number, TeamRank>,

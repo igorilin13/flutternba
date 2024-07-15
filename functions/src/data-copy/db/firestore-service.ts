@@ -1,10 +1,11 @@
 import { getFirestore } from "firebase-admin/firestore";
 import { TeamResponse } from "../ball-io/ball-io-responses";
-import { GameInfoModel, toTeamInfoModel } from "./db-models";
+import { GameInfoModel, TeamInfoModel, toTeamInfoModel } from "./db-models";
 import { TeamStandings } from "../standings/standings-models";
 import { PlayoffRound } from "../playoffs/playoffs-models";
 import { GameReminder } from "../../reminders/game-reminders";
 import { logger } from "firebase-functions/v1";
+import { TeamSeasonStats } from "../team-avg/team-avg";
 
 const db = getFirestore();
 
@@ -17,6 +18,11 @@ export function saveTeamInfos(
       batch.set(docRef, toFirestoreSaveableObject(toTeamInfoModel(team)));
     });
   });
+}
+
+export async function getTeamInfos(): Promise<TeamInfoModel[]> {
+  const snapshot = await db.collection("teams").get();
+  return snapshot.docs.map((doc) => doc.data() as TeamInfoModel);
 }
 
 export async function clearAllGames() {
@@ -63,9 +69,9 @@ export async function saveTeamStandings(
   teams: TeamStandings[],
 ): Promise<FirebaseFirestore.WriteResult[]> {
   return withBatch((batch) => {
-    teams.forEach((team) => {
-      const docRef = db.collection("standings").doc(team.id.toString());
-      batch.set(docRef, toFirestoreSaveableObject(team));
+    teams.forEach((item) => {
+      const docRef = db.collection("standings").doc(item.team.id.toString());
+      batch.set(docRef, toFirestoreSaveableObject(item));
     });
   });
 }
@@ -134,6 +140,15 @@ export async function removeReminders(teamIds: string[]) {
     teamIds.forEach((teamId) => {
       const docRef = db.collection("reminders").doc(teamId.toString());
       batch.delete(docRef);
+    });
+  });
+}
+
+export async function saveTeamSeasonStats(teams: TeamSeasonStats[]) {
+  return withBatch((batch) => {
+    teams.forEach((team) => {
+      const docRef = db.collection("teamStats").doc(team.team.id.toString());
+      batch.set(docRef, toFirestoreSaveableObject(team));
     });
   });
 }

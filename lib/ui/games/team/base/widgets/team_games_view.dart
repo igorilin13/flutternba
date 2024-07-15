@@ -90,7 +90,7 @@ class _TeamGamesViewState<T extends BaseTeamGamesCubit>
                     ),
                   ),
                 NbaHeaderItem(
-                  text: standings.fullTeamName,
+                  text: standings.team.fullName,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium

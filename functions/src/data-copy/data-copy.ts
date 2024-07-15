@@ -18,10 +18,11 @@ import {
   saveGames,
   savePlayoffRounds,
   saveTeamInfos,
+  saveTeamSeasonStats,
   saveTeamStandings,
   updatePlayoffIdForGameIds,
 } from "./db/firestore-service";
-import { getStandings } from "./standings/espn-standings-api";
+import { getStandings } from "./standings/standings-api";
 import { calculatePlayoffRounds } from "./playoffs/playoffs";
 import { TeamStandings } from "./standings/standings-models";
 import {
@@ -29,6 +30,7 @@ import {
   updatePendingReminders,
 } from "../reminders/game-reminders";
 import { GameInfoModel, toGameInfoModel } from "./db/db-models";
+import { loadTeamAverages } from "./team-avg/team-avg";
 
 const apiKey = defineSecret("BALLIO_API_KEY");
 
@@ -44,15 +46,21 @@ export const startOfSeasonUpdate = onSchedule(
 );
 
 export const hourlyUpdate = onSchedule({ schedule: "0 * * * *" }, async () => {
-  const todayGames = await updateTodayGames();
-  if (todayGames) {
-    await updatePendingReminders(todayGames);
-  }
-
-  const teamStandings = await updateStandings();
-  if (teamStandings) {
-    await updatePlayoffData(teamStandings);
-  }
+  await Promise.all([
+    (async () => {
+      const todayGames = await updateTodayGames();
+      if (todayGames) {
+        await updatePendingReminders(todayGames);
+      }
+    })(),
+    (async () => {
+      const teamStandings = await updateStandings();
+      if (teamStandings) {
+        await updatePlayoffData(teamStandings);
+        await updateSeasonTeamStats(teamStandings);
+      }
+    })(),
+  ]);
 });
 
 export const remindersJob = onSchedule(
@@ -164,5 +172,15 @@ async function updatePlayoffData(teamStandings: TeamStandings[]) {
   } else {
     await clearPlayoffData();
     logger.info("No playoff data available, cleared existing collection");
+  }
+}
+
+async function updateSeasonTeamStats(teamStandings: TeamStandings[]) {
+  try {
+    const teamStats = await loadTeamAverages(teamStandings);
+    await saveTeamSeasonStats(teamStats);
+    logger.info("Team stats loaded and saved");
+  } catch (e) {
+    logger.error("Error loading team stats", e);
   }
 }

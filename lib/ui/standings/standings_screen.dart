@@ -97,7 +97,7 @@ class _StandingsScreenState extends State<StandingsScreen>
                 NbaListCardTile(
                   onTap: () => TeamGamesScreen.navigate(context, team.id),
                   child: StandingsRow(
-                    team: team,
+                    item: team,
                     rank: state.selectedType == StandingsType.conference
                         ? team.conference
                         : team.division,

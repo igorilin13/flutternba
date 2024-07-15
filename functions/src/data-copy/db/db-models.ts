@@ -66,7 +66,7 @@ export function toTeamInfoModel(team: TeamResponse) {
   return new TeamInfoModel(
     team.id,
     team.name,
-    team.full_name,
+    team.name.includes("Clippers") ? "Los Angeles Clippers" : team.full_name,
     team.abbreviation,
     color,
   );

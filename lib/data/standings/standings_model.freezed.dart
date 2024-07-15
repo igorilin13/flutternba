@@ -20,9 +20,7 @@ TeamStandings _$TeamStandingsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TeamStandings {
-  int get id => throw _privateConstructorUsedError;
-  String get teamName => throw _privateConstructorUsedError;
-  String get fullTeamName => throw _privateConstructorUsedError;
+  Team get team => throw _privateConstructorUsedError;
   TeamRank get conference => throw _privateConstructorUsedError;
   TeamRank get division => throw _privateConstructorUsedError;
   WinLossRecord get overall => throw _privateConstructorUsedError;
@@ -45,9 +43,7 @@ abstract class $TeamStandingsCopyWith<$Res> {
       _$TeamStandingsCopyWithImpl<$Res, TeamStandings>;
   @useResult
   $Res call(
-      {int id,
-      String teamName,
-      String fullTeamName,
+      {Team team,
       TeamRank conference,
       TeamRank division,
       WinLossRecord overall,
@@ -57,6 +53,7 @@ abstract class $TeamStandingsCopyWith<$Res> {
       int streak,
       bool isWinStreak});
 
+  $TeamCopyWith<$Res> get team;
   $TeamRankCopyWith<$Res> get conference;
   $TeamRankCopyWith<$Res> get division;
   $WinLossRecordCopyWith<$Res> get overall;
@@ -78,9 +75,7 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? teamName = null,
-    Object? fullTeamName = null,
+    Object? team = null,
     Object? conference = null,
     Object? division = null,
     Object? overall = null,
@@ -91,18 +86,10 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
     Object? isWinStreak = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      teamName: null == teamName
-          ? _value.teamName
-          : teamName // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullTeamName: null == fullTeamName
-          ? _value.fullTeamName
-          : fullTeamName // ignore: cast_nullable_to_non_nullable
-              as String,
+      team: null == team
+          ? _value.team
+          : team // ignore: cast_nullable_to_non_nullable
+              as Team,
       conference: null == conference
           ? _value.conference
           : conference // ignore: cast_nullable_to_non_nullable
@@ -136,6 +123,14 @@ class _$TeamStandingsCopyWithImpl<$Res, $Val extends TeamStandings>
           : isWinStreak // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TeamCopyWith<$Res> get team {
+    return $TeamCopyWith<$Res>(_value.team, (value) {
+      return _then(_value.copyWith(team: value) as $Val);
+    });
   }
 
   @override
@@ -196,9 +191,7 @@ abstract class _$$TeamStandingsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      String teamName,
-      String fullTeamName,
+      {Team team,
       TeamRank conference,
       TeamRank division,
       WinLossRecord overall,
@@ -208,6 +201,8 @@ abstract class _$$TeamStandingsImplCopyWith<$Res>
       int streak,
       bool isWinStreak});
 
+  @override
+  $TeamCopyWith<$Res> get team;
   @override
   $TeamRankCopyWith<$Res> get conference;
   @override
@@ -233,9 +228,7 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? teamName = null,
-    Object? fullTeamName = null,
+    Object? team = null,
     Object? conference = null,
     Object? division = null,
     Object? overall = null,
@@ -246,18 +239,10 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
     Object? isWinStreak = null,
   }) {
     return _then(_$TeamStandingsImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      teamName: null == teamName
-          ? _value.teamName
-          : teamName // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullTeamName: null == fullTeamName
-          ? _value.fullTeamName
-          : fullTeamName // ignore: cast_nullable_to_non_nullable
-              as String,
+      team: null == team
+          ? _value.team
+          : team // ignore: cast_nullable_to_non_nullable
+              as Team,
       conference: null == conference
           ? _value.conference
           : conference // ignore: cast_nullable_to_non_nullable
@@ -296,11 +281,9 @@ class __$$TeamStandingsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TeamStandingsImpl implements _TeamStandings {
+class _$TeamStandingsImpl extends _TeamStandings {
   const _$TeamStandingsImpl(
-      {required this.id,
-      required this.teamName,
-      required this.fullTeamName,
+      {required this.team,
       required this.conference,
       required this.division,
       required this.overall,
@@ -308,17 +291,14 @@ class _$TeamStandingsImpl implements _TeamStandings {
       required this.away,
       required this.lastTen,
       required this.streak,
-      required this.isWinStreak});
+      required this.isWinStreak})
+      : super._();
 
   factory _$TeamStandingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamStandingsImplFromJson(json);
 
   @override
-  final int id;
-  @override
-  final String teamName;
-  @override
-  final String fullTeamName;
+  final Team team;
   @override
   final TeamRank conference;
   @override
@@ -338,7 +318,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
 
   @override
   String toString() {
-    return 'TeamStandings(id: $id, teamName: $teamName, fullTeamName: $fullTeamName, conference: $conference, division: $division, overall: $overall, home: $home, away: $away, lastTen: $lastTen, streak: $streak, isWinStreak: $isWinStreak)';
+    return 'TeamStandings(team: $team, conference: $conference, division: $division, overall: $overall, home: $home, away: $away, lastTen: $lastTen, streak: $streak, isWinStreak: $isWinStreak)';
   }
 
   @override
@@ -346,11 +326,7 @@ class _$TeamStandingsImpl implements _TeamStandings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TeamStandingsImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.teamName, teamName) ||
-                other.teamName == teamName) &&
-            (identical(other.fullTeamName, fullTeamName) ||
-                other.fullTeamName == fullTeamName) &&
+            (identical(other.team, team) || other.team == team) &&
             (identical(other.conference, conference) ||
                 other.conference == conference) &&
             (identical(other.division, division) ||
@@ -366,8 +342,8 @@ class _$TeamStandingsImpl implements _TeamStandings {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, teamName, fullTeamName,
-      conference, division, overall, home, away, lastTen, streak, isWinStreak);
+  int get hashCode => Object.hash(runtimeType, team, conference, division,
+      overall, home, away, lastTen, streak, isWinStreak);
 
   @JsonKey(ignore: true)
   @override
@@ -383,11 +359,9 @@ class _$TeamStandingsImpl implements _TeamStandings {
   }
 }
 
-abstract class _TeamStandings implements TeamStandings {
+abstract class _TeamStandings extends TeamStandings {
   const factory _TeamStandings(
-      {required final int id,
-      required final String teamName,
-      required final String fullTeamName,
+      {required final Team team,
       required final TeamRank conference,
       required final TeamRank division,
       required final WinLossRecord overall,
@@ -396,16 +370,13 @@ abstract class _TeamStandings implements TeamStandings {
       required final WinLossRecord lastTen,
       required final int streak,
       required final bool isWinStreak}) = _$TeamStandingsImpl;
+  const _TeamStandings._() : super._();
 
   factory _TeamStandings.fromJson(Map<String, dynamic> json) =
       _$TeamStandingsImpl.fromJson;
 
   @override
-  int get id;
-  @override
-  String get teamName;
-  @override
-  String get fullTeamName;
+  Team get team;
   @override
   TeamRank get conference;
   @override

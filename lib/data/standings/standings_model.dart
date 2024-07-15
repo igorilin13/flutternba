@@ -1,3 +1,4 @@
+import 'package:flutternba/data/teams/team_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'standings_model.freezed.dart';
@@ -5,10 +6,10 @@ part 'standings_model.g.dart';
 
 @freezed
 class TeamStandings with _$TeamStandings {
+  const TeamStandings._();
+
   const factory TeamStandings({
-    required int id,
-    required String teamName,
-    required String fullTeamName,
+    required Team team,
     required TeamRank conference,
     required TeamRank division,
     required WinLossRecord overall,
@@ -18,6 +19,8 @@ class TeamStandings with _$TeamStandings {
     required int streak,
     required bool isWinStreak,
   }) = _TeamStandings;
+
+  int get id => team.id;
 
   factory TeamStandings.fromJson(Map<String, dynamic> json) =>
       _$TeamStandingsFromJson(json);

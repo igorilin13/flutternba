@@ -1,18 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { TeamRank, TeamStandings, WinLossRecord } from "./standings-models";
+import { defineString } from "firebase-functions/params";
+import { getTeamInfos } from "../db/firestore-service";
+import { associateBy } from "../../utils/collections";
+import { TeamInfoModel } from "../db/db-models";
+
+const apiUrl = defineString("STANDINGS_API_URL");
 
 export async function getStandings(): Promise<TeamStandings[]> {
-  const response = await axios.get(
-    "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
-  );
+  const [response, teamInfos] = await Promise.all([
+    axios.get(apiUrl.value()),
+    getTeamInfos(),
+  ]);
+  const teamsById = associateBy(teamInfos, (team) => team.id);
 
   const conferences = response.data.children.map((conference: any) => {
     const conferenceName = conference.name.split(" ")[0];
     const conferenceId = parseInt(conference.id, 10);
 
-    const teams = conference.standings.entries.map((team: any) =>
-      parseEspnTeamResponse(team, conferenceId, conferenceName),
+    const teams = conference.standings.entries.map((item: any) =>
+      parseTeamResponse(item, conferenceId, conferenceName, teamsById),
     );
 
     teams.sort(
@@ -44,30 +52,36 @@ export async function getStandings(): Promise<TeamStandings[]> {
   return conferences.flat();
 }
 
-function parseEspnTeamResponse(
-  team: any,
+function parseTeamResponse(
+  item: any,
   conferenceId: number,
   conferenceName: string,
+  teamsById: Map<number, TeamInfoModel>,
 ): TeamStandings {
-  const espnTeamId = parseInt(team.team.id, 10);
-  const divisionInfo = getDivisionByTeamId(espnTeamId);
+  const apiTeamId = parseInt(item.team.id, 10);
+  const teamInfo = teamsById.get(teamIdMapping[apiTeamId]);
+  if (!teamInfo) {
+    throw new Error(`No team info found for team ${apiTeamId}`);
+  }
+
+  const divisionInfo = getDivisionByTeamId(apiTeamId);
   const conferenceRank = new TeamRank(
     conferenceId,
     conferenceName,
-    team.conferenceRank,
-    formatGamesBehind(team.stats[5].value),
+    item.conferenceRank,
+    formatGamesBehind(item.stats[5].value),
   );
 
-  const overall = new WinLossRecord(team.stats[12].value, team.stats[7].value);
-  const home = parseRecord(team.stats[14].displayValue);
-  const away = parseRecord(team.stats[15].displayValue);
-  const lastTen = parseRecord(team.stats[18].displayValue);
-  const streak = Math.abs(team.stats[10].value);
-  const isWinStreak = team.stats[10].displayValue.includes("W");
+  const overall = new WinLossRecord(item.stats[12].value, item.stats[7].value);
+  const home = parseRecord(item.stats[14].displayValue);
+  const away = parseRecord(item.stats[15].displayValue);
+  const lastTen = parseRecord(item.stats[18].displayValue);
+  const streak = Math.abs(item.stats[10].value);
+  const isWinStreak = item.stats[10].displayValue.includes("W");
+  const avgPoints: number = item.stats[1].value;
+  const avgPointsAgainst: number = item.stats[0].value;
   return new TeamStandings(
-    teamIdMapping[espnTeamId],
-    team.team.shortDisplayName,
-    team.team.displayName,
+    teamInfo,
     conferenceRank,
     new TeamRank(divisionInfo.id, divisionInfo.name, 0, "-"),
     overall,
@@ -76,6 +90,8 @@ function parseEspnTeamResponse(
     lastTen,
     streak,
     isWinStreak,
+    avgPoints,
+    avgPointsAgainst,
   );
 }
 
