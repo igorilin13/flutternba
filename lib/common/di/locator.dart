@@ -13,6 +13,7 @@ import 'package:flutternba/data/settings/settings_local_source.dart';
 import 'package:flutternba/data/settings/settings_repository.dart';
 import 'package:flutternba/data/standings/playoffs/playoffs_repository.dart';
 import 'package:flutternba/data/standings/standings_repository.dart';
+import 'package:flutternba/data/teams/stats/team_season_stats_repository.dart';
 import 'package:flutternba/data/teams/team_repository.dart';
 import 'package:flutternba/domain/date/game_time_formatter.dart';
 import 'package:flutternba/domain/date/get_league_dates.dart';
@@ -20,6 +21,7 @@ import 'package:flutternba/domain/games/league/get_league_games.dart';
 import 'package:flutternba/domain/games/playoffs/get_playoff_series.dart';
 import 'package:flutternba/domain/games/team/team_games_use_case.dart';
 import 'package:flutternba/domain/standings/standings_use_case.dart';
+import 'package:flutternba/domain/teams/stats/get_team_season_stats.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,6 +72,11 @@ Future<void> initLocator() async {
   locator.registerFactory(() => PlayoffsRepository(locator()));
 
   locator.registerFactory(() => BoxScoreRepository(locator(), locator()));
+
+  locator.registerFactory(() => TeamSeasonStatsRepository(locator()));
+  locator.registerFactory(
+    () => GetTeamSeasonStatsUseCase(locator(), locator()),
+  );
 
   await locator.allReady();
 }

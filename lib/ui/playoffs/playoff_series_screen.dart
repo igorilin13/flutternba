@@ -39,7 +39,7 @@ class PlayoffSeriesScreen extends StatelessWidget {
 
   NbaAppBar _buildAppBar(BuildContext context, PlayoffSeriesState state) {
     String? title;
-    if (state is DisplayDatastate) {
+    if (state is DisplayDataState) {
       title = UiStrings.matchupTitle(
         state.series.homeTeam.name,
         state.series.visitorTeam.name,
@@ -59,7 +59,7 @@ class PlayoffSeriesScreen extends StatelessWidget {
             onTap: context.read<PlayoffSeriesCubit>().retryLoading,
           ),
         );
-      case DisplayDatastate():
+      case DisplayDataState():
         final series = state.series;
         return ListView.builder(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),

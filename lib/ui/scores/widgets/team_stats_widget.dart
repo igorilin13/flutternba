@@ -95,10 +95,10 @@ class GameTeamStats extends StatelessWidget {
 }
 
 enum _StatType {
-  fieldGoals(UiStrings.statFieldGoals),
-  threePointers(UiStrings.statThreePointers),
-  freeThrows(UiStrings.statFreeThrows),
-  rebounds(UiStrings.statRebounds),
+  fieldGoals(UiStrings.statAbbrFieldGoals),
+  threePointers(UiStrings.statAbbrThreePointers),
+  freeThrows(UiStrings.statAbbrFreeThrows),
+  rebounds(UiStrings.statReboundsCombined),
   assists(UiStrings.statAssists),
   steals(UiStrings.statSteals),
   blocks(UiStrings.statBlocks),

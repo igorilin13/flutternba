@@ -29,6 +29,7 @@ class UiStrings {
   static const String navigationStandings = "Standings";
   static const String navigationFavorite = "Favorite";
   static const String navigationLeague = "League";
+  static const String navigationTeamStats = "Stats";
   static const String navigationSettings = "Settings";
   static const String titleToday = "Today";
   static const String titleSettings = "Settings";
@@ -41,9 +42,13 @@ class UiStrings {
   static const String filterStandingsDivision = "Division";
   static const String filterStandingsPlayoffs = "Playoffs";
   static const String standingsLoadError = "Error loading standings.";
+  static const String teamStatsErrorMessage = "Error loading team stats.";
   static const String standingsHideScoresMessage =
-      "Hide scores mode is on, and standings may reveal spoilers.\nContinue anyway?";
+      "Hide scores mode is on and standings may reveal spoilers.\nContinue anyway?";
+  static const String teamStatsHideScoresMessage =
+      "Hide scores mode is on and stats may reveal spoilers.\nContinue anyway?";
   static const String actionRevealStandings = "Show standings";
+  static const String actionRevealStats = "Show stats";
   static const String standingsColumnWins = "W";
   static const String standingsColumnLosses = "L";
   static const String standingsColumnWinPercentage = "PCT";
@@ -54,10 +59,8 @@ class UiStrings {
   static const String boxScoreGameNotStarted =
       "Come back for stats after the game starts";
   static const String titleTeamStats = "Team stats";
-  static const String statFieldGoals = "FG";
-  static const String statThreePointers = "3PT";
-  static const String statFreeThrows = "FT";
-  static const String statRebounds = "OReb + DReb";
+  static const String statAbbrFreeThrows = "FT";
+  static const String statReboundsCombined = "OReb + DReb";
   static const String statSteals = "Steals";
   static const String statBlocks = "Blocks";
   static const String statTurnovers = "Turnovers";
@@ -68,6 +71,20 @@ class UiStrings {
   static const String statAbbrThreePointers = "3PT";
   static const String statAbbrRebounds = "Reb";
   static const String statAbbrAssists = "Ast";
+  static const String statPoints = "Points";
+  static const String statPointsAgainst = "Points Against";
+  static const String statFgMade = "Field Goals Made";
+  static const String statFgAttempted = "Field Goals Attempted";
+  static const String statFgPct = "Field Goal %";
+  static const String statThreePtMade = "3-Pointers Made";
+  static const String statThreePtAttempted = "3-Pointers Attempted";
+  static const String statThreePtPct = "3-Point %";
+  static const String statFtMade = "Free Throws Made";
+  static const String statFtAttempted = "Free Throws Attempted";
+  static const String statFtPct = "Free Throw %";
+  static const String statRebounds = "Rebounds";
+  static const String statOffRebounds = "Offensive Rebounds";
+  static const String statDefRebounds = "Defensive Rebounds";
   static const String boxScoreHideScoreOnMessage =
       "Hide scores mode is on.\nContinue anyway?";
   static const String actionRevealBoxScore = "Show score";
@@ -79,6 +96,7 @@ class UiStrings {
   static const String gameRemindersChannelDescription =
       gameRemindersSettingDescription;
   static const String confirmSelectionInProgress = "Saving your selection";
+  static const String screenTitleTeamStats = "Team Stats";
 
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
 

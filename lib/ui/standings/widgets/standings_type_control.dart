@@ -51,7 +51,7 @@ class StandingsTypeControl extends StatelessWidget {
           showSelectedIcon: false,
           style: OutlinedButton.styleFrom(
             padding: EdgeInsets.zero,
-            visualDensity: const VisualDensity(horizontal: 4, vertical: -4),
+            visualDensity: const VisualDensity(horizontal: 4, vertical: -2),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             side: BorderSide(

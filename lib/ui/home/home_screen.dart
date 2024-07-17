@@ -9,6 +9,7 @@ import 'package:flutternba/ui/games/league/league_games_screen.dart';
 import 'package:flutternba/ui/games/team/favorite/favorite_games_screen.dart';
 import 'package:flutternba/ui/settings/settings_screen.dart';
 import 'package:flutternba/ui/standings/standings_screen.dart';
+import 'package:flutternba/ui/stats/team_season_stats_screen.dart';
 
 enum _NavigationItem {
   standings(
@@ -25,6 +26,11 @@ enum _NavigationItem {
     Icons.event,
     UiStrings.navigationLeague,
     LeagueGamesScreen(),
+  ),
+  teamStats(
+    Icons.bar_chart,
+    UiStrings.navigationTeamStats,
+    TeamSeasonStatsScreen(),
   ),
   settings(
     Icons.settings,

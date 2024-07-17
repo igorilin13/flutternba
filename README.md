@@ -2,12 +2,13 @@ Flutter mobile app (iOS/Android) that displays NBA stats.
 
 Features:
 
-- Regular season standings (conference/division)
+- Regular season standings
 - Playoff bracket
 - Playoff series overview
 - Team schedules & scores
-- League schedules & scores on a selected day
+- League schedules & scores
 - Box scores
+- Team season stats
 - Favorite team selection
 - Hide scores mode
 - Game reminders

@@ -8,5 +8,5 @@ sealed class PlayoffSeriesState with _$PlayoffSeriesState {
 
   const factory PlayoffSeriesState.display(
     PlayoffSeriesGames series,
-  ) = DisplayDatastate;
+  ) = DisplayDataState;
 }

@@ -42,21 +42,21 @@ mixin _$PlayoffSeriesState {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadingState value) loading,
     required TResult Function(ErrorState value) error,
-    required TResult Function(DisplayDatastate value) display,
+    required TResult Function(DisplayDataState value) display,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadingState value)? loading,
     TResult? Function(ErrorState value)? error,
-    TResult? Function(DisplayDatastate value)? display,
+    TResult? Function(DisplayDataState value)? display,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadingState value)? loading,
     TResult Function(ErrorState value)? error,
-    TResult Function(DisplayDatastate value)? display,
+    TResult Function(DisplayDataState value)? display,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -154,7 +154,7 @@ class _$LoadingStateImpl implements LoadingState {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadingState value) loading,
     required TResult Function(ErrorState value) error,
-    required TResult Function(DisplayDatastate value) display,
+    required TResult Function(DisplayDataState value) display,
   }) {
     return loading(this);
   }
@@ -164,7 +164,7 @@ class _$LoadingStateImpl implements LoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadingState value)? loading,
     TResult? Function(ErrorState value)? error,
-    TResult? Function(DisplayDatastate value)? display,
+    TResult? Function(DisplayDataState value)? display,
   }) {
     return loading?.call(this);
   }
@@ -174,7 +174,7 @@ class _$LoadingStateImpl implements LoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadingState value)? loading,
     TResult Function(ErrorState value)? error,
-    TResult Function(DisplayDatastate value)? display,
+    TResult Function(DisplayDataState value)? display,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -262,7 +262,7 @@ class _$ErrorStateImpl implements ErrorState {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadingState value) loading,
     required TResult Function(ErrorState value) error,
-    required TResult Function(DisplayDatastate value) display,
+    required TResult Function(DisplayDataState value) display,
   }) {
     return error(this);
   }
@@ -272,7 +272,7 @@ class _$ErrorStateImpl implements ErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadingState value)? loading,
     TResult? Function(ErrorState value)? error,
-    TResult? Function(DisplayDatastate value)? display,
+    TResult? Function(DisplayDataState value)? display,
   }) {
     return error?.call(this);
   }
@@ -282,7 +282,7 @@ class _$ErrorStateImpl implements ErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadingState value)? loading,
     TResult Function(ErrorState value)? error,
-    TResult Function(DisplayDatastate value)? display,
+    TResult Function(DisplayDataState value)? display,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -297,10 +297,10 @@ abstract class ErrorState implements PlayoffSeriesState {
 }
 
 /// @nodoc
-abstract class _$$DisplayDatastateImplCopyWith<$Res> {
-  factory _$$DisplayDatastateImplCopyWith(_$DisplayDatastateImpl value,
-          $Res Function(_$DisplayDatastateImpl) then) =
-      __$$DisplayDatastateImplCopyWithImpl<$Res>;
+abstract class _$$DisplayDataStateImplCopyWith<$Res> {
+  factory _$$DisplayDataStateImplCopyWith(_$DisplayDataStateImpl value,
+          $Res Function(_$DisplayDataStateImpl) then) =
+      __$$DisplayDataStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({PlayoffSeriesGames series});
 
@@ -308,11 +308,11 @@ abstract class _$$DisplayDatastateImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$DisplayDatastateImplCopyWithImpl<$Res>
-    extends _$PlayoffSeriesStateCopyWithImpl<$Res, _$DisplayDatastateImpl>
-    implements _$$DisplayDatastateImplCopyWith<$Res> {
-  __$$DisplayDatastateImplCopyWithImpl(_$DisplayDatastateImpl _value,
-      $Res Function(_$DisplayDatastateImpl) _then)
+class __$$DisplayDataStateImplCopyWithImpl<$Res>
+    extends _$PlayoffSeriesStateCopyWithImpl<$Res, _$DisplayDataStateImpl>
+    implements _$$DisplayDataStateImplCopyWith<$Res> {
+  __$$DisplayDataStateImplCopyWithImpl(_$DisplayDataStateImpl _value,
+      $Res Function(_$DisplayDataStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -320,7 +320,7 @@ class __$$DisplayDatastateImplCopyWithImpl<$Res>
   $Res call({
     Object? series = null,
   }) {
-    return _then(_$DisplayDatastateImpl(
+    return _then(_$DisplayDataStateImpl(
       null == series
           ? _value.series
           : series // ignore: cast_nullable_to_non_nullable
@@ -339,8 +339,8 @@ class __$$DisplayDatastateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DisplayDatastateImpl implements DisplayDatastate {
-  const _$DisplayDatastateImpl(this.series);
+class _$DisplayDataStateImpl implements DisplayDataState {
+  const _$DisplayDataStateImpl(this.series);
 
   @override
   final PlayoffSeriesGames series;
@@ -354,7 +354,7 @@ class _$DisplayDatastateImpl implements DisplayDatastate {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DisplayDatastateImpl &&
+            other is _$DisplayDataStateImpl &&
             (identical(other.series, series) || other.series == series));
   }
 
@@ -364,8 +364,8 @@ class _$DisplayDatastateImpl implements DisplayDatastate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DisplayDatastateImplCopyWith<_$DisplayDatastateImpl> get copyWith =>
-      __$$DisplayDatastateImplCopyWithImpl<_$DisplayDatastateImpl>(
+  _$$DisplayDataStateImplCopyWith<_$DisplayDataStateImpl> get copyWith =>
+      __$$DisplayDataStateImplCopyWithImpl<_$DisplayDataStateImpl>(
           this, _$identity);
 
   @override
@@ -407,7 +407,7 @@ class _$DisplayDatastateImpl implements DisplayDatastate {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadingState value) loading,
     required TResult Function(ErrorState value) error,
-    required TResult Function(DisplayDatastate value) display,
+    required TResult Function(DisplayDataState value) display,
   }) {
     return display(this);
   }
@@ -417,7 +417,7 @@ class _$DisplayDatastateImpl implements DisplayDatastate {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadingState value)? loading,
     TResult? Function(ErrorState value)? error,
-    TResult? Function(DisplayDatastate value)? display,
+    TResult? Function(DisplayDataState value)? display,
   }) {
     return display?.call(this);
   }
@@ -427,7 +427,7 @@ class _$DisplayDatastateImpl implements DisplayDatastate {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadingState value)? loading,
     TResult Function(ErrorState value)? error,
-    TResult Function(DisplayDatastate value)? display,
+    TResult Function(DisplayDataState value)? display,
     required TResult orElse(),
   }) {
     if (display != null) {
@@ -437,12 +437,12 @@ class _$DisplayDatastateImpl implements DisplayDatastate {
   }
 }
 
-abstract class DisplayDatastate implements PlayoffSeriesState {
-  const factory DisplayDatastate(final PlayoffSeriesGames series) =
-      _$DisplayDatastateImpl;
+abstract class DisplayDataState implements PlayoffSeriesState {
+  const factory DisplayDataState(final PlayoffSeriesGames series) =
+      _$DisplayDataStateImpl;
 
   PlayoffSeriesGames get series;
   @JsonKey(ignore: true)
-  _$$DisplayDatastateImplCopyWith<_$DisplayDatastateImpl> get copyWith =>
+  _$$DisplayDataStateImplCopyWith<_$DisplayDataStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

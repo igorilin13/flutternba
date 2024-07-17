@@ -92,4 +92,7 @@ class AppFirebaseDb {
   Query<Map<String, dynamic>> getPlayoffRounds() {
     return _firestore.collection("playoffs");
   }
+
+  Query<Map<String, dynamic>> getTeamSeasonStats() =>
+      _firestore.collection("teamStats");
 }
