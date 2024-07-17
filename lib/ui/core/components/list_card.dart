@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
 class NbaListCard extends StatelessWidget {
+  final VoidCallback? onTap;
   final List<Widget> children;
 
-  const NbaListCard({super.key, this.children = const <Widget>[]});
+  const NbaListCard({super.key, this.onTap, this.children = const <Widget>[]});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-        child: Column(children: children),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+          child: Column(children: children),
+        ),
       ),
     );
   }

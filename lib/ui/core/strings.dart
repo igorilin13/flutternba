@@ -97,6 +97,7 @@ class UiStrings {
       gameRemindersSettingDescription;
   static const String confirmSelectionInProgress = "Saving your selection";
   static const String screenTitleTeamStats = "Team Stats";
+  static const String hintSearchTeams = "Search teams";
 
   static String playoffWithDateFormat(String date) => "$date • Playoffs";
 

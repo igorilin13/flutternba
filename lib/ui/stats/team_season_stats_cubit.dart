@@ -29,7 +29,7 @@ class TeamSeasonStatsCubit extends BaseCubit<TeamSeasonStatsState>
   @override
   Stream<TeamSeasonStatsState> buildStateStream() {
     return CombineLatestStream.combine3(
-      _getTeamSeasonStatsUseCase(),
+      _getTeamSeasonStatsUseCase.getAll(),
       shouldHideScores(_settingsRepository.shouldHideScores()),
       _searchQuery,
       (loadResult, hideScores, searchQuery) {

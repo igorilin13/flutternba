@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutternba/common/app_config.dart';
 import 'package:flutternba/common/di/locator.dart';
 import 'package:flutternba/domain/teams/stats/team_season_stats_models.dart';
 import 'package:flutternba/ui/core/components/app_bar.dart';
@@ -10,9 +9,10 @@ import 'package:flutternba/ui/core/components/error_display.dart';
 import 'package:flutternba/ui/core/components/header_item.dart';
 import 'package:flutternba/ui/core/components/list_card.dart';
 import 'package:flutternba/ui/core/components/progress_indicator.dart';
-import 'package:flutternba/ui/core/components/team_logo.dart';
 import 'package:flutternba/ui/core/strings.dart';
+import 'package:flutternba/ui/stats/category/team_stat_category_screen.dart';
 import 'package:flutternba/ui/stats/team_season_stats_cubit.dart';
+import 'package:flutternba/ui/stats/widgets/team_stat_tile_widget.dart';
 
 class TeamSeasonStatsScreen extends StatefulWidget {
   const TeamSeasonStatsScreen({super.key});
@@ -84,6 +84,7 @@ class _TeamSeasonStatsScreenState extends State<TeamSeasonStatsScreen>
                 ),
                 child: CupertinoSearchTextField(
                   controller: _searchController,
+                  placeholder: UiStrings.hintSearchTeams,
                   style: Theme.of(context).textTheme.bodyLarge,
                   onChanged: context.read<TeamSeasonStatsCubit>().search,
                 ),
@@ -117,12 +118,12 @@ class _TeamSeasonStatsScreenState extends State<TeamSeasonStatsScreen>
   ) {
     var highlightedTeamIndex = ranking.highlightedTeamIndex;
     return NbaListCard(
+      onTap: () => TeamStatCategoryScreen.navigate(context, ranking.category),
       children: [
         for (var i = 0; i < displayedTeamsCount; i++)
           Padding(
             padding: EdgeInsets.only(top: i > 0 ? 8 : 0),
-            child: _buildTeamTile(
-              context,
+            child: TeamStatCardTile(
               team: ranking.teams[i],
               rank: i + 1,
               isHighlighted: highlightedTeamIndex == i,
@@ -134,55 +135,13 @@ class _TeamSeasonStatsScreenState extends State<TeamSeasonStatsScreen>
             padding: EdgeInsets.only(
               top: highlightedTeamIndex >= displayedTeamsCount + 1 ? 16 : 8,
             ),
-            child: _buildTeamTile(
-              context,
+            child: TeamStatCardTile(
               team: ranking.teams[highlightedTeamIndex],
               rank: highlightedTeamIndex + 1,
               isHighlighted: true,
             ),
           ),
       ],
-    );
-  }
-
-  Widget _buildTeamTile(
-    BuildContext context, {
-    required TeamStatValue team,
-    required int rank,
-    required bool isHighlighted,
-  }) {
-    final theme = Theme.of(context);
-    return NbaListCardTile(
-      child: Row(
-        children: [
-          SizedBox(
-            width: 20,
-            child: Text(
-              rank.toString(),
-              style: theme.textTheme.bodySmall,
-            ),
-          ),
-          if (AppConfig.showTeamLogos)
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: NbaTeamLogo.imageOnly(
-                teamId: team.team.id,
-                size: NbaTeamLogoSize.xSmall,
-              ),
-            ),
-          Expanded(
-            child: Text(
-              team.team.fullName,
-              style: isHighlighted
-                  ? theme.textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold)
-                  : theme.textTheme.bodyMedium,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Text(team.value.toStringAsFixed(1)),
-        ],
-      ),
     );
   }
 
