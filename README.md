@@ -13,7 +13,7 @@ Features:
 - Hide scores mode
 - Game reminders
 
-See video demo on [Youtube](https://youtu.be/NdkIE5Gyf6U)
+See video demo on [Youtube](https://youtube.com/shorts/GrPzCGtYeS8) or take a look at the [Screenshots folder](screenshots/)
 
 # Technical details
 
